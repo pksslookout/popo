@@ -1,0 +1,87 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >文章管理</a></li>
+			<li><a href="{:url('Adminpost/add')}">{:lang('ADD')}文章</a></li>
+		</ul>
+		<form class="well form-inline margin-top-20" method="post" action="{:url('Adminpost/index')}">
+			分类
+			<select class="form-control" name="admin_term_id">
+				<option value="">全部</option>
+				<volist name="admin_term" id="v">
+					<option value="{$key}" <if condition="input('request.admin_term_id') neq '' && input('request.admin_term_id') eq $key">selected</if> >{$v}</option>
+				</volist>
+			</select>
+			文章ID：
+            <input class="form-control" type="text" name="id" style="width: 200px;" value="{:input('request.id')}"
+                   placeholder="请输入文章ID">
+			关键字：
+            <input class="form-control" type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}"
+                   placeholder="请输入标题、关键词...">
+			<input type="submit" class="btn btn-primary" value="搜索">
+			<a class="btn btn-danger" href="{:url('Adminpost/index')}">清空</a>
+		</form>
+		<form method="post" class="js-ajax-form" action="{:url('Adminpost/listOrder')}">
+<!--			<div class="table-actions">-->
+<!--				<button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:lang('SORT')}</button>-->
+<!--				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:url('Adminpost/del')}"-->
+<!--						data-subcheck="true">{:lang('DELETE')}-->
+<!--				</button>-->
+<!--			</div>-->
+
+			<div class="table-actions">
+				<button class="btn btn-primary btn-sm js-ajax-submit" type="submit">{:lang('SORT')}</button>
+				<button class="btn btn-danger btn-sm js-ajax-submit" type="submit" data-action="{:url('Adminpost/del')}"
+						data-subcheck="true">{:lang('DELETE')}
+				</button>
+			</div>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="16">
+							<label>
+								<input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+							</label>
+						</th>
+						<th>序号</th>
+						<th>ID</th>
+						<th>标题</th>
+						<th>Title</th>
+						<th>地址</th>
+						<th>作者</th>
+						<th>分类</th>
+						<th>发布时间</th>
+						<th>{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>
+							<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}">
+						</td>
+						<td><input name="list_orders[{$vo.id}]" class="input-order" type="text" value="{$vo.list_order}"></td>
+						<td>{$vo.id}</td>
+						<td>{$vo['title']}</td>
+						<td>{$vo['title_en']}</td>
+						<td><a href="{$configpub['site']}{$vo['url']}" target="_blank">{$configpub['site']}{$vo['url']}</a></td>
+						<td>{$vo['user_nicename']}</td>
+						<td>{$admin_term[$vo['admin_term_id']]}</td>
+						<td>{:date('Y-m-d H:i',$vo['addtime'])}</td>
+						<td align="center">
+							<a class="btn btn-xs btn-primary" href='{:url("Adminpost/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+							<a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('Adminpost/del',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

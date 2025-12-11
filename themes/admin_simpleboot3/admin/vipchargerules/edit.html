@@ -1,0 +1,69 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('Vipchargerules/index')}">vip充值规则列表</a></li>
+			<li class="active"><a >{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Vipchargerules/editPost')}">
+
+			<div class="form-group">
+				<label for="input-list_order" class="col-sm-2 control-label"><span class="form-required">*</span>排序号</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-list_order" name="list_order" value="{$data['list_order']}"><p class="help-block">填写正整数</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>名称</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-name" name="name" value="{$data['name']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-name_en" class="col-sm-2 control-label"><span class="form-required">*</span>Name</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-name_en" name="name_en" value="{$data['name_en']}">
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<label for="input-money" class="col-sm-2 control-label"><span class="form-required">*</span>价格</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-money" name="money" value="{$data['money']}">
+					<p class="help-block">价格在0.01-99999999之间</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-days" class="col-sm-2 control-label"><span class="form-required">*</span>*充值vip天数(单位:天)</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-days" name="days" placeholder="请填写正整数" value="{$data['days']}">
+					<p class="help-block">请填写正整数</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-coin" class="col-sm-2 control-label"><span class="form-required">*</span>充值vip需花费{$name_coin}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-coin" name="coin" placeholder="请填写正整数" value="{$data['coin']}">
+					<p class="help-block">请填写正整数</p>
+				</div>
+			</div>
+            
+
+            <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

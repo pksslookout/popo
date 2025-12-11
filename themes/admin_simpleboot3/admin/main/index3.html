@@ -1,0 +1,428 @@
+<include file="public@header" />
+<link href="__STATIC__/css/index.css?t=1" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/js/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="__STATIC__/js/noty/noty-2.4.1.js"></script>
+<script type="text/javascript" src="__STATIC__/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<link rel="stylesheet" href="__STATIC__/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+<link rel="stylesheet" href="__STATIC__/js/animate/animate.css">
+</head>
+<body style="">
+<div style="display: none; position: absolute;" class="">
+    <div class="aui_outer"><table class="aui_border">
+        <tbody>
+        <tr>
+            <td class="aui_nw"></td>
+            <td class="aui_n"></td>
+            <td class="aui_ne"></td>
+        </tr>
+        <tr>
+            <td class="aui_w"></td>
+            <td class="aui_c">
+                <div class="aui_inner">
+                    <table class="aui_dialog">
+                        <tbody>
+                        <tr>
+                            <td colspan="2" class="aui_header">
+                                <div class="aui_titleBar">
+                                    <div class="aui_title" style="cursor: move; display: block;"></div>
+                                    <a class="aui_close" href="javascript:/*artDialog*/;" style="display: block;">×</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="aui_icon" style="display: none;">
+                                <div class="aui_iconBg" style="background: none;"></div>
+                            </td>
+                            <td class="aui_main" style="width: auto; height: auto;">
+                                <div class="aui_content" style="padding: 20px 25px;"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="aui_footer">
+                                <div class="aui_buttons" style="display: none;"></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+            <td class="aui_e"></td>
+        </tr>
+        <tr>
+            <td class="aui_sw"></td>
+            <td class="aui_s"></td>
+            <td class="aui_se" style="cursor: se-resize;"></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+<style>
+    .stay{
+        margin-bottom: 10px;
+    }
+    .stay li{
+        border: 1px solid rgb(204 204 204 / 25%);
+        padding: 5px 15px;
+        border-radius: 28px;
+        height: 38px;
+        font-size: 14px;
+        margin-right: 30px;
+        margin-top: 5px;
+        float: left;
+        background-color: rgb(204 204 204 / 25%);
+        color: rgb(0 0 0 / 84%);
+
+    }
+    .stay li span{
+        color: #FEC444;
+        font-size: 16px;
+    }
+    .data{
+        width: 110px;
+        font-sie: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+
+
+</style>
+<div class="content">
+    <div class="statistics basic">
+        <div class="title">基本指标
+            <div class="tips">
+                <img src="__STATIC__/images/wenti.png">
+                <div class="tips_bd">
+                    网站概况帮助您整体了解网站情况，从用户数量、活跃度、访客等分析维度提供统计数据，以便于了解分析，优化运作方法。
+                </div>
+            </div>
+            <div class="bd_title">
+                <input type="hidden" class="action" value="1">
+                <div class="data_select">
+                    <input type="text" name="start_time" class="js-bootstrap-date data" value="" autocomplete="off" placeholder="开始时间">-
+                    <input type="text" class="js-bootstrap-date data" name="end_time" value="" autocomplete="off" placeholder="结束时间">
+                </div>
+                <div class="search">
+                    查询
+                </div>
+                <div class="export">
+                    导出
+                </div>
+            </div>
+        </div>
+        <div class="bd">
+            <div class="basic_list clear">
+                <ul>
+                    <li class="newusers">
+                        <div class="basic_list_n"><span>{$basic_today.newUsers}</span></div>
+                        <div class="basic_list_t">新增用户</div>
+                    </li>
+                    <li class="launches">
+                        <div class="basic_list_n"><span>{$basic_today.launches}</span></div>
+                        <div class="basic_list_t">启动次数</div>
+                    </li>
+                    <li class="durations no">
+                        <div class="basic_list_n"><span>0</span>分钟</div>
+                        <div class="basic_list_t">使用时长</div>
+                    </li>
+                    <li class="activityusers">
+                        <div class="basic_list_n"><span>{$basic_today.activityUsers}</span></div>
+                        <div class="basic_list_t">活跃用户</div>
+                    </li>
+
+                    <li class="users_total">
+                        <div class="basic_list_n"><span>{$basic_today.totalUsers}</span></div>
+                        <div class="basic_list_t">总注册量</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="statistics basic">
+        <div class="title">待办事项
+            <div class="tips">
+                <img src="__STATIC__/images/wenti.png">
+                <div class="tips_bd">
+                    网站概况帮助您整体了解网站情况，从店铺申请数量、视频待审核数量、用户认证申请数量等分析维度提供统计数据，以便于了解分析，优化运作方法。
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bd">
+            <ul class="stay clear">
+                <a href="http://dspdemo.yunbaozb.com/admin/shopapply/index.html"><li>店铺待审核数量( <span>3</span> )</li></a>
+
+                <a href="http://dspdemo.yunbaozb.com/admin/video/index.html"><li>视频待审核数量( <span>0</span> )</li></a>
+
+                <a href="http://dspdemo.yunbaozb.com/admin/video/reportlist.html"><li>视频举报数量( <span>15</span> )</li></a>
+
+                <a href="http://dspdemo.yunbaozb.com/admin/livereport/index.html"><li>直播间举报数量( <span>0</span> )</li></a>
+
+                <a href="http://dspdemo.yunbaozb.com/admin/userauth/index.html"><li>用户认证待审核数量( <span>47</span> )</li></a>
+                <li class="hide"></li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="statistics w50 mr10 source">
+        <div class="title">终端占比
+            <div class="tips">
+                <img src="__STATIC__/images/wenti.png">
+                <div class="tips_bd">
+                    提供网站访客所使用的终端，参考此数据进行网页设计、开发，可更好地提高兼容性，以达到良好的用户交互体验。
+                </div>
+            </div>
+        </div>
+        <div class="bd">
+            <div id="echarts_source" style="width: 100%; height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1752397171981"><div style="position: relative; overflow: hidden; width: 544px; height: 300px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="544" height="300" style="position: absolute; left: 0px; top: 0px; width: 544px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+        </div>
+    </div>
+    <div class="statistics w50 reg">
+        <div class="title">登录渠道
+            <div class="tips">
+                <img src="__STATIC__/images/wenti.png">
+                <div class="tips_bd">
+                    提供访客所使用的登陆接口信息，参考此数据，对终端用户进行比对，开发，以达到良好的用户交互体验。
+                </div>
+            </div>
+        </div>
+        <div class="bd">
+            <div id="echarts_reg" style="width: 100%; height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1752397171982"><div style="position: relative; overflow: hidden; width: 544px; height: 300px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="544" height="300" style="position: absolute; left: 0px; top: 0px; width: 544px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+        </div>
+    </div>
+
+    <div class="statistics clear source">
+        <div class="title">七天数据
+            <div class="tips">
+                <img src="__STATIC__/images/wenti.png">
+                <div class="tips_bd">
+                    站点近7天的数据增量，包括视频数，点赞数，粉丝数的增量走势，参考此数据，对网站运作数据调整优化，以达到良好的用户交互体验。
+                </div>
+            </div>
+            <div class="bd_title">
+                <input type="hidden" class="action" value="2">
+                <div class="export">
+                    导出
+                </div>
+            </div>
+        </div>
+        <div class="bd">
+            <div id="echarts_week" style="width: 100%; height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1752397171983"><div style="position: relative; overflow: hidden; width: 1118px; height: 300px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1118" height="300" style="position: absolute; left: 0px; top: 0px; width: 1118px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+        </div>
+    </div>
+
+    <div class="statistics clear source">
+        <div class="title">广告数据
+            <div class="tips">
+                <img src="__STATIC__/images/wenti.png">
+                <div class="tips_bd">
+                    展示每日的视频增减量，以及用户的观看量走势，便于分析数据维度，提供统计数据，以达到良好的用户交互体验。
+                </div>
+            </div>
+            <div class="bd_title">
+                <input type="hidden" class="action" value="3">
+                <div class="data_select">
+                    <input type="text" name="start_time" class="js-bootstrap-date data" value="" autocomplete="off" placeholder="开始时间">-
+                    <input type="text" class="js-bootstrap-date data" name="end_time" value="" autocomplete="off" placeholder="结束时间">
+                </div>
+                <div class="search">
+                    查询
+                </div>
+                <div class="export">
+                    导出
+                </div>
+            </div>
+        </div>
+        <div class="bd">
+            <div id="echarts_ad" style="width: 100%; height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1752397171984"><div style="position: relative; overflow: hidden; width: 1118px; height: 300px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1118" height="300" style="position: absolute; left: 0px; top: 0px; width: 1118px; height: 300px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+        </div>
+    </div>
+
+
+    <div class="statistics clear plat">
+        <div class="title">平台数据
+            <div class="tips">
+                <img src="__STATIC__/images/wenti.png">
+                <div class="tips_bd">
+                    提供站点运营的总数据，以及近30天的平台活跃增减量数据，以便于了解网站整体运作数据状况，以达到良好的用户交互体验。
+                </div>
+            </div>
+        </div>
+        <div class="bd">
+            <ul>
+                <li class="plat_li1">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">用户粉丝总数</p>
+                        <p>2102</p>
+                    </div>
+                </li>
+                <li class="plat_li2">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">留言总数</p>
+                        <p>1123</p>
+                    </div>
+                </li>
+
+                <li class="plat_li7">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">视频总数</p>
+                        <p>167</p>
+                    </div>
+                </li>
+                <li class=" no" style="border:none;">
+                </li>
+                <li class="plat_li4">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">近30天点赞数</p>
+                        <p>7</p>
+                    </div>
+                </li>
+                <!-- <li class="plat_li5">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">近30天分享数</p>
+                        <p>0</p>
+                    </div>
+                </li> -->
+                <li class="plat_li6">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">近30天关注增量</p>
+                        <p>35</p>
+                    </div>
+                </li>
+                <li class="plat_li3">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">近30天发布视频</p>
+                        <p>7</p>
+                    </div>
+                </li>
+                <!-- <li class="plat_li8 no">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">近30天视频增量</p>
+                        <p>0</p>
+                    </div>
+                </li> -->
+                <li class="plat_li9 no">
+                    <div class="plat_l">
+                    </div>
+                    <div class="plat_r">
+                        <p class="plat_t">近30天留言数</p>
+                        <p>12</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+<script src="__STATIC__/js/admin2.js"></script>
+<script src="__STATIC__/js/echarts/echarts.min.js"></script>
+<script>
+    var users_total='{$users_total}';
+    var data_basic={$data_basicj};
+    var data_source={$data_sourcej};
+    var data_charge={$data_chargej};
+    var data_type={$data_typej};
+</script>
+<!--<div class="datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu" style="left: 752.344px; z-index: 1010;">-->
+<!--    <div class="datetimepicker-minutes" style="display: none;">-->
+<!--        <table class=" table-condensed">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th class="prev" style="visibility: visible;">-->
+<!--                    <i class="glyphicon icon-arrow-left"></i>-->
+<!--                </th>-->
+<!--                <th colspan="5" class="switch">13 七月 2025</th>-->
+<!--                <th class="next" style="visibility: visible;">-->
+<!--                    <i class="glyphicon icon-arrow-right"></i>-->
+<!--                </th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr>-->
+<!--                <td colspan="7">-->
+<!--                    <span class="minute">16:00</span>-->
+<!--                    <span class="minute">16:05</span>-->
+<!--                    <span class="minute">16:10</span>-->
+<!--                    <span class="minute">16:15</span>-->
+<!--                    <span class="minute">16:20</span>-->
+<!--                    <span class="minute">16:25</span>-->
+<!--                    <span class="minute">16:30</span>-->
+<!--                    <span class="minute">16:35</span>-->
+<!--                    <span class="minute">16:40</span>-->
+<!--                    <span class="minute">16:45</span>-->
+<!--                    <span class="minute">16:50</span>-->
+<!--                    <span class="minute active">16:55</span>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--            <tfoot>-->
+<!--            <tr>-->
+<!--                <th colspan="7" class="today">今天</th>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th colspan="7" class="clear" style="display: none;">Clear</th>-->
+<!--            </tr>-->
+<!--            </tfoot>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--    <div class="datetimepicker-hours" style="display: none;">-->
+<!--        <table class=" table-condensed">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th class="prev" style="visibility: visible;">-->
+<!--                    <i class="glyphicon icon-arrow-left"></i>-->
+<!--                </th>-->
+<!--                <th colspan="5" class="switch">13 七月 2025</th>-->
+<!--                <th class="next" style="visibility: visible;">-->
+<!--                    <i class="glyphicon icon-arrow-right"></i>-->
+<!--                </th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr>-->
+<!--                <td colspan="7">-->
+<!--                    <span class="hour">0:00</span>-->
+<!--                    <span class="hour">1:00</span>-->
+<!--                    <span class="hour">2:00</span>-->
+<!--                    <span class="hour">3:00</span>-->
+<!--                    <span class="hour">4:00</span>-->
+<!--                    <span class="hour">5:00</span><span class="hour">6:00</span><span class="hour">7:00</span><span class="hour">8:00</span><span class="hour">9:00</span><span class="hour">10:00</span><span class="hour">11:00</span><span class="hour">12:00</span><span class="hour">13:00</span><span class="hour">14:00</span><span class="hour">15:00</span><span class="hour active">16:00</span><span class="hour">17:00</span><span class="hour">18:00</span><span class="hour">19:00</span><span class="hour">20:00</span><span class="hour">21:00</span><span class="hour">22:00</span><span class="hour">23:00</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr><tr><th class="dow">日</th><th class="dow">一</th><th class="dow">二</th><th class="dow">三</th><th class="dow">四</th><th class="dow">五</th><th class="dow">六</th></tr></thead><tbody><tr><td class="day old">29</td><td class="day old">30</td><td class="day">1</td><td class="day">2</td><td class="day">3</td><td class="day">4</td><td class="day">5</td></tr><tr><td class="day">6</td><td class="day">7</td><td class="day">8</td><td class="day">9</td><td class="day">10</td><td class="day">11</td><td class="day">12</td></tr><tr><td class="day active">13</td><td class="day">14</td><td class="day">15</td><td class="day">16</td><td class="day">17</td><td class="day">18</td><td class="day">19</td></tr><tr><td class="day">20</td><td class="day">21</td><td class="day">22</td><td class="day">23</td><td class="day">24</td><td class="day">25</td><td class="day">26</td></tr><tr><td class="day">27</td><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="day">31</td><td class="day new">1</td><td class="day new">2</td></tr><tr><td class="day new">3</td><td class="day new">4</td><td class="day new">5</td><td class="day new">6</td><td class="day new">7</td><td class="day new">8</td><td class="day new">9</td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="month">一月</span><span class="month">二月</span><span class="month">三月</span><span class="month">四月</span><span class="month">五月</span><span class="month">六月</span><span class="month active">七月</span><span class="month">八月</span><span class="month">九月</span><span class="month">十月</span><span class="month">十一月</span><span class="month">十二月</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2020-2029</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="year ">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year ">2030</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div><div class="datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu" style="left: 874px; z-index: 1020;"><div class="datetimepicker-minutes" style="display: none;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">13 七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="minute">16:00</span><span class="minute">16:05</span><span class="minute">16:10</span><span class="minute">16:15</span><span class="minute">16:20</span><span class="minute">16:25</span><span class="minute">16:30</span><span class="minute">16:35</span><span class="minute">16:40</span><span class="minute">16:45</span><span class="minute">16:50</span><span class="minute active">16:55</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-hours" style="display: none;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">13 七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="hour">0:00</span><span class="hour">1:00</span><span class="hour">2:00</span><span class="hour">3:00</span><span class="hour">4:00</span><span class="hour">5:00</span><span class="hour">6:00</span><span class="hour">7:00</span><span class="hour">8:00</span><span class="hour">9:00</span><span class="hour">10:00</span><span class="hour">11:00</span><span class="hour">12:00</span><span class="hour">13:00</span><span class="hour">14:00</span><span class="hour">15:00</span><span class="hour active">16:00</span><span class="hour">17:00</span><span class="hour">18:00</span><span class="hour">19:00</span><span class="hour">20:00</span><span class="hour">21:00</span><span class="hour">22:00</span><span class="hour">23:00</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr><tr><th class="dow">日</th><th class="dow">一</th><th class="dow">二</th><th class="dow">三</th><th class="dow">四</th><th class="dow">五</th><th class="dow">六</th></tr></thead><tbody><tr><td class="day old">29</td><td class="day old">30</td><td class="day">1</td><td class="day">2</td><td class="day">3</td><td class="day">4</td><td class="day">5</td></tr><tr><td class="day">6</td><td class="day">7</td><td class="day">8</td><td class="day">9</td><td class="day">10</td><td class="day">11</td><td class="day">12</td></tr><tr><td class="day active">13</td><td class="day">14</td><td class="day">15</td><td class="day">16</td><td class="day">17</td><td class="day">18</td><td class="day">19</td></tr><tr><td class="day">20</td><td class="day">21</td><td class="day">22</td><td class="day">23</td><td class="day">24</td><td class="day">25</td><td class="day">26</td></tr><tr><td class="day">27</td><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="day">31</td><td class="day new">1</td><td class="day new">2</td></tr><tr><td class="day new">3</td><td class="day new">4</td><td class="day new">5</td><td class="day new">6</td><td class="day new">7</td><td class="day new">8</td><td class="day new">9</td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="month">一月</span><span class="month">二月</span><span class="month">三月</span><span class="month">四月</span><span class="month">五月</span><span class="month">六月</span><span class="month active">七月</span><span class="month">八月</span><span class="month">九月</span><span class="month">十月</span><span class="month">十一月</span><span class="month">十二月</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2020-2029</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="year ">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year ">2030</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div><div class="datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu" style="left: 752.344px; z-index: 1030;"><div class="datetimepicker-minutes" style="display: none;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">13 七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="minute">16:00</span><span class="minute">16:05</span><span class="minute">16:10</span><span class="minute">16:15</span><span class="minute">16:20</span><span class="minute">16:25</span><span class="minute">16:30</span><span class="minute">16:35</span><span class="minute">16:40</span><span class="minute">16:45</span><span class="minute">16:50</span><span class="minute active">16:55</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-hours" style="display: none;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">13 七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="hour">0:00</span><span class="hour">1:00</span><span class="hour">2:00</span><span class="hour">3:00</span><span class="hour">4:00</span><span class="hour">5:00</span><span class="hour">6:00</span><span class="hour">7:00</span><span class="hour">8:00</span><span class="hour">9:00</span><span class="hour">10:00</span><span class="hour">11:00</span><span class="hour">12:00</span><span class="hour">13:00</span><span class="hour">14:00</span><span class="hour">15:00</span><span class="hour active">16:00</span><span class="hour">17:00</span><span class="hour">18:00</span><span class="hour">19:00</span><span class="hour">20:00</span><span class="hour">21:00</span><span class="hour">22:00</span><span class="hour">23:00</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr><tr><th class="dow">日</th><th class="dow">一</th><th class="dow">二</th><th class="dow">三</th><th class="dow">四</th><th class="dow">五</th><th class="dow">六</th></tr></thead><tbody><tr><td class="day old">29</td><td class="day old">30</td><td class="day">1</td><td class="day">2</td><td class="day">3</td><td class="day">4</td><td class="day">5</td></tr><tr><td class="day">6</td><td class="day">7</td><td class="day">8</td><td class="day">9</td><td class="day">10</td><td class="day">11</td><td class="day">12</td></tr><tr><td class="day active">13</td><td class="day">14</td><td class="day">15</td><td class="day">16</td><td class="day">17</td><td class="day">18</td><td class="day">19</td></tr><tr><td class="day">20</td><td class="day">21</td><td class="day">22</td><td class="day">23</td><td class="day">24</td><td class="day">25</td><td class="day">26</td></tr><tr><td class="day">27</td><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="day">31</td><td class="day new">1</td><td class="day new">2</td></tr><tr><td class="day new">3</td><td class="day new">4</td><td class="day new">5</td><td class="day new">6</td><td class="day new">7</td><td class="day new">8</td><td class="day new">9</td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="month">一月</span><span class="month">二月</span><span class="month">三月</span><span class="month">四月</span><span class="month">五月</span><span class="month">六月</span><span class="month active">七月</span><span class="month">八月</span><span class="month">九月</span><span class="month">十月</span><span class="month">十一月</span><span class="month">十二月</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2020-2029</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="year ">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year ">2030</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div><div class="datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu" style="left: 874px; z-index: 1040;"><div class="datetimepicker-minutes" style="display: none;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">13 七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="minute">16:00</span><span class="minute">16:05</span><span class="minute">16:10</span><span class="minute">16:15</span><span class="minute">16:20</span><span class="minute">16:25</span><span class="minute">16:30</span><span class="minute">16:35</span><span class="minute">16:40</span><span class="minute">16:45</span><span class="minute">16:50</span><span class="minute active">16:55</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-hours" style="display: none;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">13 七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="hour">0:00</span><span class="hour">1:00</span><span class="hour">2:00</span><span class="hour">3:00</span><span class="hour">4:00</span><span class="hour">5:00</span><span class="hour">6:00</span><span class="hour">7:00</span><span class="hour">8:00</span><span class="hour">9:00</span><span class="hour">10:00</span><span class="hour">11:00</span><span class="hour">12:00</span><span class="hour">13:00</span><span class="hour">14:00</span><span class="hour">15:00</span><span class="hour active">16:00</span><span class="hour">17:00</span><span class="hour">18:00</span><span class="hour">19:00</span><span class="hour">20:00</span><span class="hour">21:00</span><span class="hour">22:00</span><span class="hour">23:00</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">七月 2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr><tr><th class="dow">日</th><th class="dow">一</th><th class="dow">二</th><th class="dow">三</th><th class="dow">四</th><th class="dow">五</th><th class="dow">六</th></tr></thead><tbody><tr><td class="day old">29</td><td class="day old">30</td><td class="day">1</td><td class="day">2</td><td class="day">3</td><td class="day">4</td><td class="day">5</td></tr><tr><td class="day">6</td><td class="day">7</td><td class="day">8</td><td class="day">9</td><td class="day">10</td><td class="day">11</td><td class="day">12</td></tr><tr><td class="day active">13</td><td class="day">14</td><td class="day">15</td><td class="day">16</td><td class="day">17</td><td class="day">18</td><td class="day">19</td></tr><tr><td class="day">20</td><td class="day">21</td><td class="day">22</td><td class="day">23</td><td class="day">24</td><td class="day">25</td><td class="day">26</td></tr><tr><td class="day">27</td><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="day">31</td><td class="day new">1</td><td class="day new">2</td></tr><tr><td class="day new">3</td><td class="day new">4</td><td class="day new">5</td><td class="day new">6</td><td class="day new">7</td><td class="day new">8</td><td class="day new">9</td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2025</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="month">一月</span><span class="month">二月</span><span class="month">三月</span><span class="month">四月</span><span class="month">五月</span><span class="month">六月</span><span class="month active">七月</span><span class="month">八月</span><span class="month">九月</span><span class="month">十月</span><span class="month">十一月</span><span class="month">十二月</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datetimepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: visible;"><i class="glyphicon icon-arrow-left"></i></th><th colspan="5" class="switch">2020-2029</th><th class="next" style="visibility: visible;"><i class="glyphicon icon-arrow-right"></i></th></tr></thead><tbody><tr><td colspan="7"><span class="year ">2019</span><span class="year">2020</span><span class="year">2021</span><span class="year">2022</span><span class="year">2023</span><span class="year">2024</span><span class="year active">2025</span><span class="year">2026</span><span class="year">2027</span><span class="year">2028</span><span class="year">2029</span><span class="year ">2030</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today">今天</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table>-->
+<!--</div>-->
+<!--</div>-->
+<script type="text/javascript">
+    var data_week={"date":["2025-07-06","2025-07-07","2025-07-08","2025-07-09","2025-07-10","2025-07-11","2025-07-12"],"value":[0,0,0,0,0,0,0],"fans":[0,1,0,0,0,0,0],"likes":[0,0,0,0,0,0,0]};
+    var data_ad={"date":["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"],"value":["0",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"videoviews":["0",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]};
+</script>
+<script src="__STATIC__/js/admin_index2.js?t=123"></script>
+
+</body></html>

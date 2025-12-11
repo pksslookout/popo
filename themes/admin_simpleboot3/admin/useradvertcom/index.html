@@ -1,0 +1,34 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap">
+	<form method="post" class="js-ajax-form" action="">
+		<table class="table table-hover table-bordered">
+			<tbody>
+			<tr>
+				<td align="center">
+					<table class="table table-hover table-bordered comment_lists_table">
+						<tbody>
+						<foreach name="lists" item="vo">
+						<tr>
+							<td width="70%">{$vo['content']}</td>
+							<td width="30%">{$vo['user_nicename']} ({$vo['uid']})</td>
+						</tr>
+						<tr>
+							<td>评论时间 : {:date('Y-m-d H:i',$vo['addtime'])}</td>
+							<td>获赞数: {$vo['number_likes']}</td>
+						</tr>
+						</foreach>
+						</tbody>
+					</table>
+				</td>
+
+			</tr>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

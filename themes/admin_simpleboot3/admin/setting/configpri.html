@@ -1,0 +1,1910 @@
+<include file="public@header"/>
+<style>
+.cdnhide{
+	display:none;
+}
+.codehide{
+	display:none;
+}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#A" data-toggle="tab">基本设置</a></li>
+        <li><a href="#B" data-toggle="tab">登录配置</a></li>
+        <li><a href="#E" data-toggle="tab">腾讯云推送及IM配置</a></li>
+        <li><a href="#O" data-toggle="tab">视频推荐列表设置</a></li>
+<!--        <li><a href="#H" data-toggle="tab">统计配置</a></li>-->
+        <li><a href="#G" data-toggle="tab">邀请奖励</a></li>
+        <li><a href="#F" data-toggle="tab">支付配置</a></li>
+<!--        <li><a href="#D" data-toggle="tab">{$name_votes}提现配置</a></li>-->
+        <li><a href="#D" data-toggle="tab">USDT提现配置</a></li>
+        <li><a href="#P" data-toggle="tab">上热门</a></li>
+        <li><a href="#Q" data-toggle="tab">VIP设置</a></li>
+        <li><a href="#R" data-toggle="tab">短视频观看模式</a></li>
+        <li><a href="#I" data-toggle="tab">视频配置</a></li>
+        <li><a href="#C" data-toggle="tab">直播配置</a></li>
+        <li><a href="#J" data-toggle="tab">店铺/商品配置</a></li>
+        <li><a href="#K" data-toggle="tab">动态配置</a></li>
+        <li><a href="#L" data-toggle="tab">游戏配置</a></li>
+        <li><a href="#M" data-toggle="tab">物流配置</a></li>
+        <li><a href="#U" data-toggle="tab">云存储设置</a></li>
+        <li><a href="#N" data-toggle="tab">每日任务</a></li>
+        <li><a href="#S" data-toggle="tab">敏感词</a></li>
+        <li><a href="#T" data-toggle="tab">openinstall配置</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" role="form" action="{:url('setting/configpriPost')}" method="post">
+        <fieldset>
+            <div class="tabbable">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="A">
+
+                        <div class="form-group">
+                            <label for="input-cache_switch" class="col-sm-2 control-label">缓存开关</label>
+                            <div class="col-md-6 col-sm-10" id="cache_switch">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[cache_switch]" <in value="0" name="config['cache_switch']">checked="checked"</in>>关闭</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[cache_switch]" <in value="1" name="config['cache_switch']">checked="checked"</in>>开启</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-service_url" class="col-sm-2 control-label">缓存时间</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-caches_time"
+                                       name="options[caches_time]" value="{$config.caches_time|default='60'}">
+                                <p class="help-block">网站数据的缓存时间(秒)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-is_auth" class="col-sm-2 control-label">认证限制</label>
+                            <div class="col-md-6 col-sm-10" id="is_auth">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[is_auth]" <in value="0" name="config['is_auth']">checked="checked"</in>>关闭</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[is_auth]" <in value="1" name="config['is_auth']">checked="checked"</in>>开启</label>
+                                <p class="help-block">在系统中认证限制权限最高，只要认证限制打开,未认证用户就不可以发布视频和开播</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-is_msg_number" class="col-sm-2 control-label">未关注发送消息条数开关</label>
+                            <div class="col-md-6 col-sm-10" id="is_msg_number">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[is_msg_number]" <in value="0" name="config['is_msg_number']">checked="checked"</in>>关闭</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[is_msg_number]" <in value="1" name="config['is_msg_number']">checked="checked"</in>>开启</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-msg_number" class="col-sm-2 control-label">未关注可发送消息条数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-msg_number"
+                                       name="options[msg_number]" value="{$config.msg_number|default='5'}">
+                                <p class="help-block">未关注用户可发送消息条数(整数)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-is_auth" class="col-sm-2 control-label">视频审核开关</label>
+                            <div class="col-md-6 col-sm-10" id="is_video_audit">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[is_video_audit]" <in value="0" name="config['is_video_audit']">checked="checked"</in>>关闭</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[is_video_audit]" <in value="1" name="config['is_video_audit']">checked="checked"</in>>开启</label>
+                                <p class="help-block">视频审核开关关闭，推送配置->推送开关开启，用户发布视频时,粉丝会收到发布视频的推送消息</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-is_auth" class="col-sm-2 control-label">系统功能概述</label>
+                            <div class="col-md-6 col-sm-10">
+                                <p class="help-block">1、系统中认证权限最高，只要认证限制打开,非认证用户不可发布视频、不可开播</p>
+                                <p class="help-block">2、用户开播跟用户是否为vip无关，只要用户达到直播配置中的发布视频数和粉丝数就可开播</p>
+                                <p class="help-block">3、推送开启后，基本设置->视频审核开关关闭，用户发布视频时,粉丝会收到发布视频的推送消息</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-family_switch" class="col-sm-2 control-label">家族控制</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[family_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['family_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-family_member_divide_switch" class="col-sm-2 control-label">家族长修改成员分成比例是否管理员审核</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[family_member_divide_switch]">
+                                    <option value="0">否</option>
+                                    <option value="1" <eq name="config['family_member_divide_switch']" value="1">selected</eq>>是</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-service_switch" class="col-sm-2 control-label">客服</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[service_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['service_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-service_url" class="col-sm-2 control-label">客服链接</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-service_url"
+                                       name="options[service_url]" value="{$config.service_url|default=''}">
+<!--                                       <p class="help-block">注册链接：http://www.53kf.com/reg/index?yx_from=210260</p>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="1">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="B">
+                        <div class="form-group">
+                            <label for="input-reg_reward" class="col-sm-2 control-label">注册奖励</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-reg_reward"
+                                       name="options[reg_reward]" value="{$config.reg_reward|default=''}">
+                                       <p class="help-block">新用户注册奖励（整数）</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-bonus_switch" class="col-sm-2 control-label">登录奖励开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[bonus_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['bonus_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+
+<!--                        <div class="form-group">-->
+<!--                            <label for="input-login_wx_appid" class="col-sm-2 control-label">微信公众平台Appid</label>-->
+<!--                            <div class="col-md-6 col-sm-10">-->
+<!--                                <input type="text" class="form-control" id="input-login_wx_appid" name="options[login_wx_appid]" value="{$config['login_wx_appid']|default=''}">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="input-login_wx_appsecret" class="col-sm-2 control-label">微信公众平台AppSecret</label>-->
+<!--                            <div class="col-md-6 col-sm-10">-->
+<!--                                <input type="text" class="form-control" id="input-login_wx_appsecret" name="options[login_wx_appsecret]" value="{$config['login_wx_appsecret']|default=''}"> -->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <!-- <div class="form-group">
+                            <label for="input-ihuyi_account" class="col-sm-2 control-label">互亿无线APIID</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-ihuyi_account" name="options[ihuyi_account]" value="{$config['ihuyi_account']|default=''}"> 短信验证码   http://www.ihuyi.com/  互亿无线后台-》验证码、短信通知-》账号及签名->APIID
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-ihuyi_ps" class="col-sm-2 control-label">互亿无线key</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-ihuyi_ps" name="options[ihuyi_ps]" value="{$config['ihuyi_ps']|default=''}">  短信验证码 互亿无线后台-》验证码、短信通知-》账号及签名->APIKEY
+                            </div>
+                        </div> -->
+                        
+                        <div class="form-group">
+                            <label for="input-sendcode_switch" class="col-sm-2 control-label">短信验证码开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[sendcode_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['sendcode_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                                <p class="help-block">短信验证码开关,关闭后不再发送真实验证码，采用默认验证码123456</p>
+                            </div>
+                        </div>
+                       
+						
+                        <div class="form-group">
+                            <label for="input-typecode_switch" class="col-sm-2 control-label">短信接口平台</label>
+                            <div class="col-md-6 col-sm-10" id="duanxin">
+                                <label class="radio-inline"><input type="radio" value="1" name="options[typecode_switch]" <in value="1" name="config['typecode_switch']">checked="checked"</in>>阿里云</label>
+                                <label class="radio-inline"><input type="radio" value="2" name="options[typecode_switch]" <in value="2" name="config['typecode_switch']">checked="checked"</in>>容联云</label>
+                            </div>
+                        </div>
+						
+                        <div class=" code_bd <neq name='config.typecode_switch' value='1'>codehide</neq>" id="typecode_switch_1">
+                            <div class="form-group">
+								<label for="input-aly_keydi" class="col-sm-2 control-label">阿里云AccessKey ID</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-aly_keydi" name="options[aly_keydi]" value="{$config['aly_keydi']|default=''}">  阿里云控制台==》云通信-》短信服务==》 AccessKey ID 
+								</div>
+							</div>
+
+							<div class="form-group">							
+								<label for="input-aly_secret" class="col-sm-2 control-label">阿里云AccessKey Secret</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-aly_secret" name="options[aly_secret]" value="{$config['aly_secret']|default=''}">  阿里云控制台==》云通信-》短信服务==》 AccessKey Secret 
+								</div>
+							</div>
+
+                            <div class="form-group">
+                                <label for="input-areacode_switch" class="col-sm-2 control-label">阿里云短信发送区域</label>
+                                <div class="col-md-6 col-sm-10" id="areacode_switch">
+                                    <label class="radio-inline"><input type="radio" value="1" name="options[areacode_switch]" <in value="1" name="config['areacode_switch']">checked="checked"</in>>中国大陆</label>
+                                    <label class="radio-inline"><input type="radio" value="2" name="options[areacode_switch]" <in value="2" name="config['areacode_switch']">checked="checked"</in>>港澳台/国际</label>
+                                    <label class="radio-inline"><input type="radio" value="3" name="options[areacode_switch]" <in value="3" name="config['areacode_switch']">checked="checked"</in>>全球</label>
+                                    <p class="help-block">如果选择全球,国内、国际/港澳台等信息都需要配置</p>
+                                </div>
+                            </div>
+
+							<div class="form-group">
+								<label for="input-aly_signName" class="col-sm-2 control-label">国内短信签名</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-aly_signName" name="options[aly_signName]" value="{$config['aly_signName']|default=''}">  阿里云控制台==》云通信-》短信服务==》国内消息==》 短信签名
+								</div>
+							</div>
+
+							<div class="form-group">							
+								<label for="input-aly_templateCode" class="col-sm-2 control-label">国内短信模板ID</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-aly_templateCode" name="options[aly_templateCode]" value="{$config['aly_templateCode']|default=''}">  阿里云控制台==》云通信-》国内消息==》短信服务==》 短信模板ID
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="input-aly_signName" class="col-sm-2 control-label">国际/港澳台短信签名</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-int_aly_signName" name="options[int_aly_signName]" value="{$config['int_aly_signName']|default=''}">  阿里云控制台==》云通信-》短信服务==》国际/港澳台消息==》 短信签名
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="input-aly_templateCode" class="col-sm-2 control-label">国际/港澳台短信模板ID</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-int_aly_templateCode" name="options[int_aly_templateCode]" value="{$config['int_aly_templateCode']|default=''}">  阿里云控制台==》云通信-》短信服务==》国际/港澳台消息==》 短信模板ID
+								</div>
+							</div>
+                        
+                        </div>
+				
+						<div class=" code_bd <neq name='config.typecode_switch' value='2'>codehide</neq>" id="typecode_switch_2">
+							<div class="form-group">
+								<label for="input-ccp_sid" class="col-sm-2 control-label">容联云ACCOUNT SID</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-ccp_sid" name="options[ccp_sid]" value="{$config['ccp_sid']|default=''}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-ccp_token" class="col-sm-2 control-label">容联云AUTH TOKEN</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-ccp_token" name="options[ccp_token]" value="{$config['ccp_token']|default=''}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-ccp_appid" class="col-sm-2 control-label">容联云应用APPID</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-ccp_appid" name="options[ccp_appid]" value="{$config['ccp_appid']|default=''}"> 
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-ccp_tempid" class="col-sm-2 control-label">容联云短信模板ID</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-ccp_tempid" name="options[ccp_tempid]" value="{$config['ccp_tempid']|default=''}"> 
+								</div>
+							</div>
+                        </div>
+                        
+                        
+                        
+                        <div class="form-group">
+                            <label for="input-iplimit_switch" class="col-sm-2 control-label">短信验证码IP限制开关</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[iplimit_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['iplimit_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-iplimit_times" class="col-sm-2 control-label">短信验证码IP限制次数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-iplimit_times" name="options[iplimit_times]" value="{$config['iplimit_times']|default=''}"> 
+                                <p class="help-block">同一IP每天可以发送验证码的最大次数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="C">
+<!--                        <div class="form-group">-->
+<!--                            <label for="input-auth_islimit" class="col-sm-2 control-label">认证限制</label>-->
+<!--                            <div class="col-md-6 col-sm-10">-->
+<!--								<select class="form-control" name="options[auth_islimit]">-->
+<!--                                    <option value="0">关闭</option>-->
+<!--                                    <option value="1">开启</option>-->
+<!--                                </select>-->
+<!--                                <p class="help-block">主播开播是否需要身份认证</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="form-group">
+                            <label for="input-live_video_number" class="col-sm-2 control-label">进行直播需发布视频达到数量</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-live_video_number" name="options[live_video_number]" value="{$config['live_video_number']|default='10'}">
+                                <p class="help-block">发布视频(审核通过且未下架)达到该数量可进行直播,0表示不限制(整数)</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-live_fans_number" class="col-sm-2 control-label">进行直播需粉丝达到该数量</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-live_fans_number" name="options[live_fans_number]" value="{$config['live_fans_number']|default='10'}">
+                                <p class="help-block">粉丝达到该数量可进行直播,0表示不限制(整数)粉</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-level_islimit" class="col-sm-2 control-label">直播等级控制</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[level_islimit]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['level_islimit']" value="1">selected</eq>>开启</option>
+                                </select>
+                                <p class="help-block">直播等级控制是否开启</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-level_limit" class="col-sm-2 control-label">直播限制等级</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-level_limit" name="options[level_limit]" value="{$config['level_limit']|default=''}"> 
+                                <p class="help-block">直播等级限制开启时，最低开播等级（用户等级）</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-speak_limit" class="col-sm-2 control-label">发言等级限制</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-speak_limit" name="options[speak_limit]" value="{$config['speak_limit']|default=''}">
+                                <p class="help-block"> 0表示无限制</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-barrage_limit" class="col-sm-2 control-label">弹幕等级限制</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-barrage_limit" name="options[barrage_limit]" value="{$config['barrage_limit']|default=''}"> <p class="help-block">0表示无限制</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-barrage_fee" class="col-sm-2 control-label">弹幕费用</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-barrage_fee" name="options[barrage_fee]" value="{$config['barrage_fee']|default=''}"> 
+                                <p class="help-block">每条弹幕的价格（整数）</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-userlist_time" class="col-sm-2 control-label">用户列表请求间隔(秒)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-userlist_time" name="options[userlist_time]" value="{$config['userlist_time']|default=''}"> <p class="help-block">直播间用户列表刷新间隔时间  注：不小于5s</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-mic_limit" class="col-sm-2 control-label">连麦等级限制</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-mic_limit" name="options[mic_limit]" value="{$config['mic_limit']|default=''}"> 
+                               <p class="help-block"> 0表示无限制</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-chatserver" class="col-sm-2 control-label">聊天服务器带端口</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-chatserver" name="options[chatserver]" value="{$config['chatserver']|default=''}"> 
+                               <p class="help-block"> 格式：http://域名(:端口) 或者 http://IP(:端口)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-live_sdk" class="col-sm-2 control-label">模式选择</label>
+                            <div class="col-md-6 col-sm-10" id="sdk">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[live_sdk]" <in value="0" name="config['live_sdk']">checked="checked"</in>>直播模式</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[live_sdk]" <in value="1" name="config['live_sdk']">checked="checked"</in>>直播+连麦模式</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-cdn_switch" class="col-sm-2 control-label">CDN</label>
+                            <div class="col-md-6 col-sm-10" id="cdn">
+<!--                                <label class="radio-inline"><input type="radio" value="1" name="options[cdn_switch]" <in value="1" name="config['cdn_switch']">checked="checked"</in>  <in value="1" name="config['live_sdk']">disabled</in>>阿里云</label>-->
+                                <label class="radio-inline"><input type="radio" value="2" name="options[cdn_switch]" <in value="2" name="config['cdn_switch']">checked="checked"</in>>腾讯云</label>
+<!--                                <label class="radio-inline"><input type="radio" value="3" name="options[cdn_switch]" <in value="3" name="config['cdn_switch']">checked="checked"</in>  <in value="1" name="config['live_sdk']">disabled</in>>七牛云</label>-->
+<!--                                <label class="radio-inline"><input type="radio" value="4" name="options[cdn_switch]" <in value="4" name="config['cdn_switch']">checked="checked"</in>  <in value="1" name="config['live_sdk']">disabled</in>>网宿</label>-->
+<!--                                <label class="radio-inline"><input type="radio" value="5" name="options[cdn_switch]" <in value="5" name="config['cdn_switch']">checked="checked"</in>  <in value="1" name="config['live_sdk']">disabled</in>>网易云</label>-->
+<!--                                <label class="radio-inline"><input type="radio" value="6" name="options[cdn_switch]" <in value="6" name="config['cdn_switch']">checked="checked"</in>  <in value="1" name="config['live_sdk']">disabled</in>>奥点云</label>-->
+                            </div>
+                        </div>
+
+                        <div class="cdn_bd <neq name='config.cdn_switch' value='1'>cdnhide</neq>" id="cdn_switch_1">
+                             <div class="form-group">
+                                <label for="input-push_url" class="col-sm-2 control-label">推流服务器地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-push_url" name="options[push_url]" value="{$config['push_url']|default=''}"> 
+                                    <p class="help-block">格式：域名(:端口) 或者 IP(:端口)</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-auth_key_push" class="col-sm-2 control-label">推流鉴权KEY</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-auth_key_push" name="options[auth_key_push]" value="{$config['auth_key_push']|default=''}"> 
+                                    <p class="help-block">推流鉴权KEY 留空表示不启用</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-auth_length_push" class="col-sm-2 control-label">推流鉴权有效时长</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-auth_length_push" name="options[auth_length_push]" value="{$config['auth_length_push']|default=''}"> 
+                                    <p class="help-block">推流鉴权有效时长（秒）</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-pull_url" class="col-sm-2 control-label">播流服务器地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-pull_url" name="options[pull_url]" value="{$config['pull_url']|default=''}"> 
+                                    <p class="help-block">格式：域名(:端口) 或者 IP(:端口)</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-auth_key_pull" class="col-sm-2 control-label">播流鉴权KEY</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-auth_key_pull" name="options[auth_key_pull]" value="{$config['auth_key_pull']|default=''}"> 
+                                    <p class="help-block">播流鉴权KEY 留空表示不启用</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-auth_length_pull" class="col-sm-2 control-label">播流鉴权有效时长</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-auth_length_pull" name="options[auth_length_pull]" value="{$config['auth_length_pull']|default=''}"> 
+                                    <p class="help-block">播流鉴权有效时长（秒）</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-aliy_key_id" class="col-sm-2 control-label">阿里云AccessKey ID</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-aliy_key_id" name="options[aliy_key_id]" value="{$config['aliy_key_id']|default=''}">
+                                    <p class="help-block"> 回放用</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-aliy_key_secret" class="col-sm-2 control-label">阿里云AccessKey Secret</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-aliy_key_secret" name="options[aliy_key_secret]" value="{$config['aliy_key_secret']|default=''}">
+                                    <p class="help-block"> 回放用</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cdn_bd <neq name='config.cdn_switch' value='2'>cdnhide</neq>" id="cdn_switch_2">
+                            <div class="form-group">
+                                <label for="input-tx_appid" class="col-sm-2 control-label">腾讯云直播appid</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_appid" name="options[tx_appid]" value="{$config['tx_appid']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_bizid" class="col-sm-2 control-label">腾讯云直播bizid</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_bizid" name="options[tx_bizid]" value="{$config['tx_bizid']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_push_key" class="col-sm-2 control-label">腾讯云推流防盗链Key</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_push_key" name="options[tx_push_key]" value="{$config['tx_push_key']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_acc_key" class="col-sm-2 control-label">腾讯云直播低延迟Key</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_acc_key" name="options[tx_acc_key]" value="{$config['tx_acc_key']|default=''}">
+                                    <p class="help-block">一般是 直播推流防盗链Key</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_api_key" class="col-sm-2 control-label">腾讯云直播推流鉴权key</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_api_key" name="options[tx_api_key]" value="{$config['tx_api_key']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_play_key" class="col-sm-2 control-label">腾讯云直播播流鉴权key</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_play_key" name="options[tx_play_key]" value="{$config['tx_play_key']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_play_time" class="col-sm-2 control-label">腾讯云直播播流鉴权时间(秒)</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_play_time" name="options[tx_play_time]" value="{$config['tx_play_time']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_play_key_switch" class="col-sm-2 control-label">是否开启腾讯云播流鉴权</label>
+                                <div class="col-md-6 col-sm-10" id="sdk">
+                                    <label class="radio-inline"><input type="radio" value="0" name="options[tx_play_key_switch]" <if condition="array_key_exists('tx_play_key_switch',$config) && $config['tx_play_key_switch'] eq '0'">checked="checked" </if>>关闭</label>
+                                    <label class="radio-inline"><input type="radio" value="1" name="options[tx_play_key_switch]" <if condition="array_key_exists('tx_play_key_switch',$config) && $config['tx_play_key_switch'] eq '1'">checked="checked" </if>>开启</label>
+                                    <p class="help-block">如果选择开启，请确保腾讯云-->云直播-->域名管理-->{$config['tx_pull']|default=''}-->管理-->访问控制-->鉴权配置 里的信息开启了配置,并保持腾讯云填写的鉴权key和鉴权时间与此处填写的一致,参考文档：<a href="https://cloud.tencent.com/document/product/267/32463" target="_blank">https://cloud.tencent.com/document/product/267/32463</a></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_push" class="col-sm-2 control-label">腾讯云直播推流域名</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_push" name="options[tx_push]" value="{$config['tx_push']|default=''}">
+                                    <p class="help-block"> 不带 http:// ,最后无 /</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-tx_pull" class="col-sm-2 control-label">腾讯云直播播流域名</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-tx_pull" name="options[tx_pull]" value="{$config['tx_pull']|default=''}">
+                                    <p class="help-block"> 不带 http:// ,最后无 /</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-txcloud_secret_id" class="col-sm-2 control-label">腾讯云Api密钥SecretId</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-txcloud_secret_id" name="options[txcloud_secret_id]" value="{$config['txcloud_secret_id']|default=''}">
+                                    <p class="help-block">腾讯云连麦混流时身份验证，只在直播+连麦模式时才需要配置，获取方式：腾讯云后台-->用户登录账号下拉菜单-->访问管理-->访问密钥-->API密钥管理</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-txcloud_secret_key" class="col-sm-2 control-label">腾讯云Api密钥SecretKey</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-txcloud_secret_key" name="options[txcloud_secret_key]" value="{$config['txcloud_secret_key']|default=''}">
+                                    <p class="help-block">腾讯云连麦混流时身份验证，只在直播+连麦模式时才需要配置，获取方式：腾讯云后台-->用户登录账号下拉菜单-->访问管理-->访问密钥-->API密钥管理</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="cdn_bd <neq name='config.cdn_switch' value='3'>cdnhide</neq>" id="cdn_switch_3">
+                            <div class="form-group">
+                                <label for="input-qn_ak" class="col-sm-2 control-label">七牛云AccessKey</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-qn_ak" name="options[qn_ak]" value="{$config['qn_ak']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-qn_sk" class="col-sm-2 control-label">七牛云SecretKey</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-qn_sk" name="options[qn_sk]" value="{$config['qn_sk']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-qn_hname" class="col-sm-2 control-label">七牛云直播空间名称</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-qn_hname" name="options[qn_hname]" value="{$config['qn_hname']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-qn_push" class="col-sm-2 control-label">七牛云推流地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-qn_push" name="options[qn_push]" value="{$config['qn_push']|default=''}"> 
+                                    <p class="help-block">七牛云直播云域名管理中RTMP推流域名</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-qn_pull" class="col-sm-2 control-label">七牛云播流地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-qn_pull" name="options[qn_pull]" value="{$config['qn_pull']|default=''}"> 
+                                    <p class="help-block">七牛云直播云域名管理中RTMP播流域名</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cdn_bd <neq name='config.cdn_switch' value='4'>cdnhide</neq>" id="cdn_switch_4">
+                            <div class="form-group">
+                                <label for="input-ws_push" class="col-sm-2 control-label">网宿推流地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-ws_push" name="options[ws_push]" value="{$config['ws_push']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-ws_pull" class="col-sm-2 control-label">网宿播流地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-ws_pull" name="options[ws_pull]" value="{$config['ws_pull']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-ws_apn" class="col-sm-2 control-label">网宿AppName</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-ws_apn" name="options[ws_apn]" value="{$config['ws_apn']|default=''}"> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cdn_bd <neq name='config.cdn_switch' value='5'>cdnhide</neq>" id="cdn_switch_5">
+                            <div class="form-group">
+                                <label for="input-wy_appkey" class="col-sm-2 control-label">网易cdn Appkey</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-wy_appkey" name="options[wy_appkey]" value="{$config['wy_appkey']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-wy_appsecret" class="col-sm-2 control-label">网易cdn AppSecret</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-wy_appsecret" name="options[wy_appsecret]" value="{$config['wy_appsecret']|default=''}"> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cdn_bd <neq name='config.cdn_switch' value='6'>cdnhide</neq>" id="cdn_switch_6">
+                            <div class="form-group">
+                                <label for="input-ady_push" class="col-sm-2 control-label">奥点云推流地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-ady_push" name="options[ady_push]" value="{$config['ady_push']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-ady_pull" class="col-sm-2 control-label">奥点云播流地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-ady_pull" name="options[ady_pull]" value="{$config['ady_pull']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-ady_hls_pull" class="col-sm-2 control-label">奥点云HLS播流地址</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-ady_hls_pull" name="options[ady_hls_pull]" value="{$config['ady_hls_pull']|default=''}"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-ady_apn" class="col-sm-2 control-label">奥点云AppName</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-ady_apn" name="options[ady_apn]" value="{$config['ady_apn']|default=''}"> 
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="D1">
+                        <div class="form-group">
+                            <label for="input-cash_rate" class="col-sm-2 control-label">普通{$name_votes}提现比例</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-cash_rate" name="options[cash_rate]" value="{$config['cash_rate']|default=''}">
+                                <p class="help-block">(整数)提现一元人民币需要的票数</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-cash_rate" class="col-sm-2 control-label">看视频奖励红包{$name_votes}提现比例</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-red_cash_rate" name="options[red_cash_rate]" value="{$config['red_cash_rate']|default=''}">
+                                <p class="help-block">(整数)提现一元人民币需要的票数</p>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label for="input-cash_take" class="col-sm-2 control-label">提现抽成(元)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-cash_take" name="options[cash_take]" value="{$config['cash_take']|default=''}">
+                                <p class="help-block">(%-整数)百分比<br/>说明: 当提现比例设置为100{$name_votes}等于1元时,提现抽成比例设置为10%,那么用户提现1000{$name_votes}时,通过提现比例转换为10元,平台在从10元的基础上抽成10%,用户最终提现到账金额为9元</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-cash_min" class="col-sm-2 control-label">提现最低额度（元）</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-cash_min" name="options[cash_min]" value="{$config['cash_min']|default=''}">
+                                <p class="help-block">可提现的最小额度，低于该额度无法提现</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-cash_start" class="col-sm-2 control-label">每月提现期</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-cash_start" name="options[cash_start]" value="{$config['cash_start']|default=''}" style="width:100px;display:inline-block;"> - 
+                                <input type="text" class="form-control" id="input-cash_end" name="options[cash_end]" value="{$config['cash_end']|default=''}" style="width:100px;display:inline-block;">
+                                <p class="help-block">每月提现期限，不在时间段无法提现</p> 
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-cash_max_times" class="col-sm-2 control-label">每月提现次数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-cash_max_times" name="options[cash_max_times]" value="{$config['cash_max_times']|default=''}">
+                                <p class="help-block">每月可提现最大次数，0表示不限制</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="D">
+                        <div class="form-group">
+                            <label for="input-cash_rate" class="col-sm-2 control-label">USDT提现比例</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-usdt_rate" name="options[usdt_rate]" value="{$config['usdt_rate']|default=''}">
+                                <p class="help-block">(整数)提现1的整数</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-cash_take" class="col-sm-2 control-label">提现抽成(元)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-usdt_take" name="options[usdt_take]" value="{$config['usdt_take']|default=''}">
+                                <p class="help-block">(%-整数)百分比<br/>说明: 当提现比例设置为100USDT等于1时,提现抽成比例设置为10%,平台在从10的基础上抽成10%,用户最终提现到账为9</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-cash_min" class="col-sm-2 control-label">提现最低额度（元）</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-usdt_min" name="options[usdt_min]" value="{$config['usdt_min']|default=''}">
+                                <p class="help-block">可提现的最小额度，低于该额度无法提现</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-cash_start" class="col-sm-2 control-label">每月提现期</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-usdt_start" name="options[usdt_start]" value="{$config['usdt_start']|default=''}" style="width:100px;display:inline-block;"> -
+                                <input type="text" class="form-control" id="input-usdt_end" name="options[usdt_end]" value="{$config['usdt_end']|default=''}" style="width:100px;display:inline-block;">
+                                <p class="help-block">每月提现期限，不在时间段无法提现</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-cash_max_times" class="col-sm-2 control-label">每月提现次数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-usdt_max_times" name="options[usdt_max_times]" value="{$config['usdt_max_times']|default=''}">
+                                <p class="help-block">每月可提现最大次数，0表示不限制</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="E">
+
+                        <div class="form-group">
+                            <label for="input-is_push" class="col-sm-2 control-label">推送开关</label>
+                            <div class="col-md-6 col-sm-10" id="recommended_video_display_methods">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[is_push]" <in value="0" name="config['is_push']">checked="checked"</in>>关闭</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[is_push]" <in value="1" name="config['is_push']">checked="checked"</in>>开启</label>
+
+                                <p class="help-block">关闭后用户间不可私信推送开启后，基本设置->视频审核开关关闭，用户发布视频时，粉丝会收到发布视频的推送消息推送开启后，主播开播时，粉丝会收到开播推送信息</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-letter_switch" class="col-sm-2 control-label">私信开关</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[letter_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['letter_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                                <p class="help-block">关闭后用户间不可私信</p>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">推送服务</label>
+                            <div class="col-md-6 col-sm-10" id="tuisong">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[typepush_switch]" <in value="0" name="config['typepush_switch']">checked="checked"</in>>极光推送</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[typepush_switch]" <in value="1" name="config['typepush_switch']">checked="checked"</in>>腾讯IM推送服务</label>
+                            </div>
+                        </div>
+
+                        <div class=" push_bd <neq name='config.typepush_switch' value='0'>codehide</neq>" id="typepush_switch_0">
+                            <div class="form-group">
+                                <label for="input-jpush_sandbox" class="col-sm-2 control-label">极光推送模式</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <select class="form-control" name="options[jpush_sandbox]">
+                                        <option value="0">开发</option>
+                                        <option value="1" <eq name="config['jpush_sandbox']" value="1">selected</eq>>生产</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-jpush_key" class="col-sm-2 control-label">极光推送APP_KEY</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-jpush_key" name="options[jpush_key]" value="{$config['jpush_key']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-jpush_secret" class="col-sm-2 control-label">极光推送master_secret</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="input-jpush_secret" name="options[jpush_secret]" value="{$config['jpush_secret']|default=''}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-tencentIM_area" class="col-sm-2 control-label">腾讯云IM APPID所在国家/地区</label>
+                            <div class="col-md-6 col-sm-10">
+                                <label class="radio-inline"><input type="radio" value="china" name="options[tencentIM_area]" <in value="china" name="config['tencentIM_area']">checked="checked"</in>>中国</label>
+                                <label class="radio-inline"><input type="radio" value="singapore" name="options[tencentIM_area]" <in value="singapore" name="config['tencentIM_area']">checked="checked"</in>>新加坡</label>
+                                <label class="radio-inline"><input type="radio" value="seoul" name="options[tencentIM_area]" <in value="seoul" name="config['tencentIM_area']">checked="checked"</in>>首尔</label>
+                                <label class="radio-inline"><input type="radio" value="frankfurt" name="options[tencentIM_area]" <in value="frankfurt" name="config['tencentIM_area']">checked="checked"</in>>法兰克福</label>
+                                <label class="radio-inline"><input type="radio" value="bombay" name="options[tencentIM_area]" <in value="bombay" name="config['tencentIM_area']">checked="checked"</in>>孟买</label>
+                                <label class="radio-inline"><input type="radio" value="silicon-valley" name="options[tencentIM_area]" <in value="silicon-valley" name="config['tencentIM_area']">checked="checked"</in>>硅谷</label>
+                                <label class="radio-inline"><input type="radio" value="jakarta" name="options[tencentIM_area]" <in value="jakarta" name="config['tencentIM_area']">checked="checked"</in>>雅加达</label>
+
+                                <p class="help-block">确保配置同腾讯云IM控制台创建的应用区域一致，否则推送将失败</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-tencentIM_appid" class="col-sm-2 control-label">腾讯云IM SDKAppID</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-tencentIM_appid" name="options[tencentIM_appid]" value="{$config['tencentIM_appid']|default=''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-tencentIM_appkey" class="col-sm-2 control-label">腾讯云IM 密钥</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-tencentIM_appkey" name="options[tencentIM_appkey]" value="{$config['tencentIM_appkey']|default=''}">
+                                <p class="help-block">请务必登录腾讯云控制台==>产品==>即时通信IM==>帐号管理==>新建帐号中添加普通账号goodsorder_admin。否则IM功能将无法使用</p>
+<!--                                dsp_comment、dsp_at、dsp_like、dsp_fans、/-->
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="F">
+
+                        <div class="form-group">
+                            <label for="input-shop_balance_switch" class="col-sm-2 control-label">店铺余额支付APP开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[shop_balance_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['shop_balance_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="input-paidprogram_balance_switch" class="col-sm-2 control-label">付费内容余额支付APP开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[paidprogram_balance_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['paidprogram_balance_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="G">
+                        <div class="form-group">
+                            <label for="input-agent_switch" class="col-sm-2 control-label">邀请开关</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[agent_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['agent_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-agent_must" class="col-sm-2 control-label">邀请码必填</label>
+                            <div class="col-md-6 col-sm-10">
+                                <label class="radio-inline"><input type="radio" name="options[agent_must]" value="0" <eq name="config['agent_must']" value="0">checked</eq>>关闭</label>
+                                <label class="radio-inline"><input type="radio" name="options[agent_must]" value="1" <eq name="config['agent_must']" value="1">checked</eq> >开启</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-distribut1" class="col-sm-2 control-label">一级分成</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-distribut1" name="options[distribut1]" value="{$config['distribut1']|default=''}">%
+                                <p class="help-block">一级分成(整数) 注：比例小于40%</p>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="H">
+                        <div class="form-group">
+                            <label for="input-um_apikey" class="col-sm-2 control-label">友盟OpenApi-apiKey</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-um_apikey" name="options[um_apikey]" value="{$config['um_apikey']|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-um_apisecurity" class="col-sm-2 control-label">友盟OpenApi-apiSecurity</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-um_apisecurity" name="options[um_apisecurity]" value="{$config['um_apisecurity']|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-um_appkey_android" class="col-sm-2 control-label">友盟Android应用-appkey</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-um_appkey_android" name="options[um_appkey_android]" value="{$config['um_appkey_android']|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-um_appkey_ios" class="col-sm-2 control-label">友盟IOS应用-appkey</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-um_appkey_ios" name="options[um_appkey_ios]" value="{$config['um_appkey_ios']|default=''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="I">
+                        
+                        <div class="form-group">
+                            <label for="input-video_audit_switch" class="col-sm-2 control-label">视频审核开关</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[video_audit_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['video_audit_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+								<p class="help-block">当开关关闭时用户发布视频则无需审核</p>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <label for="input-video_watermark" class="col-sm-2 control-label">视频水印图片</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="hidden" name="options[video_watermark]" id="thumbnail2" value="{$config['video_watermark']|default=''}">
+                                <a href="javascript:uploadOneImage('图片上传','#thumbnail2');">
+                                    <if condition="empty($config.video_watermark)">
+                                    <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail2-preview"
+                                             style="cursor: pointer;max-width:150px;max-height:150px;"/>
+                                    <else/>
+                                    <img src="{:cmf_get_image_preview_url($config.video_watermark)}"
+                                         id="thumbnail2-preview"
+                                         style="cursor: pointer;max-width:150px;max-height:150px;"/>
+                                    </if>
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail2" value="取消图片">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="J">
+
+                        <div class="form-group">
+                            <label for="input-shop_system_name" class="col-sm-2 control-label">系统店铺名称</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_system_name" name="options[shop_system_name]" value="{$config['shop_system_name']|default=''}">
+                                <p class="help-block">用于个人中心店铺显示和店铺个人中心顶部显示</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-shop_bond" class="col-sm-2 control-label">申请店铺需要的保证金({$name_coin})</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_bond" name="options[shop_bond]" value="{$config['shop_bond']|default=''}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-show_switch" class="col-sm-2 control-label">店铺审核</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[show_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['show_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label for="input-show_switch" class="col-sm-2 control-label">店铺经营类目审核</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[show_category_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['show_category_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-shoporder_percent" class="col-sm-2 control-label">店铺订单默认抽成比例</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shoporder_percent" name="options[shoporder_percent]" value="{$config['shoporder_percent']|default='0'}">%
+                                <p class="help-block">0-100之间的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-goods_switch" class="col-sm-2 control-label">商品审核</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[goods_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['goods_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_certificate_desc" class="col-sm-2 control-label">店铺资质说明</label>
+                            <div class="col-md-6 col-sm-10">
+                                <textarea class="form-control" id="input-shop_certificate_desc" name="options[shop_certificate_desc]" >{$config.shop_certificate_desc|default=''}</textarea>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_payment_time" class="col-sm-2 control-label">店铺付款失效时间(分钟)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_payment_time" name="options[shop_payment_time]" value="{$config['shop_payment_time']|default='0'}">
+                                <p class="help-block">大于0的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_shipment_time" class="col-sm-2 control-label">店铺发货失效时间(天)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_shipment_time" name="options[shop_shipment_time]" value="{$config['shop_shipment_time']|default='0'}">
+                                <p class="help-block">大于0的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_receive_time" class="col-sm-2 control-label">店铺自动确认收货时间(天)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_receive_time" name="options[shop_receive_time]" value="{$config['shop_receive_time']|default='0'}">
+                                <p class="help-block">大于0的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_refund_time" class="col-sm-2 control-label">买家发起退款,卖家不做处理自动退款时间(天)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_refund_time" name="options[shop_refund_time]" value="{$config['shop_refund_time']|default='0'}">
+                                <p class="help-block">大于0的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_refund_finish_time" class="col-sm-2 control-label">卖家拒绝买家退款后,买家不做任何操作,订单自动进入退款前状态的时间(天)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_refund_finish_time" name="options[shop_refund_finish_time]" value="{$config['shop_refund_finish_time']|default='0'}">
+                                <p class="help-block">大于0的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_receive_refund_time" class="col-sm-2 control-label">订单确认收货后,支持退货退款的时间限制(天)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_receive_refund_time" name="options[shop_receive_refund_time]" value="{$config['shop_receive_refund_time']|default='0'}">
+                                <p class="help-block">大于0的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shop_settlement_time" class="col-sm-2 control-label">订单确认收货后,货款自动打到卖家的时间(天)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-shop_settlement_time" name="options[shop_settlement_time]" value="{$config['shop_settlement_time']|default='0'}">
+                                <p class="help-block">大于0的整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-balance_cash_min" class="col-sm-2 control-label">余额提现最低额度（元）</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-balance_cash_min" name="options[balance_cash_min]" value="{$config['balance_cash_min']|default=''}">
+                                <p class="help-block">可提现的最小额度，低于该额度无法提现</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-balance_cash_start" class="col-sm-2 control-label">每月提现期限</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-balance_cash_start" name="options[balance_cash_start]" value="{$config['balance_cash_start']|default=''}" style="width:100px;display:inline-block;"> - 
+                                <input type="text" class="form-control" id="input-balance_cash_end" name="options[balance_cash_end]" value="{$config['balance_cash_end']|default=''}" style="width:100px;display:inline-block;">
+                                <p class="help-block">每月提现期限，不在时间段无法提现 </p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-balance_cash_max_times" class="col-sm-2 control-label">每月提现次数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-balance_cash_max_times" name="options[balance_cash_max_times]" value="{$config['balance_cash_max_times']|default=''}">
+                                <p class="help-block">每月可提现最大次数，0表示不限制</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-shoporder_percent" class="col-sm-2 control-label">店铺机制说明</label>
+                            <div class="col-md-6 col-sm-10">
+                                <p class="help-block">1:用户下单后{$config['shop_payment_time']|default='0'}分钟不付款，系统自动将订单关闭</p>
+                                <p class="help-block">2:买家付款成功后，卖家超过{$config['shop_shipment_time']|default='0'}天未发货，系统自动关闭,商品所花费金额退还到买家账户余额中</p>
+                                <p class="help-block">3:商家发货后，买家超过{$config['shop_receive_time']|default='0'}天未确认收货，系统自动确认收货，商品所花费金额自动转到卖家账户余额中</p>
+                                <p class="help-block">4:买家发起退款后,卖家超过{$config['shop_refund_time']|default='0'}天未做处理，系统自动退款，商品所花费金额自动转到买家账户余额中</p>
+                                <p class="help-block">5:卖家拒绝买家退款后,买家不做任何操作,超过{$config['shop_refund_finish_time']|default='0'}天退款处理 系统自动完成，订单自动进入退款前状态</p>
+                                <p class="help-block">6:买家确认收货后,{$config['shop_receive_refund_time']|default='0'}天内可以发起退货退款</p>
+                                <p class="help-block">7:买家确认收货后,超过{$config['shop_settlement_time']|default='0'}天系统自动结算，将货款转给卖家</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="K">
+                        <div class="form-group">
+                            <label for="input-dynamic_auth" class="col-sm-2 control-label">动态认证开关</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[dynamic_auth]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['dynamic_auth']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-dynamic_switch" class="col-sm-2 control-label">动态审核</label>
+                            <div class="col-md-6 col-sm-10">
+								<select class="form-control" name="options[dynamic_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['dynamic_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-comment_weight" class="col-sm-2 control-label">评论权重值</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-comment_weight" name="options[comment_weight]" value="{$config['comment_weight']|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-like_weight" class="col-sm-2 control-label">点赞权重值</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-like_weight" name="options[like_weight]" value="{$config['like_weight']|default=''}">
+                            </div>
+                        </div>
+                        
+                        
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="L">
+                        <div class="form-group">
+                            <label for="input-dynamic_auth" class="col-sm-2 control-label"></label>
+                            <div class="col-md-6 col-sm-10">
+								<span style="color:#ff0000">
+                                    系统干预：人为控制游戏结果，保证平台收益<br>
+                                    当进行系统干预时<br>
+                                    普通游戏：总是下注金额最少的位置获胜<br>
+                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上庄游戏：庄家全胜<br> -->
+                                    不进行系统干预时：游戏结果完全随机
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-shop_fans" class="col-sm-2 control-label">游戏开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <php>
+									$game1='1';
+									$game3='3';
+									$game4='4';
+								</php>
+								<label class="checkbox-inline"><input type="checkbox" value="1" name="game_switch[]" <in value="$config['game_switch']" name="game1">checked="checked"</in>>智勇三张</label>
+								<label class="checkbox-inline"><input type="checkbox" value="3" name="game_switch[]" <in value="$config['game_switch']" name="game3">checked="checked"</in>>转盘</label>
+								<label class="checkbox-inline" style="display:none;"><input type="checkbox" value="4" name="game_switch[]" <in value="$config['game_switch']" name="game4">checked="checked"</in>>开心牛仔</label>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group" style="display:none;">
+                            <label for="input-game_banker_limit" class="col-sm-2 control-label">上庄限制</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-game_banker_limit" name="options[game_banker_limit]" value="{$config['game_banker_limit']|default=''}"> 上庄游戏 申请上庄的用户拥有的{$name_coin}数的最低值
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-game_odds" class="col-sm-2 control-label">普通游戏赔率</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-game_odds" name="options[game_odds]" value="{$config['game_odds']|default=''}">% 
+                                <p class="help-block">游戏结果不进行系统干预的概率，0 表示 完全进行 系统干预，平台绝对不会赔，100 表示完全随机</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="display:none;">
+                            <label for="input-game_odds_p" class="col-sm-2 control-label">系统坐庄游戏赔率</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-game_odds_p" name="options[game_odds_p]" value="{$config['game_odds_p']|default=''}">% 
+                                <p class="help-block">游戏结果不进行系统干预的概率 0 表示 完全进行 系统干预，庄家绝对不会赔，100 表示完全随机</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="display:none;">
+                            <label for="input-game_odds_u" class="col-sm-2 control-label">用户坐庄游戏赔率</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-game_odds_u" name="options[game_odds_u]" value="{$config['game_odds_u']|default=''}">% 
+                                <p class="help-block">游戏结果不进行系统干预的概率 0 表示 完全进行 系统干预，庄家绝对不会赔，100 表示完全随机</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-game_pump" class="col-sm-2 control-label">游戏抽水</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-game_pump" name="options[game_pump]" value="{$config['game_pump']|default=''}">% 
+                                <p class="help-block">用户获胜后，去除本金部分的抽成比例 </p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-turntable_switch" class="col-sm-2 control-label">直播间大转盘开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[turntable_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['turntable_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="M">
+                        
+                        <div class="form-group">
+                            <label for="input-express_type" class="col-sm-2 control-label">物流模式</label>
+                            <div class="col-md-6 col-sm-10">
+                                <label class="radio-inline"><input type="radio" name="options[express_type]" value="0" <eq name="config['express_type']" value="0">checked</eq> >开发版</label>
+                                <label class="radio-inline"><input type="radio" name="options[express_type]" value="1" <eq name="config['express_type']" value="1">checked</eq> >正式版</label>
+                                <p class="help-block">开发版仅适用于程序调试,每天查询最多500次,且只支持申通、圆通、百世、天天</p>
+                                <p class="help-block">正式运营后,请购买三方套餐,将正式版电商EBusinessID和AppKey填写,并且将此处的物流模式切换为正式版；<a href="http://www.kdniao.com" target="_blank">立即购买</a></p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-express_id_dev" class="col-sm-2 control-label">用户ID（开发版）</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-express_id_dev" name="options[express_id_dev]" value="{$config['express_id_dev']|default=''}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-express_appkey_dev" class="col-sm-2 control-label">Api Key（开发版）</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-express_appkey_dev" name="options[express_appkey_dev]" value="{$config['express_appkey_dev']|default=''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-express_id" class="col-sm-2 control-label">用户ID (正式版)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-express_id" name="options[express_id]" value="{$config['express_id']|default=''}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-express_appkey" class="col-sm-2 control-label">Api Key (正式版)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-express_appkey" name="options[express_appkey]" value="{$config['express_appkey']|default=''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="N">
+                        
+                        <div class="form-group">
+                            <label for="input-watch_live_term" class="col-sm-2 control-label">视频点赞</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(个)：<input type="text" class="form-control" id="input-like_video_term" name="options[like_video_term]" value="{$config['like_video_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-like_video_coin" name="options[like_video_coin]" value="{$config['like_video_coin']|default='0'}">
+								
+								<br />注：切记!填写的条件和奖励一定要填写整数;例: 视频点赞达到X个
+                            </div>
+							
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-watch_live_term" class="col-sm-2 control-label">视频评论</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(个)：<input type="text" class="form-control" id="input-comment_video_term" name="options[comment_video_term]" value="{$config['comment_video_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-comment_video_coin" name="options[comment_video_coin]" value="{$config['comment_video_coin']|default='0'}">
+
+								<br />注：切记!填写的条件和奖励一定要填写整数;例: 视频点评论达到X个
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-watch_live_term" class="col-sm-2 control-label">关注用户</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(个)：<input type="text" class="form-control" id="input-attention_user_term" name="options[attention_user_term]" value="{$config['attention_user_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-attention_user_coin" name="options[attention_user_coin]" value="{$config['attention_user_coin']|default='0'}">
+
+								<br />注：切记!填写的条件和奖励一定要填写整数;例: 关注用户达到X个
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-watch_live_term" class="col-sm-2 control-label">视频收藏</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(个)：<input type="text" class="form-control" id="input-collect_user_term" name="options[collect_user_term]" value="{$config['collect_user_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-collect_user_coin" name="options[collect_user_coin]" value="{$config['collect_user_coin']|default='0'}">
+
+                                <br />注：切记!填写的条件和奖励一定要填写整数;例: 收藏视频达到X个
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-watch_live_term" class="col-sm-2 control-label">观看直播</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(分钟)：<input type="text" class="form-control" id="input-watch_live_term" name="options[watch_live_term]" value="{$config['watch_live_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-watch_live_coin" name="options[watch_live_coin]" value="{$config['watch_live_coin']|default='0'}">
+
+								<br />注：切记!填写的条件和奖励一定要填写整数;例: 当用户观看直播时长达到X分钟时奖励X{$name_coin}
+                            </div>
+
+                        </div>
+                       
+						
+						 <div class="form-group">
+                            <label for="input-watch_video_term" class="col-sm-2 control-label">观看视频</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(分钟)：<input type="text" class="form-control" id="input-watch_video_term" name="options[watch_video_term]" value="{$config['watch_video_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-watch_video_coin" name="options[watch_video_coin]" value="{$config['watch_video_coin']|default='0'}">
+								<br />注：切记!填写的条件和奖励一定要填写整数;例: 当用户观看视频时长达到X分钟时奖励X{$name_coin}
+                            </div>
+							
+                        </div>
+						
+						<div class="form-group">
+                            <label for="input-open_live_term" class="col-sm-2 control-label">直播奖励</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(小时)：<input type="text" class="form-control" id="input-open_live_term" name="options[open_live_term]" value="{$config['open_live_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-open_live_coin" name="options[open_live_coin]" value="{$config['open_live_coin']|default='0'}">
+								<br />注：切记!填写的条件和奖励一定要填写整数;例: 当主播每天开播满足X小时可获得奖励X{$name_coin}
+                            </div>
+							
+                        </div>
+						
+						
+						<div class="form-group">
+                            <label for="input-award_live_term" class="col-sm-2 control-label">打赏奖励</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件({$name_coin})：<input type="text" class="form-control" id="input-award_live_term" name="options[award_live_term]" value="{$config['award_live_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-award_live_coin" name="options[award_live_coin]" value="{$config['award_live_coin']|default='0'}">
+								<br />注：切记!填写的条件和奖励一定要填写整数;例: 当用户打赏主播超过X{$name_coin}，奖励X{$name_coin}
+                            </div>
+							
+                        </div>
+						
+						<div class="form-group">
+                            <label for="input-share_live_term" class="col-sm-2 control-label">分享邀请奖励</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(次)：<input type="text" class="form-control" id="input-share_agent_term" name="options[share_agent_term]" value="{$config['share_agent_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-share_agent_coin" name="options[share_agent_coin]" value="{$config['share_agent_coin']|default='0'}">
+								<br />注：切记!填写的条件和奖励一定要填写整数;例:用户每日分享邀请X次可获得奖励X{$name_coin}
+                            </div>
+							
+                        </div>
+
+						<div class="form-group">
+                            <label for="input-share_live_term" class="col-sm-2 control-label">分享视频奖励</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(次)：<input type="text" class="form-control" id="input-share_video_term" name="options[share_video_term]" value="{$config['share_video_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-share_video_coin" name="options[share_video_coin]" value="{$config['share_video_coin']|default='0'}">
+								<br />注：切记!填写的条件和奖励一定要填写整数;例:用户每日分享直播间X次可获得奖励X{$name_coin}
+                            </div>
+
+                        </div>
+
+						<div class="form-group">
+                            <label for="input-share_live_term" class="col-sm-2 control-label">分享直播奖励</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(次)：<input type="text" class="form-control" id="input-share_live_term" name="options[share_live_term]" value="{$config['share_live_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-share_live_coin" name="options[share_live_coin]" value="{$config['share_live_coin']|default='0'}">
+								<br />注：切记!填写的条件和奖励一定要填写整数;例:用户每日分享直播间X次可获得奖励X{$name_coin}
+                            </div>
+
+                        </div>
+
+						<div class="form-group">
+                            <label for="input-share_live_term" class="col-sm-2 control-label">下载奖励</label>
+                            <div class="col-md-6 col-sm-10"><br />
+                                条件(次)：<input type="text" class="form-control" id="input-download_term" name="options[download_term]" value="{$config['download_term']|default='0'}"><br />
+                                奖励({$name_coin})：<input type="text" class="form-control" id="input-download_coin" name="options[download_coin]" value="{$config['download_coin']|default='0'}">
+								<br />注：切记!填写的条件和奖励一定要填写整数;例:下载一次奖励120
+                            </div>
+
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="O">
+
+
+                        <div class="form-group">
+                            <label for="input-recommended_video_display_methods" class="col-sm-2 control-label">推荐视频显示方式</label>
+                            <div class="col-md-6 col-sm-10" id="input-recommended_video_display_methods">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[recommended_video_display_methods]" <in value="0" name="config['recommended_video_display_methods']">checked="checked"</in>>隨机</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[recommended_video_display_methods]" <in value="1" name="config['recommended_video_display_methods']">checked="checked"</in>>按曝光值</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-advertising_video_switch" class="col-sm-2 control-label">后台上传的广告视频开关</label>
+                            <div class="col-md-6 col-sm-10" id="input-advertising_video_switch">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[advertising_video_switch]" <in value="0" name="config['advertising_video_switch']">checked="checked"</in>>关</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[advertising_video_switch]" <in value="1" name="config['advertising_video_switch']">checked="checked"</in>>开</label>
+                                <p>打开时，在首页推荐视频列表上会出现后台上传的广告视频</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-advertising_video_polling_switch" class="col-sm-2 control-label">APP首页 后台广告视频是否轮循展示</label>
+                            <div class="col-md-6 col-sm-10" id="input-advertising_video_polling_switch">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[advertising_video_polling_switch]" <in value="0" name="config['advertising_video_polling_switch']">checked="checked"</in>>关</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[advertising_video_polling_switch]" <in value="1" name="config['advertising_video_polling_switch']">checked="checked"</in>>开</label>
+                                <p>打开时，在首页推荐视频列表上会出现后台上传的广告视频</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-advertising_video_polling_number" class="col-sm-2 control-label">APP滑动几个视频出现后台上传的广告视频</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-advertising_video_polling_number"
+                                       name="options[advertising_video_polling_number]" value="{$config.advertising_video_polling_number|default='5'}">
+                                <p class="help-block">请从1,2,4,5,10,20中选择一个填写</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-video_rewards_switch" class="col-sm-2 control-label">用户每观看60秒视频奖励{$name_coin}开关</label>
+                            <div class="col-md-6 col-sm-10" id="input-video_rewards_switch">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[video_rewards_switch]" <in value="0" name="config['video_rewards_switch']">checked="checked"</in>>关</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[video_rewards_switch]" <in value="1" name="config['video_rewards_switch']">checked="checked"</in>>开</label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="input-video_rewards_number" class="col-sm-2 control-label">用户每观看60秒视频奖励{$name_coin}</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-video_rewards_number"
+                                       name="options[video_rewards_number]" value="{$config.video_rewards_number|default='10'}">
+                                <p class="help-block">正整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-video_rewards_max_number" class="col-sm-2 control-label">一个用户一天观看视频最多奖励{$name_coin}</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-video_rewards_max_number"
+                                       name="options[video_rewards_max_number]" value="{$config.video_rewards_max_number|default='20'}">
+                                <p class="help-block">正整数，大于等于观看60秒视频奖励</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-comment_weight_value" class="col-sm-2 control-label">评论权重值</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-comment_weight_value"
+                                       name="options[comment_weight_value]" value="{$config.comment_weight_value|default='10000'}">
+                                <p class="help-block">用于视频推荐，请填写正整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-like_weight_value" class="col-sm-2 control-label">点赞权重值</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-like_weight_value"
+                                       name="options[like_weight_value]" value="{$config.like_weight_value|default='10000'}">
+                                <p class="help-block">用于视频推荐，请填写正整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-share_weight_value" class="col-sm-2 control-label">分享权重值</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-share_weight_value"
+                                       name="options[share_weight_value]" value="{$config.share_weight_value|default='10000'}">
+                                <p class="help-block">用于视频推荐，请填写正整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-initial_exposure_value" class="col-sm-2 control-label">初始曝光值</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-initial_exposure_value"
+                                       name="options[initial_exposure_value]" value="{$config.initial_exposure_value|default='10000'}">
+                                <p class="help-block">用于视频推荐，请填写正整数</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="P">
+
+                        <div class="form-group">
+                            <label for="input-popular_video_addition_interval" class="col-sm-2 control-label">上热门视频添加间隔</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-popular_video_addition_interval"
+                                       name="options[popular_video_addition_interval]" value="{$config.popular_video_addition_interval|default='5'}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-popular_base_number" class="col-sm-2 control-label">热门基数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-popular_base_number"
+                                       name="options[popular_base_number]" value="{$config.popular_base_number|default='10'}">
+                                <p class="help-block">一小时提升的播放量(整数)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-popular_tips" class="col-sm-2 control-label">提示内容</label>
+                            <div class="col-md-6 col-sm-10">
+                                <textarea class="form-control" id="input-popular_tips" name="options[popular_tips]" >{$config.popular_tips|default=''}</textarea>
+                                <p class="help-block">最多200字</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="Q">
+
+                        <div class="form-group">
+                            <label for="input-vip_switch" class="col-sm-2 control-label">vip开关</label>
+                            <div class="col-md-6 col-sm-10" id="input-vip_switch">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[vip_switch]" <in value="0" name="config['vip_switch']">checked="checked"</in>>关闭</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[vip_switch]" <in value="1" name="config['vip_switch']">checked="checked"</in>>开启</label>
+                                <p class="help-block">vip 关闭后，站点所有与vip相关信息都不展示</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-not_vip_user_video_number" class="col-sm-2 control-label">非VIP用户每天可上传视频数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-not_vip_user_video_number"
+                                       name="options[not_vip_user_video_number]" value="{$config.not_vip_user_video_number|default='10'}">
+                                <p class="help-block">非VIP用户每天可上传视频数,0表示不限制(整数)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="R">
+                        <div class="form-group">
+                            <label for="input-video_views_mode" class="col-sm-2 control-label">短视频观看模式</label>
+                            <div class="col-md-6 col-sm-10" id="input-video_views_mode">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[video_views_mode]" <in value="0" name="config['video_views_mode']">checked="checked"</in>>次数限制模式</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[video_views_mode]" <in value="1" name="config['video_views_mode']">checked="checked"</in>>内容限制模式</label>
+                                <p class="help-block">(次数限制模式开启时，免费观看视频数发挥作用。内容限制模式开启时 视频发布者可设置视频的收费价格，非vp用户观看收费视频需要付费，一次付费永久观看。在vip开关打开的情况下，vip用户无论何种模式可免费观看)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-free_video_views_number" class="col-sm-2 control-label">免费观看视频数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-free_video_views_number"
+                                       name="options[free_video_views_number]" value="{$config.free_video_views_number|default='10'}">
+                                <p class="help-block">非vip用户或游客每天可免费观看视频数,0表示不限制(整数)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="S">
+
+                        <div class="form-group">
+                            <label for="input-sensitive_words" class="col-sm-2 control-label">敏感词</label>
+                            <div class="col-md-6 col-sm-10">
+                                <textarea class="form-control" id="input-sensitive_words" style="height: 300px" name="options[sensitive_words]" >{$config.sensitive_words|default=''}</textarea><p class="help-block">设置多个敏感字，请用英文状态下逗号隔开</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- openinstall配置 -->
+                    <div class="tab-pane" id="T">
+
+                        <div class="form-group">
+                            <label for="input-openinstall_switch" class="col-sm-2 control-label">openinstall开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control w-80" name="options[openinstall_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['openinstall_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                                <p class="help-block">该功能打开时，用户扫描他人分享的邀请二维码下载APP，注册账号后，会自动建立上下级邀请关系</p>
+                                <p class="help-block">该功能关闭后，用户下载APP后，需要通过填写邀请码的方式建立上下级邀请关系</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-openinstall_appkey" class="col-sm-2 control-label">openinstall AppKey</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-openinstall_appkey" name="options[openinstall_appkey]" value="{$config['openinstall_appkey']|default=''}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 云存储设置 -->
+                    <div class="tab-pane" id="U">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择存储方式</label>
+                            <div class="col-md-6 col-sm-10" id="cloudtype">
+<!--                                <label class="radio-inline"><input type="radio" value="1" name="options[cloudtype]" <in value="1" name="config['cloudtype']">checked="checked"</in>>七牛云存储</label>-->
+                                <label class="radio-inline"><input type="radio" value="2" name="options[cloudtype]" <in value="2" name="config['cloudtype']">checked="checked"</in>>腾讯云存储</label>
+
+                                <p class="help-block">如有旧资源：先迁移资源再切换否则无法加载</p>
+                            </div>
+                        </div>
+                        <div id="cloudtype_1" class="cloudtype_hide <neq name="config['cloudtype']" value="1">hide</neq>">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-md-6 col-sm-10">
+                                    <p class="help-block">七牛云存储信息请到插件中心--》插件列表里配置</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cloudtype_2" class="cloudtype_hide <neq name="config['cloudtype']" value="2">hide</neq>" >
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">APPID</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" name="options[qcloud_app_id]" value="{$config['qcloud_app_id']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">secretId</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" name="options[qcloud_secret_id]" value="{$config['qcloud_secret_id']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">secretKey</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" name="options[qcloud_secret_key]" value="{$config['qcloud_secret_key']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-region" class="col-sm-2 control-label">存储区域</label>
+                                <div class="col-md-6 col-sm-10" id="input-region">
+                                    <label class="radio-inline"><input type="radio" value="ap-beijing" name="options[qcloud_region]" <in value="ap-beijing" name="config['qcloud_region']">checked="checked"</in>>北京</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-nanjing" name="options[qcloud_region]" <in value="ap-nanjing" name="config['qcloud_region']">checked="checked"</in>>南京</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-shanghai" name="options[qcloud_region]" <in value="ap-shanghai" name="config['qcloud_region']">checked="checked"</in>>上海</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-guangzhou" name="options[qcloud_region]" <in value="ap-guangzhou" name="config['qcloud_region']">checked="checked"</in>>广州</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-chengdu" name="options[qcloud_region]" <in value="ap-chengdu" name="config['qcloud_region']">checked="checked"</in>>成都</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-chongqing" name="options[qcloud_region]" <in value="ap-chongqing" name="config['qcloud_region']">checked="checked"</in>>重庆</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-shenzhen-fsi" name="options[qcloud_region]" <in value="ap-shenzhen-fsi" name="config['qcloud_region']">checked="checked"</in>>深圳金融</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-shanghai-fsi" name="options[qcloud_region]" <in value="ap-shanghai-fsi" name="config['qcloud_region']">checked="checked"</in>>上海金融</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-beijing-fsi" name="options[qcloud_region]" <in value="ap-beijing-fsi" name="config['qcloud_region']">checked="checked"</in>>北京金融</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-hongkong" name="options[qcloud_region]" <in value="ap-hongkong" name="config['qcloud_region']">checked="checked"</in>>中国香港</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-singapore" name="options[qcloud_region]" <in value="ap-singapore" name="config['qcloud_region']">checked="checked"</in>>新加坡</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-jakarta" name="options[qcloud_region]" <in value="ap-jakarta" name="config['qcloud_region']">checked="checked"</in>>雅加达</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-seoul" name="options[qcloud_region]" <in value="ap-seoul" name="config['qcloud_region']">checked="checked"</in>>首尔</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-bangkok" name="options[qcloud_region]" <in value="ap-bangkok" name="config['qcloud_region']">checked="checked"</in>>曼谷</label>
+                                    <label class="radio-inline"><input type="radio" value="ap-tokyo" name="options[qcloud_region]" <in value="ap-tokyo" name="config['qcloud_region']">checked="checked"</in>>东京</label>
+                                    <label class="radio-inline"><input type="radio" value="na-siliconvalley" name="options[qcloud_region]" <in value="na-siliconvalley" name="config['qcloud_region']">checked="checked"</in>>硅谷（美西）</label>
+                                    <label class="radio-inline"><input type="radio" value="na-ashburn" name="options[qcloud_region]" <in value="na-ashburn" name="config['qcloud_region']">checked="checked"</in>>弗吉尼亚（美东）</label>
+                                    <label class="radio-inline"><input type="radio" value="sa-saopaulo" name="options[qcloud_region]" <in value="sa-saopaulo" name="config['qcloud_region']">checked="checked"</in>>圣保罗</label>
+                                    <label class="radio-inline"><input type="radio" value="eu-frankfurt" name="options[qcloud_region]" <in value="eu-frankfurt" name="config['qcloud_region']">checked="checked"</in>>法兰克福</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">域名协议</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" name="options[qcloud_scheme]" value="{$config['qcloud_scheme']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">存储桶</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" name="options[qcloud_bucket]" value="{$config['qcloud_bucket']|default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">空间域名</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" name="options[qcloud_host]" value="{$config['qcloud_host']|default=''}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
+                                    {:lang('SAVE')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+(function(){
+
+    $('.btn-cancel-thumbnail2').click(function () {
+        $('#thumbnail2-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumbnail2').val('');
+    });
+    
+
+    $("#sdk label").on('click',function(){
+        var v=$("input",this).val();
+        if(v==1){
+            $("#cdn label input[type=radio]").attr('disabled','disabled');
+            $("#cdn label input[type=radio][value=2]").removeAttr('disabled');
+            $("#cdn label").eq(1).click();
+        }else{
+            $("#cdn label input[type=radio]").removeAttr('disabled');
+        }
+    })
+    
+    $("#cdn label").on('click',function(){
+        var v_d=$("input",this).attr('disabled');
+        if(v_d=='disabled'){
+            return !1;
+        }
+        var v=$("input",this).val();
+        var b=$("#cdn_switch_"+v);
+        $(".cdn_bd").hide();
+        b.show();
+    })
+    
+    $("#cloudtype label").on('click',function(){
+        var v=$("input",this).val();
+        var b=$("#cloudtype_"+v);
+        $(".cloudtype_bd").siblings('.cloudtype_bd').hide();
+        b.show();
+    })
+	
+	$("#duanxin label").on('click',function(){
+        var v_d=$("input",this).attr('disabled');
+        if(v_d=='disabled'){
+            return !1;
+        }
+        var v=$("input",this).val();
+        var b=$("#typecode_switch_"+v);
+        $(".code_bd").hide();
+        b.show();
+    })
+
+	$("#tuisong label").on('click',function(){
+        var v_d=$("input",this).attr('disabled');
+        if(v_d=='disabled'){
+            return !1;
+        }
+        var v=$("input",this).val();
+        var b=$("#typepush_switch_"+v);
+        $(".push_bd").hide();
+        b.show();
+    })
+
+    $("#cloudtype label").on('click',function(){
+        var v=$("input",this).val();
+        var b=$("#cloudtype_"+v);
+        $(".cloudtype_bd").siblings('.cloudtype_bd').hide();
+        b.show();
+    })
+
+    //云存储切换
+    $("#cloudtype label.radio-inline").on('click',function(){
+        var v=$("input",this).val();
+        $(".cloudtype_hide").addClass('hide');
+        $("#cloudtype_"+v).removeClass('hide');
+    })
+
+})()
+</script>
+</body>
+</html>

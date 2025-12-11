@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://dspdemo.yunbaozb.com/admin/public/login.html -->
+<html class=" js no-mobile desktop no-ie chrome chrome138 admin-section public-section w-1827 gt-240 gt-320 gt-480 gt-640 gt-768 gt-800 gt-1024 gt-1280 gt-1440 gt-1680 lt-1920 no-portrait landscape gradient rgba opacity textshadow multiplebgs boxshadow borderimage borderradius cssreflections csstransforms csstransitions no-touch no-retina fontface" id="login-page"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>{$configpub['site_name']}</title>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="robots" content="noindex,nofollow">
+    <!-- HTML5 shim for IE8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+    <link href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/login.css" rel="stylesheet">
+    <link href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/login(1).css?v=123" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        if (window.parent !== window.self) {
+            document.write              = '';
+            window.parent.location.href = window.self.location.href;
+            setTimeout(function () {
+                document.body.innerHTML = '';
+            }, 0);
+        }
+    </script>
+    <script type="text/javascript" src="__STATIC__/js/ajaxForm.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/artDialog/artDialog.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/noty/noty-2.4.1.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/jquery.validate/jquery.validate.js"></script>
+    <link rel="stylesheet" href="__STATIC__/js/artDialog/skins/default.css">
+    <link rel="stylesheet" href="__STATIC__/js/animate//animate.css">
+</head>
+<body style="">
+<div class="wrap">
+    <div class="container">
+        <div class="row">
+            <div class="login_bd">
+                <div class="bd_top">
+                    <img src="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/top.png">
+                </div>
+                <div class="bd_center">
+                    <h1 class="text-center">{$configpub['site_name']}</h1>
+                    <form class="js-ajax-form" action="{:url('public/doLogin')}" method="post" novalidate="novalidate">
+                        <div class="form-group border name">
+                            <input type="text" id="input_username" class="form-control valid" name="username"
+                                   placeholder="{:lang('USERNAME_OR_EMAIL')}" title="{:lang('USERNAME_OR_EMAIL')}"
+                                   value="{:cookie('admin_username')}" data-rule-required="true" data-msg-required="">
+                        </div>
+
+                        <div class="form-group border pass">
+                            <input type="password" id="input_password" class="form-control" name="password"
+                                   placeholder="{:lang('PASSWORD')}" title="{:lang('PASSWORD')}" data-rule-required="true"
+                                   data-msg-required="">
+                        </div>
+
+                        <div class="form-group yzm">
+                            <div style="position: relative;">
+                                <captcha height="32" width="150" font-size="18"
+                                         style="cursor: pointer;right:1px;top:1px;"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group border code">
+                            <div style="position: relative;">
+                                <input type="text" name="captcha" id="input_captcha" placeholder="验证码" class="form-control captcha">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="redirect" value="">
+                            <button class="btn btn-primary btn-block js-ajax-submit" type="submit"
+                                    data-loadingmsg="{:lang('LOADING')}">
+                                {:lang('LOGIN')}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="bd_bottom">鲁ICP备16015455号-3 鲁网文[2019]4333-083号            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    //全局变量
+    var GV = {
+        ROOT: "/",
+        WEB_ROOT: "/",
+        JS_ROOT: "static/js/",
+        APP: ''/*当前应用名*/
+    };
+</script>
+<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    (function () {
+        document.getElementById('input_username').focus();
+    })();
+</script>
+
+
+</body></html>

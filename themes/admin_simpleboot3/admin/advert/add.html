@@ -1,0 +1,98 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >广告{:lang('ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('advert/addPost')}">
+
+            <div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>所有者用户</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="select_2 form-control valid" name="uid" aria-invalid="false">
+						<foreach name="user_lists" item="vo">
+						<option value="{$vo.id}">{$vo.user_nicename}({$vo.id})</option>
+						</foreach>
+					</select>
+				</div>
+			</div>
+            <div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>广告标题</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-admin" name="title" value="">
+				</div>
+			</div>
+            <div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>广告封面</label>
+				<div class="col-md-6 col-sm-10">
+					<div style="text-align: left;">
+						<input type="hidden" name="thumb" id="thumb" value="">
+						<a href="javascript:uploadOneImage('图片上传','#thumb');">
+							<img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumb-preview"
+								 width="135" style="cursor: hand"/>
+						</a>
+						<input type="button" class="btn btn-sm"
+							   onclick="$('#thumbnail-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumbnail').val('');return false;"
+							   value="取消图片">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">到期时间</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="js-bootstrap-date form-control" id="input-ad_endtime" name="ad_endtime" autocomplete="off">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>视频上传型式</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="video_type" value="1" checked="">视频链接</label>
+					<label class="radio-inline"><input type="radio" name="video_type" value="2">视频文件</label>
+				</div>
+			</div>
+			<div class="form-group" id="linkUrl">
+				<label class="col-sm-2 control-label">视频链接</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-href" name="href">以http://或https://开头
+				</div>
+			</div>
+			<div class="form-group" id="fileVideo" style="display: none;">
+				<label class="col-sm-2 control-label">上传视频</label>
+				<div class="col-md-6 col-sm-10">
+<!--					<input type="file" class="form-control" id="input-file" name="file">-->
+					<input class="form-control" id="js-file-input-href" type="text" name="file" style="width: 300px;display: inline-block;" title="文件名称">
+					<a href="javascript:uploadOne('文件上传','#js-file-input-href','video');">上传文件</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">广告外链</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-ad_url" name="ad_url">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+            
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script>
+		//切换消息类型
+		$("input[name='video_type']").click(function(){
+			var val=$(this).val();
+			if(val==1){
+				$("#linkUrl").show();
+				$("#fileVideo").hide();
+			}else{
+				$("#fileVideo").show();
+				$("#linkUrl").hide();
+			}
+		});
+	</script>
+</body>
+</html>

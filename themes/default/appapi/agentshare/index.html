@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html style="font-size: 55.2px;"><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link type="text/css" rel="stylesheet" href="__STATIC__/layui/layer.css">
+    <link href="__STATIC__/appapi/css/common.css" rel="stylesheet" type="text/css">
+    <!--公共css-->
+    <title>{:lang("邀请奖励")}</title>
+    <link href='__STATIC__/appapi/css/agentshare.css?t=15617112921' rel="stylesheet" type="text/css" >
+
+<body >
+<div class="agentshare">
+    <div class="agentshare_img">
+        <img src="__STATIC__/appapi/images/agentshare/bg.png">
+    </div>
+    <div class="tips">
+        <div class="tips_mark"></div>
+        <p>请点击右上角</p>
+        <p>选择“浏览器中打开”</p>
+    </div>
+</div>
+<div class="logo">
+    <p><img src="__STATIC__/images/favicon.ico"></p>
+    <p class="app_name">短视频</p>
+</div>
+
+<div class="code_area">
+    <div class="code_area_con">
+        <div class="code_area_user">
+            <div class="userinfo_area">
+                <div class="avatar">
+                    <img src="{$userinfo.avatar}">
+                </div>
+                <div class="info">
+                    <p class="nicename">{$userinfo.user_nicename}</p>
+                    <p>ID:{$userinfo.id}</p>
+                </div>
+            </div>
+            <div class="agentcode_area">
+                <p>邀请码</p>
+                <p class="code">{$code}</p>
+            </div>
+        </div>
+
+        <div class="code_area_down">
+            <input type="button" value="立即下载">
+        </div>
+    </div>
+</div>
+<script>
+    var isiPad = /iPad/i.test(navigator.userAgent);
+    var isiPhone = /iPhone|iPod/i.test(navigator.userAgent);
+    var isAndroid = /Android/i.test(navigator.userAgent);
+    var isWeixin = /MicroMessenger/i.test(navigator.userAgent);
+    var isQQ = /QQ/i.test(navigator.userAgent);
+    var isIOS = (isiPad || isiPhone);
+    var isWeibo = /Weibo/i.test(navigator.userAgent);
+    var isApp = (isAndroid || isIOS);
+
+    var uid='{$userinfo.id}';
+
+    var apk_url="https://videodl.yunbaokj.com/YbdspAD";
+    var baseSize = 100;
+    function setRem () {
+        var scale = document.documentElement.clientWidth / 750;
+        document.documentElement.style.fontSize = (baseSize * Math.min(scale, 3)) + 'px';
+    }
+    setRem();
+    window.onresize = function () {
+        setRem();
+    }
+</script>
+<include file="appapi@footer"/>
+<script>
+
+    (function(){
+        var code="{$code}";
+        var openinstall_switch= {$openinstall_switch};
+
+        if(openinstall_switch){
+            location.href='/appapi/agent/downapp?code='+code;
+        }else{
+            $('.code_area_down input').click(function(){
+
+                if(isQQ || isWeixin){
+                    $('.tips').show();
+                    return !1;
+                }
+                if(isIOS){
+                    location.href='https://videodl.yunbaokj.com/YbdspAD';
+                }else{
+                    //layer.msg('Android');
+                    if(apk_url!=''){
+                        location.href='https://videodl.yunbaokj.com/YbdspAD';
+                    }
+
+                }
+
+            })
+        }
+
+
+
+
+    })()
+
+
+</script>
+</body>
+</html>

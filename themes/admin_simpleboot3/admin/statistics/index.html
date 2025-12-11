@@ -1,0 +1,43 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >统计记录</a></li>
+		</ul>
+
+		
+		<form method="post" class="js-ajax-form">
+	
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>币种</th>
+						<th>统计类型</th>
+						<th>数额</th>
+						 <th>{:lang('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.currency}</td>
+						<td>{$type[$vo['statistics_type']]}</td>
+						<td>{$vo['value']}</td>
+						<td>
+							<a class="btn btn-xs btn-primary" href='{:url("Statistics/add",array("id"=>$vo["id"]))}'>新增/减少</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+
+		</form>
+	</div>
+    <script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

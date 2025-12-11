@@ -1,0 +1,180 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >{:lang('ADD')}视频</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Video/addPost')}">
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>视频状态</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="status" checked="checked" value="1">通过</label>
+					<label class="radio-inline"><input type="radio" name="status" value="2">不通过</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上下架状态</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="isdel" checked="checked" value="0">上架</label>
+					<label class="radio-inline"><input type="radio" name="isdel" value="1">下架</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>所有者</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="is_admin" checked="checked" value="1">管理员</label>
+					<label class="radio-inline"><input type="radio" name="is_admin" value="0">用户</label>
+				</div>
+			</div>
+
+			<div class="form-group" id="uid" style="display: none">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>用户ID</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-uid" name="uid" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');">
+					<p class="help-block">请填写用户id</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label"><span class="form-required">*</span>视频标题</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-title" name="title">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>需花费{$name_coin}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="number" class="form-control" id="input-coin" name="coin" value="0">
+				</div>
+			</div>
+
+            <div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>视频分类</label>
+				<div class="col-md-6 col-sm-10">
+					<select class="form-control" name="classid">
+                        <volist name="class" id="v">
+                        <option value="{$v['id']}">{$v['name']}</option>
+                        </volist>
+                    </select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>图片</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="hidden" name="thumb" id="thumbnail" value="">
+					<a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+						<img src="__TMPL__/public/assets/images/default-thumbnail.png"
+							 id="thumbnail-preview"
+							 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+					</a>
+					<input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>视频上传型式</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="video_type" value="1" checked="">视频链接</label>
+					<label class="radio-inline"><input type="radio" name="video_type" value="2">视频文件</label>
+				</div>
+			</div>
+            
+            <div class="form-group" id="href">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传视频</label>
+				<div class="col-md-6 col-sm-10">
+					<input class="form-control" id="js-file-input" type="text" name="href" style="display: inline-block;" title="视频文件地址" >
+
+<!--                    <a href="javascript:uploadOne('文件上传','#js-file-input','video');">上传文件</a>MP4格式-->
+<!--                   	<p class="help-block">可填写视频链接 [只能包含字母,数字,下划线,不能包含*#$等特殊字符]，可直接上传视频获取链接</p>-->
+					<p class="help-block">以http://或https://开头</p>
+				</div>
+				
+			</div>
+            
+            <div class="form-group" id="href_w">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传水印视频</label>
+				<div class="col-md-6 col-sm-10">
+					<input class="form-control" id="js-file-input2" type="text" name="href_w" style="display: inline-block;" title="水印视频文件地址">
+<!--                    <a href="javascript:uploadOne('文件上传','#js-file-input2','video');">上传文件</a>MP4格式-->
+<!--                    <p class="help-block">可填写视频链接 [只能包含字母,数字,下划线,不能包含*#$等特殊字符]，可直接上传视频获取链接</p> -->
+					<p class="help-block">以http://或https://开头</p>
+				</div>
+			</div>
+
+			<div class="form-group upload_video_area" id="fileHref" style="display: none;">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传视频</label>
+				<div class="col-md-6 col-sm-10">
+<!--					<input type="file" name="file">-->
+					<div>
+						<input class="form-control" id="js-file-input-href" type="text" name="file" style="width: 300px;display: inline-block;" title="文件名称">
+						<a href="javascript:uploadOne('文件上传','#js-file-input-href','video');">上传文件</a>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group upload_video_area" id="fileHref_w" style="display: none;">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传水印视频</label>
+				<div class="col-md-6 col-sm-10">
+<!--					<input type="file" name="file_w">-->
+					<div>
+						<input class="form-control" id="js-file-input-href_w" type="text" name="file_w" style="width: 300px;display: inline-block;" title="文件名称">
+						<a href="javascript:uploadOne('文件上传','#js-file-input-href_w','file');">上传文件</a>
+					</div>
+				</div>
+			</div>
+            
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+                    <input type="hidden" name="status" value="1">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+            
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+    <script>
+        (function(){
+            $('.btn-cancel-thumbnail').click(function () {
+                $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail').val('');
+            });
+            
+            
+        })()
+		//切换消息类型
+		$("input[name='is_admin']").click(function(){
+			var val=$(this).val();
+			if(val==1){
+				$("#uid").hide();
+			}else{
+				$("#uid").show();
+			}
+		});
+
+		//切换消息类型
+		$("input[name='video_type']").click(function(){
+			var val=$(this).val();
+			if(val==1){
+				$("#href").show();
+				$("#href_w").show();
+				$("#fileHref").hide();
+				$("#fileHref_w").hide();
+			}else{
+				$("#href").hide();
+				$("#href_w").hide();
+				$("#fileHref").show();
+				$("#fileHref_w").show();
+			}
+		});
+	</script>
+</body>
+</html>

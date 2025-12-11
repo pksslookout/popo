@@ -1,0 +1,61 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >{$name_votes}收入记录</a></li>
+		</ul>
+		<form class="well form-inline margin-top-20" name="form1" method="post" action="">
+			收入行为：
+            <select class="form-control" name="action">
+				<option value="">全部</option>
+                <volist name="action" id="v">
+                    <option value="{$key}" <if condition="input('request.action') neq '' && input('request.action') eq $key">selected</if>>{$v}</option>
+                </volist>
+			</select>
+
+			收入时间：
+			<input class="form-control js-bootstrap-date" name="start_time" placeholder="开始时间" id="start_time" autocomplete="off" value="{:input('request.start_time')}" aria-invalid="false" style="width: 110px;"> -
+            <input class="form-control js-bootstrap-date" name="end_time" placeholder="结束时间" id="end_time" autocomplete="off" value="{:input('request.end_time')}" aria-invalid="false" style="width: 110px;">
+			收入用户：
+            <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+                   placeholder="请输入收入用户D">
+			行为用户：
+			<input class="form-control" type="text" name="fromid" style="width: 200px;" value="{:input('request.fromid')}"
+				   placeholder="请输入行为用户D">
+            <input type="button" class="btn btn-primary" value="搜索" onclick="form1.action='{:url('Votesrecord/index')}';form1.submit();"/>
+			<a class="btn btn-danger" href="{:url('Votesrecord/index')}">清空</a>
+			<input type="button" class="btn btn-success" value="导出" onclick="form1.action='{:url('Votesrecord/export')}';form1.submit();"/>
+		</form>
+    	
+		<form method="post" class="js-ajax-form" >
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>收支行为</th>
+						<th>收入用户(ID)</th>
+						<th>行为用户(ID)</th>
+						<th>{$name_votes}</th>
+						<th>时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$action[$vo['action']]}</td>
+						<td>{$vo['userinfo']['user_nicename']} ({$vo['uid']})</td>
+						<td>{$vo['touserinfo']['user_nicename']} ({$vo['fromid']})</td>
+						<td>{$vo['votes']}</td>
+						<td>{:date('Y-m-d H:i:s',$vo['addtime'])}</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

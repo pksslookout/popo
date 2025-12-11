@@ -1,0 +1,92 @@
+
+body{
+    padding: 0 0.4rem;
+	background-color: #110D24;
+}
+.uinfo{
+    position:relative;
+    padding-left:1.5rem;
+    width:4rem;
+	height: 1.5rem;
+    padding-top: 0.5rem;
+}
+.uinfo .info{
+	padding-top: 0.12rem;
+}
+.uinfo .img{
+    position:absolute;
+    top:0.5rem;
+    left:0.1rem;
+    width:1.2rem;
+    height:1.2rem;
+}
+.uinfo .img img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    vertical-align:top;
+}
+
+.uinfo .info p.name{
+    color:#FFFFFF;
+    font-size:0.35rem;
+}
+
+.uinfo .info p.id{
+    color:#FFFFFF;
+    font-size:0.3rem;
+}
+.lists{
+	position:relative;
+    background-color: #1D192E;
+    border-radius: 0.15rem;
+	padding: 0.5rem;
+	margin-top: 0.2rem;
+	margin-bottom: 0.5rem;
+	padding-top: 0.2rem;
+}
+
+.lists .lists_tit{
+	height: 1rem;
+    line-height: 1rem;
+    font-size: 0.38rem;
+    color: #fff;
+}
+
+.lists ul{
+	margin-top: 0.35rem;
+}
+
+.lists ul>li{
+	border-left: 0.04rem dashed #4E515E;
+	padding:0.2rem;
+    position: relative;
+    padding-bottom: 0.7rem;
+
+}
+.lists ul>li>img{
+	position: absolute;
+    top: -0.2rem;
+    left: -0.18rem;
+    width: 0.3rem;
+}
+.lists ul>li>.date{
+	font-size: 0.35rem;
+    color: #fff;
+    position: absolute;
+    top: -0.27rem;
+    left: 0.3rem;
+}
+
+.lists ul>li>.describe{
+	color:#A0A1AF;
+	font-size: 0.3rem;
+    margin-top: 0.2rem;
+    padding-left: 0.3rem;
+}
+.lists ul>li:last-child{
+	border-left: 0.04rem dashed #1D192E;
+}
+
+
+

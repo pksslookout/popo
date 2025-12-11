@@ -1,0 +1,51 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:url('Authorcenter/classify')}">创作者分类列表</a></li>
+			<li class="active"><a >创作者分类{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Authorcenter/catEditPost')}">
+			<div class="form-group">
+				<label for="input-list_order" class="col-sm-2 control-label"><span class="form-required">*</span>排序号</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-list_order" name="list_order" value="{$data['list_order']}">
+				</div>
+			</div>
+            <div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>创作者分类名称</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-name" name="name" value="{$data['name']}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>Creator Category Name</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-name_en" name="name_en" value="{$data['name_en']}" placeholder="Please fill in the creator category name">
+					<volist name="list_language_translate" id="v">
+						<input style="margin-top: 5px" type="text" value="{$v.value}" class="form-control" id="input-{$v.code}" name="language[{$v.code}]" placeholder="{$v.language_title}">
+					</volist>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>是否显示</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="is_status" value="1" <if condition="$data['is_status'] eq 1">checked=""</if>>显示</label>
+					<label class="radio-inline"><input type="radio" name="is_status" value="0" <if condition="$data['is_status'] eq 0">checked=""</if>>不显示</label>
+				</div>
+			</div>
+            
+            <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

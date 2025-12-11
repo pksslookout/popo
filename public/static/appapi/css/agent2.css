@@ -1,0 +1,331 @@
+body{
+    background:#F3FFF3;
+}
+
+.agent .top .top_img{
+    /*padding-top:0.48rem;*/
+    text-align:center;
+}
+.agent .top .top_img img{
+    width:100%;
+}
+
+.agent .top_tips_bg{
+    padding:0.2rem 0;
+}
+.agent .top_tips{
+    margin:0.22rem auto 0;
+    padding-top:0.1rem;
+    width:6.9rem;
+    border-radius:0.2rem;
+}
+
+.agent .top_tips_en{
+    margin:0.22rem auto 0;
+    padding-top:0.1rem;
+    width:6.9rem;
+    height:4rem;
+    border-radius:0.2rem;
+}
+
+.agent .top_tips .tips_bd{
+    position:relative;
+    margin:0 auto;
+    padding:0.52rem 0.1rem 0 0;
+    width:6.7rem;
+    border-radius:0.2rem;
+    -moz-box-sizing: border-box;  /*Firefox3.5+*/
+	-webkit-box-sizing: border-box; /*Safari3.2+*/
+	-o-box-sizing: border-box; /*Opera9.6*/
+	-ms-box-sizing: border-box; /*IE8*/
+	box-sizing: border-box;      
+}
+.agent .top_tips .tips_bd .tips_label{
+    position:absolute;
+    top:0.1rem;
+    text-align:center;
+    color:#020406;
+    font-size:0.28rem;
+    overflow: hidden;
+}
+.agent .top_tips .tips_bd ul{}
+.agent .top_tips .tips_bd ul li{
+    margin-top: 0.2rem;
+    position:relative;
+    padding-left:0.35rem;
+    line-height:0.4rem;
+    color:#020406;
+    font-size:0.28rem
+}
+.agent .top_tips .tips_bd ul li .li_n{
+    position:absolute;
+    top:0;
+    left:0;
+    width:0.35rem;
+}
+.agent .top_tips .tips_bd ul li .li_i{
+
+}
+.agent .info{
+    margin:0 auto;
+    width:100%;
+    margin-top: 0.3rem;
+    border-radius:0.2rem;
+    padding: 0.2rem 0;
+}
+
+.agent .info .info_p{
+    width:50%;
+    height:1.8rem;
+    border-left:1px solid #eee;
+    -moz-box-sizing: border-box;  /*Firefox3.5+*/
+	-webkit-box-sizing: border-box; /*Safari3.2+*/
+	-o-box-sizing: border-box; /*Opera9.6*/
+	-ms-box-sizing: border-box; /*IE8*/
+	box-sizing: border-box;
+}
+.agent .info .info_p:first-child{
+    border-left:none;
+}
+.agent .info .info_p .info_p_t{
+    height:0.9rem;
+    line-height:0.9rem;
+    text-align:center;
+    color:#020406;
+    font-size:0.3rem;
+    margin-top: -0.15rem;
+    overflow: hidden;
+}
+.agent .info .info_p .info_p_bd{
+    height:0.9rem;
+    line-height:0.9rem;
+    text-align:center;
+    color: #2DE515;
+    font-size:0.4rem;
+    font-weight:bold;
+}
+.agent .info .info_p .info_p_bd .score{
+    width:0.32rem;
+    height:0.32rem;
+}
+.agent .cash{
+    padding-bottom:0.28rem;
+    height:0.3rem;
+    line-height:0.3rem;
+    text-align:center;
+    color:#2DE515;
+    font-size:0.3rem;
+}
+
+ .share_btn{
+    width:6.9rem;
+    height:0.92rem;
+    margin: 0 auto;
+    line-height:0.92rem;
+    text-align:center;
+    color:#020406;
+    font-size:0.34rem;
+    /*background: linear-gradient( 270deg, #49FF56 0%, #B8FF3C 100%);*/
+    background:url('../images/agent/share.png') no-repeat center;
+    /*background-image: ;*/
+    margin-bottom: 0.3rem;
+    border-radius: 0.5rem;
+     position: fixed;
+     left: 0;
+     right: 0;
+     bottom: 0.2rem;
+}
+
+.agent .agent_code{
+    margin:-0.5rem auto 0;
+    padding-top:0.1rem;
+    width:6.5rem;
+    height:2.2rem;
+    border-radius:0.2rem;
+    margin-top: -44%;
+    /*background:url('../images/agent/agent_code_bg.png') no-repeat center;*/
+    background-size: 100%;
+    position: relative;
+    z-index: 1;
+    /*filter: drop-shadow(2px 1px 4px #626262);*/
+}
+
+.agent .agent_code .tips_bd_title{
+    color: #000;
+    font-size: 0.3rem;
+    text-align: center;
+    height: 0.6rem;
+    line-height: 0.6rem;
+}
+
+.agent .agent_code .tips_bd_title img{
+    width: 0.5rem;
+}
+
+.agent .agent_code .tips_bd_codes{
+    width: 80%;
+    margin:0.1rem auto;
+    margin-top: 12px;
+
+}
+
+.agent .agent_code .tips_bd_codes li{
+    float: left;
+    margin-right: 0.13rem;
+    margin-left: 0.13rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    text-align: center;
+    line-height: 0.6rem;
+    font-size: 0.5rem;
+    font-weight: bold;
+    color: #020406;
+}
+
+.agent .agent_code .copy_btn{
+    width:2.5rem;
+    height:0.65rem;
+    margin: 0 auto;
+    margin-top: 0.4rem;
+    line-height:0.65rem;
+    text-align:center;
+    color:#020406;
+    font-size:0.3rem;
+    background: linear-gradient( 270deg, #49FF56 0%, #B8FF3C 100%);
+    margin-bottom: 0.3rem;
+    border-radius: 0.5rem;
+}
+
+
+.agent .agent_top{
+    margin:0 auto;
+    margin-top: 12%;
+    width:100%;
+    border-radius:0.2rem;
+    padding: 0.2rem 0;
+    z-index: 2;
+}
+
+.agent .agent_top .myagent{
+	position:relative;
+    padding-top:0.6rem;
+    padding-left:0.4rem;
+    padding-right:0.4rem;
+    font-weight: 400;
+    font-size: 0.3rem;
+    color: #020406;
+    line-height: 0.52rem;
+    text-align: left;
+    font-style: normal;
+    text-transform: none;
+
+}
+.agent .agent_top .myagent .li_l{
+    color:#020406;
+    font-size: 0.3rem;
+    width: 30%;
+}
+.agent .agent_top .myagent .li_r{
+	color:#020406;
+    font-size: 0.3rem;
+    font-weight: 400;
+    float:right;
+    width: 70%;
+    height: 0.52rem;
+    overflow: hidden;
+    font-style: normal;
+    text-align: right;
+}
+
+.agent .agent_top .myagent .agent_add .li_r{
+    font-weight:normal;
+}
+
+/* 设置邀请码 */
+.setcode{}
+.setcode .top{
+	height:4rem;
+	background:url("../images/agent/top_set4.png") no-repeat center;
+	background-size:auto 4rem;
+}
+.setcode .top_en{
+	height:4rem;
+	background:url("../images/agent/top_set_en.png") no-repeat center;
+	background-size:auto 4rem;
+}
+.setcode{}
+.setcode{}
+.setcode{}
+.setcode .mycode{
+	color:#020406;
+	line-height:1rem;
+	padding:0 0.2rem;
+	font-size:0.32rem;
+	text-align:center;
+}
+.setcode .mycode .code{
+	position:relative;
+	display:inline-block;
+}
+.setcode .mycode .code i{
+	display:inline-block;
+	width:0.8rem;
+	height:0.8rem;
+	text-align:center;
+	line-height:0.8rem;
+	color:#020406;
+	/*border:1px solid #707070;*/
+	font-style: normal;	
+	margin:0 0.04rem;
+    background: #F5F5F5;
+    border-radius: 4px 4px 4px 4px;
+}
+.setcode .mycode .code input{
+	position:absolute;
+	top:0;
+	left:0;
+	width:auto;
+	height:auto;
+	opacity: 0;
+	z-index:-1;
+	-khtml-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+.setcode .mycode .copy i{
+	display:inline-block;
+	width:0.4rem;
+	height:0.4rem;
+	background:url("../images/agent/copy.png") no-repeat center;
+	background-size:0.4rem;
+	vertical-align: middle;
+    margin-top: -0.06rem;
+	margin-right:0.06rem;
+}
+.setcode .tips{
+	padding:0.2rem;
+	color:#999999;
+	line-height:0.6rem;
+	font-size: 0.26rem;
+	
+}
+.setcode .submit{
+    position: fixed;
+    left: 10%;
+    bottom: 30px;
+	width:80%;
+	height:0.8rem;
+	line-height:0.8rem;
+	text-align:center;
+	color:#020406;
+	font-size:15px;
+	margin:0.4rem auto 0;
+	border-radius:30px;
+	background: linear-gradient( 270deg, #49FF56 0%, #B8FF3C 100%); !important;
+}
+
+
+.clearboth{
+    clear: both;
+}

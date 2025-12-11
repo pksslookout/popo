@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html style="font-size: 55.2px;background-color: #FFFFFF">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+	<link type="text/css" rel="stylesheet" href="__STATIC__/layui/css/layui.css"/>
+	<link type="text/css" rel="stylesheet" href="__STATIC__/css/common.css"/>
+	<link type="text/css" rel="stylesheet" href="__STATIC__/appapi/css/liverecord.css"/>
+    <title>{:lang("直播动态")}</title>
+</head>
+<style>
+    body {
+        background-image:url('__STATIC__/appapi/images/bg.png');
+        padding: 0 0;
+        background-color: #080808;
+    }
+    .lists {
+        min-height: calc(100vh - 3.2rem);
+        position: relative;
+        background-color: #1C1C1C;
+        border-radius: 0.15rem;
+        padding: 0.5rem;
+        margin-top: 0.3rem;
+        margin-bottom: 0.5rem;
+        padding-top: 0.2rem;
+    }
+    .uinfo {
+        position: relative;
+        padding-left: 2rem;
+        width: 4rem;
+        height: 1.5rem;
+        padding-top: 0.7rem;
+    }
+    .uinfo .img {
+        position: absolute;
+        top: 0.7rem;
+        left: 0.4rem;
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    .uinfo .info p.id {
+        color: #FFFFFF;
+        font-size: 0.25rem;
+    }
+    .uinfo .img {
+        border: 3px solid rgba(255, 255, 255, 1);
+        border-radius: 50%;
+    }
+    .lists {
+        border-radius: 0.15rem 0.15rem 0 0;
+        margin-bottom: 0;
+    }
+    .lists .lists_tit {
+        font-size: 0.3rem;
+        color: #FFFFFF;
+    }
+    .lists ul {
+        margin-top: 0.6rem;
+        margin-left: 0.3rem;
+    }
+    .lists ul>li {
+        border-left: 0.04rem dashed rgba(255,255,255,0.2);
+        padding: 0.2rem;
+        position: relative;
+        padding-bottom: 0.7rem;
+    }
+    .lists ul>li>.date {
+        font-size: 0.27rem;
+        color: #FFFFFF;
+        position: absolute;
+        top: -0.27rem;
+        left: 0.3rem;
+    }
+    .lists ul>li>img {
+        position: absolute;
+        top: -0.18rem;
+        left: -0.138rem;
+        width: 0.22rem;
+    }
+    .lists ul>li>.describe {
+        color: rgba(255,255,255,0.5);
+        font-size: 0.24rem;
+        margin-top: -0.1rem;
+        padding-left: 0.25rem;
+    }
+    .lists ul>li:last-child {
+        border-left: none;
+    }
+</style>
+
+<body style="">
+<div class="uinfo">
+    <div class="img">
+        <img src="{$userinfo['avatar']}">
+    </div>
+    <div class="info">
+        <p class="name">{$userinfo['user_nicename']}</p>
+        <p class="id">ID: {$userinfo['id']}</p>
+    </div>
+</div>
+
+<div class="lists">
+    <div class="lists_tit">{:lang("历史回顾")}</div>
+    <ul>
+        <volist name="list" id="v">
+        <li>
+            <img src="__STATIC__/appapi/images/dian.png">
+            <div class="date">{$v['starttime_ymd']}</div>
+            <div class="describe">{$v['starttime']}-{$v['endtime']}   {$v['title']}</div>
+        </li>
+        </volist>
+    </ul>
+</div>
+
+</body>
+</html>

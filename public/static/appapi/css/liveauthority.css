@@ -1,0 +1,65 @@
+.liveauthority{
+    background:#15102C;
+    font-size: 14px;
+    padding:10px 5%;
+    color: #969696;
+}
+
+.tips{
+	height: 50px;
+	line-height: 50px;
+}
+
+.lists{
+	height: 80px;
+	background: #1C1733;
+	margin-bottom: 20px;
+	font-size: 15px;
+}
+
+.lists_left,.lists_right{
+
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
+	text-align: center;
+}
+
+.fansnum{
+	background: url('../images/liveauthority/fansnum.png') no-repeat center center;
+}
+
+.videonum{
+	background: url('../images/liveauthority/videonum.png') no-repeat center center;
+}
+
+.lists_right{
+	width: 60px;
+}
+
+.lists_title{
+	margin-top: 20px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.lists_des{
+	height: 20px;
+	line-height: 20px;
+}
+
+.ok{
+	color: #00FF90;
+}
+
+.fl{
+	float: left;
+}
+
+.fr{
+	float: right;
+}
+
+.clearboth{
+	clear: both;
+}

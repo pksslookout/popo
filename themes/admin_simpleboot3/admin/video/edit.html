@@ -1,0 +1,266 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<if condition="$data['status'] eq 1 and $data['isdel'] eq 0">
+				<li><a href='{:url("Video/index",array("isdel"=>0,"status"=>1))}'>审核通过列表</a></li>
+			</if>
+			<if condition="$data['status'] eq 0 and $data['isdel'] eq 0">
+				<li><a href='{:url("Video/index",array("isdel"=>0,"status"=>0))}'>等待审核列表</a></li>
+			</if>
+			<if condition="$data['status'] eq 2 and $data['isdel'] eq 0">
+				<li><a href='{:url("Video/index",array("isdel"=>0,"status"=>2))}'>未通过列表</a></li>
+			</if>
+			<if condition="$data['isdel'] eq 1">
+				<li><a href='{:url("Video/index",array("isdel"=>1))}'>下架列表</a></li>
+			</if>
+			<li class="active"><a >{:lang('EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Video/editPost')}">
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>视频状态</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="status" <if condition="$data['status'] eq 1">checked="checked"</if> value="1">通过</label>
+					<label class="radio-inline"><input type="radio" name="status" <if condition="$data['status'] eq 2">checked="checked"</if> value="2">不通过</label>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>用户</label>
+				<div class="col-md-6 col-sm-10" style="padding-top:7px;">
+					{$data['userinfo']['user_nicename']} ({$data['uid']})
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label"><span class="form-required">*</span>视频标题</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-title" name="title" value="{$data['title']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>需花费{$name_coin}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="number" class="form-control" id="input-coin" name="coin" value="{$data['coin']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>虚拟点赞数</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="number" class="form-control" id="input-virtual_likes" name="virtual_likes" value="{$data['virtual_likes']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>虚拟浏览数</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="number" class="form-control" id="input-virtual_views" name="virtual_views" value="{$data['virtual_views']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>虚拟评论数</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="number" class="form-control" id="input-virtual_comments" name="virtual_comments" value="{$data['virtual_comments']}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>虚拟分享数</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="number" class="form-control" id="input-virtual_shares" name="virtual_shares" value="{$data['virtual_shares']}">
+				</div>
+			</div>
+
+            
+            <div class="form-group">
+				<label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>图片</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="hidden" name="thumb" id="thumbnail" value="{$data['thumb']}">
+                    <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                        <if condition="empty($data.thumb)">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                 id="thumbnail-preview"
+                                 style="cursor: pointer;max-width:100px;max-height:100px;"/>
+                        <else/>
+                        <img src="{:cmf_get_image_preview_url($data.thumb)}"
+                             id="thumbnail-preview"
+                             style="cursor: pointer;max-width:100px;max-height:100px;"/>
+                        </if>
+                    </a>
+                    <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片"> 
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-ad_endtime" class="col-sm-2 control-label">视频</label>
+				<div class="col-md-6 col-sm-10">
+					<!-- <input type="hidden" name="href" id="thumb3" value="http://ybdsp.yunbaozb.com/android_22316_20250608_204924_303516.mp4"> -->
+					<div class="playerzmblbkjP" id="playerzmblbkjP" style="width: 500px; height: 500px; background-color: rgb(0, 0, 0); cursor: pointer;">
+						<video controls="controls" src="{$data['href_url']}" id="ckplayer_playerzmblbkjP" width="100%" height="100%" webkit-playsinline=""></video>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>视频上传型式</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline"><input type="radio" name="video_type" value="1">视频链接</label>
+					<label class="radio-inline"><input type="radio" name="video_type" value="2">视频文件</label>
+					<span class="form-required">* 需要更改视频时请选择对应上传型式,不需要重新上传视频时无需选择</span>
+				</div>
+			</div>
+
+			<div class="form-group" id="href" style="display: none;">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传视频</label>
+				<div class="col-md-6 col-sm-10">
+					<input class="form-control" id="js-file-input" type="text" name="href" value="{$data['href']}" style="display: inline-block;" title="视频文件地址" >
+
+					<!--                    <a href="javascript:uploadOne('文件上传','#js-file-input','video');">上传文件</a>MP4格式-->
+					<!--                   	<p class="help-block">可填写视频链接 [只能包含字母,数字,下划线,不能包含*#$等特殊字符]，可直接上传视频获取链接</p>-->
+					<p class="help-block">以http://或https://开头</p>
+				</div>
+
+			</div>
+
+			<div class="form-group" id="href_w" style="display: none;">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传水印视频</label>
+				<div class="col-md-6 col-sm-10">
+					<input class="form-control" id="js-file-input2" type="text" name="href_w" value="{$data['href_w']}" style="display: inline-block;" title="水印视频文件地址">
+					<!--                    <a href="javascript:uploadOne('文件上传','#js-file-input','video');">上传文件</a>MP4格式-->
+					<!--                   	<p class="help-block">可填写视频链接 [只能包含字母,数字,下划线,不能包含*#$等特殊字符]，可直接上传视频获取链接</p>-->
+					<p class="help-block">以http://或https://开头</p>
+				</div>
+			</div>
+
+			<div class="form-group upload_video_area" id="fileHref" style="display: none;">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传视频</label>
+				<div class="col-md-6 col-sm-10">
+					<!--					<input type="file" name="file">-->
+					<div>
+						<input class="form-control" id="js-file-input-href" type="text" name="file" value="{$data['href']}" style="width: 300px;display: inline-block;" title="文件名称">
+						<a href="javascript:uploadOne('文件上传','#js-file-input-href','video');">上传文件</a>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group upload_video_area" id="fileHref_w" style="display: none;">
+				<label class="col-sm-2 control-label"><span class="form-required">*</span>上传水印视频</label>
+				<div class="col-md-6 col-sm-10">
+					<!--					<input type="file" name="file_w">-->
+					<div>
+						<input class="form-control" id="js-file-input-href_w" type="text" name="file_w" value="{$data['href_w']}" style="width: 300px;display: inline-block;" title="文件名称">
+						<a href="javascript:uploadOne('文件上传','#js-file-input-href_w','file');">上传文件</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			<if condition="!empty($goodsinfo)">
+				
+				<div class="form-group" >
+					<label for="input-type_name" class="col-sm-2 control-label">商品类型</label>
+					<div class="col-md-6 col-sm-10">
+						<input type="text" class="form-control" id="input-type_name"  value="{$goodsinfo['type_name']}" readonly="readonly" />
+					</div>
+				</div>
+
+
+				<div class="form-group" >
+					<label for="input-name" class="col-sm-2 control-label">商品名称</label>
+					<div class="col-md-6 col-sm-10">
+						<input type="text" class="form-control" id="input-name"  value="{$goodsinfo['name']}" readonly="readonly" />
+					</div>
+				</div>
+				
+				
+				<div class="form-group" >
+					<label for="input-goods_thumb" class="col-sm-2 control-label">商品封面</label>
+					<div class="col-md-6 col-sm-10">
+						<img src="{:get_upload_path($goodsinfo['thumb'])}" class="imgtip" style="max-width:150px;max-height:150px;"/>
+					</div>
+				</div>
+
+				<div class="form-group" >
+					<label for="input-goods_href" class="col-sm-2 control-label">商品链接</label>
+					<div class="col-md-6 col-sm-10">
+						<input type="text" class="form-control" id="input-goods_href"  value="{$goodsinfo['href']}" readonly="readonly" />
+					</div>
+				</div>
+
+				<div class="form-group" >
+					<label for="input-old_price" class="col-sm-2 control-label">商品原价</label>
+					<div class="col-md-6 col-sm-10">
+						<input type="text" class="form-control" id="input-old_price"  value="{$goodsinfo['old_price']}" readonly="readonly" />
+					</div>
+				</div>
+
+				<div class="form-group" >
+					<label for="input-price" class="col-sm-2 control-label">商品现价</label>
+					<div class="col-md-6 col-sm-10">
+						<input type="text" class="form-control" id="input-price"  value="{$goodsinfo['price']}" readonly="readonly" />
+					</div>
+				</div>
+
+				<div class="form-group" >
+					<label for="input-goods_desc" class="col-sm-2 control-label">商品简介</label>
+					<div class="col-md-6 col-sm-10">
+						<textarea class="form-control"  rows="2" cols="20"  readonly="readonly">{$goodsinfo['des']}</textarea>
+					</div>
+				</div>
+
+				<div class="form-group" >
+					<label for="input-goods_addtime" class="col-sm-2 control-label">商品添加时间</label>
+					<div class="col-md-6 col-sm-10">
+						<input type="text" class="form-control"  value="{:date('Y-m-d H:i:s',$goodsinfo['addtime'])}" readonly="readonly" />
+					</div>
+				</div>
+
+
+			</if>
+            
+
+            <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+    <script type="text/javascript">
+        (function(){
+            $('.btn-cancel-thumbnail').click(function () {
+                $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+                $('#thumbnail').val('');
+            });
+        })()
+
+		//切换消息类型
+		$("input[name='video_type']").click(function(){
+			var val=$(this).val();
+			if(val==1){
+				$("#href").show();
+				$("#href_w").show();
+				$("#fileHref").hide();
+				$("#fileHref_w").hide();
+			}else{
+				$("#href").hide();
+				$("#href_w").hide();
+				$("#fileHref").show();
+				$("#fileHref_w").show();
+			}
+		});
+
+    </script>
+</body>
+</html>
