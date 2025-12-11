@@ -8,7 +8,7 @@ function connectionRedis(){
         $REDIS_PORT= config('database.REDIS_PORT');
         $redis = new \Redis();
         $redis -> connect($REDIS_HOST,$REDIS_PORT);
-        //$redis -> auth($REDIS_AUTH);
+        $redis -> auth($REDIS_AUTH);
 
         $GLOBALS['redisdb']=$redis;        
     }

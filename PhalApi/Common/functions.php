@@ -9,7 +9,7 @@ function connectionRedis(){
 		$redis = new Redis();
         $redis -> connect($REDIS_HOST,$REDIS_PORT);
 //        $redis -> pconnect($REDIS_HOST,$REDIS_PORT);
-//		$redis -> auth($REDIS_AUTH);
+		$redis -> auth($REDIS_AUTH);
         return $redis;
 	}
 	/* 设置缓存 */
