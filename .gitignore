@@ -9,3 +9,4 @@ data/config/
 /data/config/
 PhalApi/Config/
 PhalApi/Runtime/
+node/node_modules/
