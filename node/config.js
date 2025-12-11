@@ -1,5 +1,5 @@
 module.exports = {
-	'REDISHOST' : 'po-bn1rcg.serverless.apse1.cache.amazonaws.com',
+	'REDISHOST' : 'pop-bn1rcg.serverless.apse1.cache.amazonaws.com',
 	'REDISPASS' : 'redis123456',
 	'REDISPORT' : '6379',
 	'TOKEN'		: '1234567',

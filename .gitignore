@@ -3,10 +3,6 @@
 temp/
 data/
 vendor/
-data/runtime/
-data/config/
-/data/runtime/
-/data/config/
 PhalApi/Config/
 PhalApi/Runtime/
 node/node_modules/
