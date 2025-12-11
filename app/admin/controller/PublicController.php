@@ -18,8 +18,6 @@ class PublicController extends AdminBaseController
     public function initialize()
     {
         $siteInfo = cmf_get_site_info();
-        var_dump($siteInfo);
-        exit();
         $this->assign("configpub", $siteInfo);
     }
 
