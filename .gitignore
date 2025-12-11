@@ -9,3 +9,4 @@ PhalApi/Config/dbs.php
 /data/jpush.txt
 temp/
 data/
+vendor/
