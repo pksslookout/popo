@@ -28,7 +28,7 @@ var LiveConnect_pull={};
 
 // redis 链接
 var clientRedis  = redis.createClient(config['REDISPORT'],config['REDISHOST']);
-//clientRedis.auth(config['REDISPASS']);
+clientRedis.auth(config['REDISPASS']);
 //var server = https.createServer(options,function(req, res) {
 var server = https.createServer(function(req, res) {
 	res.writeHead(200, {
