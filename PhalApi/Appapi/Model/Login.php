@@ -38,7 +38,7 @@ class Model_Login extends PhalApi_Model_NotORM {
                 'birthday' => time()-(23*24*60*60*365),
                 'avatar' => 'avatar/'.$img_info['type'].'/'.$img_info['img_url'],
                 'avatar_thumb' => 'avatar/'.$img_info['type'].'/'.$img_info['img_url'].'?imageMogr2/crop/200x200/gravity/center',
-                'bg_img' =>'default_thumb.jpg',
+                'bg_img' =>'user/bg@2x.png',
                 'create_time' => $nowtime,
                 'user_status' => 1,
                 "user_type"=>2,//会员
@@ -412,6 +412,7 @@ class Model_Login extends PhalApi_Model_NotORM {
 			'avatar_thumb' => 'avatar/'.$img_info['type'].'/'.$img_info['img_url'].'?imageMogr2/crop/200x200/gravity/center',
             'last_login_ip' =>$_SERVER['REMOTE_ADDR'],
 			'create_time' => time(),
+            'bg_img' =>'user/bg@2x.png',
 			'user_status' => 1,
 			"user_type"=>2,//会员
 			"source"=>$source,
