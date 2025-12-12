@@ -1999,7 +1999,7 @@ class Model_User extends PhalApi_Model_NotORM {
                     $data['state']=$info['state'];
                 }
 
-                $data['schedule']=$schedule;
+                $data['schedule']=dealPrice($schedule);
                 $data['target']=$target;
                 //提示标语
                 if($k==5){
@@ -2082,7 +2082,7 @@ class Model_User extends PhalApi_Model_NotORM {
                     $data['state']=$info['state'];
                 }
 
-                $data['schedule']=$schedule;
+                $data['schedule']=dealPrice($schedule);
                 $data['target']=$target;
 
                 //提示标语
@@ -2168,7 +2168,7 @@ class Model_User extends PhalApi_Model_NotORM {
                     $data['state']=$info['state'];
                 }
 
-                $data['schedule']=$schedule;
+                $data['schedule']=dealPrice($schedule);
                 $data['target']=$target;
 
                 //提示标语
