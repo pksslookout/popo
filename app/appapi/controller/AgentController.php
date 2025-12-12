@@ -88,6 +88,7 @@ class AgentController extends HomebaseController {
             cloudUploadLocalFiles($outputImage,$outputImage);
             Db::name('user_information')->where(["id"=>$uid])->update(array("agent_url"=>$outputImage));
 
+            unlink($outputImage);
         }else{
             $outputImage=$user_information['agent_url'];
         }
@@ -96,7 +97,6 @@ class AgentController extends HomebaseController {
 		$code_a=str_split($code);
 
         unlink($qr);
-        unlink($outputImage);
 		$this->assign("code",$code);
 		$this->assign("code_a",$code_a);
 		$agentinfo=array();
