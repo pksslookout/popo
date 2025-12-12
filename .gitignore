@@ -6,3 +6,4 @@ vendor/
 PhalApi/Config/
 PhalApi/Runtime/
 node/node_modules/
+public/upload/
