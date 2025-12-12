@@ -1,6 +1,6 @@
 module.exports = {
-	'REDISHOST' : 'pop-bn1rcg.serverless.apse1.cache.amazonaws.com',
-	'REDISPASS' : 'redis123456',
+	'REDISHOST' : '127.0.0.1',
+	'REDISPASS' : '27199673',
 	'REDISPORT' : '6379',
 	'TOKEN'		: '1234567',
 	'sign_key'	: '76576076c1f5f657b634e966c8836a06',
