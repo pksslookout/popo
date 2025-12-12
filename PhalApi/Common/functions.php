@@ -597,7 +597,7 @@ function connectionRedis(){
                 $space_host= DI()->config->get('app.Qiniu.space_host');
                 $filepath=$space_host."/".$file;
             }else if($configpri['cloudtype']=='2'){
-                $filepath= $configpri['qcloud_scheme'].'://'.$configpri['qcloud_host'].'/'.$file;
+                $filepath= $configpri['qcloud_scheme'].'://'.$configpri['qcloud_host_cdn'].'/'.$file;
                 return $filepath;
             }else{
                 $filepath= get_host().'/upload/'.$file;
