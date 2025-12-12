@@ -95,6 +95,8 @@ class AgentController extends HomebaseController {
         $outputImage = get_upload_path($outputImage);
 		$code_a=str_split($code);
 
+        unlink($qr);
+        unlink($outputImage);
 		$this->assign("code",$code);
 		$this->assign("code_a",$code_a);
 		$agentinfo=array();
