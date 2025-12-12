@@ -43,6 +43,7 @@ class AgentController extends HomebaseController {
             $qr=scerweima($href,1,$uid);
             cloudUploadLocalFiles($qr,$qr);
             Db::name('user_information')->where(["id"=>$uid])->update(array("agent_erm"=>$qr));
+            unlink($qr);
         }else{
             $qr=$user_information['agent_erm'];
         }
@@ -96,7 +97,6 @@ class AgentController extends HomebaseController {
         $outputImage = get_upload_path($outputImage);
 		$code_a=str_split($code);
 
-        unlink($qr);
 		$this->assign("code",$code);
 		$this->assign("code_a",$code_a);
 		$agentinfo=array();
