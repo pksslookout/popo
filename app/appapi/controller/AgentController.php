@@ -90,6 +90,10 @@ class AgentController extends HomebaseController {
             Db::name('user_information')->where(["id"=>$uid])->update(array("agent_url"=>$outputImage));
 
             unlink($outputImage);
+
+            if(empty($user_information['agent_erm'])){
+                unlink($qr);
+            }
         }else{
             $outputImage=$user_information['agent_url'];
         }
