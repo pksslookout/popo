@@ -43,7 +43,6 @@ class AgentController extends HomebaseController {
             $qr=scerweima($href,1,$uid);
             cloudUploadLocalFiles($qr,$qr);
             Db::name('user_information')->where(["id"=>$uid])->update(array("agent_erm"=>$qr));
-            unlink($qr);
         }else{
             $qr=$user_information['agent_erm'];
         }
