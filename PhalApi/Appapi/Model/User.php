@@ -1739,19 +1739,19 @@ class Model_User extends PhalApi_Model_NotORM {
                     if ($k == 1) {
                         $target = $configpri['like_video_term'];
                         $reward = $configpri['like_video_coin'];
-                        $img = get_upload_path('day/gkzb.png');
+                        $img = get_upload_path('images/day/gkzb.png');
                     } else if ($k == 2) {
                         $target = $configpri['comment_video_term'];
                         $reward = $configpri['comment_video_coin'];
-                        $img = get_upload_path('day/gkjl.png');
+                        $img = get_upload_path('images/day/gkjl.png');
                     } else if ($k == 3) {
                         $target = $configpri['attention_user_term'];
                         $reward = $configpri['attention_user_coin'];
-                        $img = get_upload_path('day/zbjl.png');
+                        $img = get_upload_path('images/day/zbjl.png');
                     } else {
                         $target = $configpri['collect_user_term'];
                         $reward = $configpri['collect_user_coin'];
-                        $img = get_upload_path('day/dsjl.png');
+                        $img = get_upload_path('images/day/dsjl.png');
                     }
 
                     $save = [
@@ -1950,19 +1950,19 @@ class Model_User extends PhalApi_Model_NotORM {
                 if($k==5){
                     $target=$configpri['watch_live_term'];
                     $reward=$configpri['watch_live_coin'];
-                    $img=get_upload_path('day/gkzb.png');
+                    $img=get_upload_path('images/day/gkzb.png');
                 }else if($k==6){
                     $target=$configpri['watch_video_term'];
                     $reward=$configpri['watch_video_coin'];
-                    $img=get_upload_path('day/gkjl.png');
+                    $img=get_upload_path('images/day/gkjl.png');
                 }else if($k==7){
                     $target=$configpri['open_live_term'];
                     $reward=$configpri['open_live_coin'];
-                    $img=get_upload_path('day/zbjl.png');
+                    $img=get_upload_path('images/day/zbjl.png');
                 }else{
                     $target=$configpri['award_live_term'];
                     $reward=$configpri['award_live_coin'];
-                    $img=get_upload_path('day/dsjl.png');
+                    $img=get_upload_path('images/day/dsjl.png');
                 }
 
 
@@ -2034,19 +2034,19 @@ class Model_User extends PhalApi_Model_NotORM {
                 if($k==1){
                     $target=$configpri['like_video_term'];
                     $reward=$configpri['like_video_coin'];
-                    $img=get_upload_path('day/gkzb.png');
+                    $img=get_upload_path('images/day/gkzb.png');
                 }else if($k==2){
                     $target=$configpri['comment_video_term'];
                     $reward=$configpri['comment_video_coin'];
-                    $img=get_upload_path('day/gkjl.png');
+                    $img=get_upload_path('images/day/gkjl.png');
                 }else if($k==3){
                     $target=$configpri['attention_user_term'];
                     $reward=$configpri['attention_user_coin'];
-                    $img=get_upload_path('day/zbjl.png');
+                    $img=get_upload_path('images/day/zbjl.png');
                 }else{
                     $target=$configpri['collect_user_term'];
                     $reward=$configpri['collect_user_coin'];
-                    $img=get_upload_path('day/dsjl.png');
+                    $img=get_upload_path('images/day/dsjl.png');
                 }
 
                 $save=[
@@ -2119,19 +2119,19 @@ class Model_User extends PhalApi_Model_NotORM {
                 if($k==9){
                     $target=$configpri['share_agent_term'];
                     $reward=$configpri['share_agent_coin'];
-                    $img=get_upload_path('day/fxjl.png');
+                    $img=get_upload_path('images/day/fxjl.png');
                 }else if($k==10){
                     $target=$configpri['share_video_term'];
                     $reward=$configpri['share_video_coin'];
-                    $img=get_upload_path('day/fxjl.png');
+                    $img=get_upload_path('images/day/fxjl.png');
                 }else if($k==11){
                     $target=$configpri['share_live_term'];
                     $reward=$configpri['share_live_coin'];
-                    $img=get_upload_path('day/fxjl.png');
+                    $img=get_upload_path('images/day/fxjl.png');
                 }else{
                     $target=$configpri['download_term'];
                     $reward=$configpri['download_coin'];
-                    $img=get_upload_path('day/fxjl.png');
+                    $img=get_upload_path('images/day/fxjl.png');
                 }
 
 
