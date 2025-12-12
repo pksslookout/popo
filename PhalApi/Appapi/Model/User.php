@@ -1763,10 +1763,8 @@ class Model_User extends PhalApi_Model_NotORM {
                         'addtime' => $time,
                         'state' => '2',
                     ];
-                    $data['reward'] = $reward;
-                    $data['img'] = $img;
 
-                    $where = "uid={$uid} and type={$k} and addtime={$day}";
+                    $where = "uid={$uid} and type={$k}";
                     //每日任务
                     $info = DI()->notorm->user_daily_tasks
                         ->where($where)
@@ -1775,9 +1773,13 @@ class Model_User extends PhalApi_Model_NotORM {
 
                     if (!$info) {
                         $addScore = $addScore+$reward;
-                        releaseScore($uid,$uid,$reward,$k);
                         DI()->notorm->user_daily_tasks->insert($save);
-                    } else {
+                    }else if($time!=$info['addtime']){
+                        $addScore = $addScore+$reward;
+                        DI()->notorm->user_daily_tasks
+                            ->where('id=?',$info['id'])
+                            ->update(array("addtime"=>$time,"state"=>2));
+                    }else {
                         if($info['state']!=2){
                             DI()->notorm->user_daily_tasks
                                 ->where('id=?',$info['id'])
@@ -1928,6 +1930,7 @@ class Model_User extends PhalApi_Model_NotORM {
         $day = strtotime('today');
 		$list=[];
 
+        $time=strtotime(date("Y-m-d 00:00:00",time()));
         if($type == 'day'){
             //type 任务类型 1观看直播, 2观看视频, 3直播奖励, 4打赏奖励, 5分享邀请奖励, 6分享视频奖励, 7分享直播奖励
             $type=[
@@ -1935,7 +1938,6 @@ class Model_User extends PhalApi_Model_NotORM {
             ];
 
             // 当天时间
-            $time=strtotime(date("Y-m-d 00:00:00",time()));
             foreach($type as $k=>$v){
                 $data=[
                     'id'=>'0',
@@ -1976,13 +1978,13 @@ class Model_User extends PhalApi_Model_NotORM {
                 $data['reward']=$reward;
                 $data['img']=$img;
 
-                $where="uid={$uid} and type={$k} and addtime={$day}";
+                $where="uid={$uid} and type={$k}";
                 //每日任务
                 $info=DI()->notorm->user_daily_tasks
                     ->where($where)
                     ->select("*")
                     ->fetchOne();
-
+                $schedule = '0';
                 if(!$info){
                     $info=DI()->notorm->user_daily_tasks->insert($save);
 
@@ -1993,9 +1995,12 @@ class Model_User extends PhalApi_Model_NotORM {
                 }else{
                     $target=$info['target'];
                     $reward=$info['reward'];
+                    $schedule=$info['schedule'];
                     $data['state']=$info['state'];
                 }
 
+                $data['schedule']=$schedule;
+                $data['target']=$target;
                 //提示标语
                 if($k==5){
                     $tip_m=T("观看直播时长达到{target}分钟，奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
@@ -2017,7 +2022,6 @@ class Model_User extends PhalApi_Model_NotORM {
             $type=['1'=>T('视频点赞'),'2'=>T('视频评论'),'3'=>T('关注用户'),'4'=>T('视频收藏')];
 
             // 当天时间
-            $time=strtotime(date("Y-m-d 00:00:00",time()));
             foreach($type as $k=>$v){
                 $data=[
                     'id'=>'0',
@@ -2057,19 +2061,29 @@ class Model_User extends PhalApi_Model_NotORM {
                 $data['reward']=$reward;
                 $data['img']=$img;
 
-                $where="uid={$uid} and type={$k} and addtime={$day}";
+                $where="uid={$uid} and type={$k}";
                 //每日任务
                 $info=DI()->notorm->user_daily_tasks
                     ->where($where)
                     ->select("*")
                     ->fetchOne();
 
+                $schedule = '0';
                 if(!$info){
                     $info=DI()->notorm->user_daily_tasks->insert($save);
+
+
+                }else if($info['addtime']!=$time){
+                    $save['uptime']=time(); //更新时间
+                    DI()->notorm->user_daily_tasks->where("id={$info['id']}")->update($save);
                 }else{
                     $target=$info['target'];
+                    $schedule=$info['schedule'];
                     $data['state']=$info['state'];
                 }
+
+                $data['schedule']=$schedule;
+                $data['target']=$target;
 
                 //提示标语
                 if($k==1){
@@ -2093,7 +2107,6 @@ class Model_User extends PhalApi_Model_NotORM {
             $type=['9'=>T('分享邀请奖励'),'10'=>T('分享视频奖励'),'11'=>T('分享直播奖励'),'12'=>T('下载奖励')];
 
             // 当天时间
-            $time=strtotime(date("Y-m-d 00:00:00",time()));
             foreach($type as $k=>$v){
                 $data=[
                     'id'=>'0',
@@ -2134,13 +2147,14 @@ class Model_User extends PhalApi_Model_NotORM {
                 $data['reward']=$reward;
                 $data['img']=$img;
 
-                $where="uid={$uid} and type={$k} and addtime={$day}";
+                $where="uid={$uid} and type={$k}";
                 //每日任务
                 $info=DI()->notorm->user_daily_tasks
                     ->where($where)
                     ->select("*")
                     ->fetchOne();
 
+                $schedule = '0';
                 if(!$info){
                     $info=DI()->notorm->user_daily_tasks->insert($save);
 
@@ -2150,9 +2164,12 @@ class Model_User extends PhalApi_Model_NotORM {
                     DI()->notorm->user_daily_tasks->where("id={$info['id']}")->update($save);
                 }else{
                     $target=$info['target'];
-                    $reward=$info['reward'];
+                    $schedule=$info['schedule'];
                     $data['state']=$info['state'];
                 }
+
+                $data['schedule']=$schedule;
+                $data['target']=$target;
 
                 //提示标语
                 if($k==9){
