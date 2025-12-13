@@ -2265,27 +2265,27 @@ class Model_User extends PhalApi_Model_NotORM {
         }
         $info['vip_list'] = [
             [
-                'img' => get_upload_path('/images/vip/fa.png'),
+                'img' => get_upload_path('images/vip/fa.png'),
                 'title' => '一键签到完成任务',
                 'des' => '一键签到完成任务',
             ],
             [
-                'img' => get_upload_path('/images/vip/c.png'),
+                'img' => get_upload_path('images/vip/c.png'),
                 'title' => '享受加密直播间',
                 'des' => '享受加密直播间',
             ],
             [
-                'img' => get_upload_path('/images/vip/wx.png'),
+                'img' => get_upload_path('images/vip/wx.png'),
                 'title' => '享受发布视频打赏',
                 'des' => '享受发布视频打赏',
             ],
             [
-                'img' => get_upload_path('/images/vip/w.png'),
+                'img' => get_upload_path('images/vip/w.png'),
                 'title' => '享受群聊加密建群',
                 'des' => '享受群聊加密建群',
             ],
             [
-                'img' => get_upload_path('/images/vip/m.png'),
+                'img' => get_upload_path('images/vip/m.png'),
                 'title' => '享受更多分享权益',
                 'des' => '享受更多分享权益',
             ],
