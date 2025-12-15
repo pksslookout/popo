@@ -24,7 +24,7 @@ class AgentController extends HomebaseController {
 			return $this->fetch(':error');
 		}
 		  
-		$userinfo=getUserInfo($uid);
+		$userinfo=getUserInfo($uid,1);
 		$code=Db::name('agent_code')->where(["uid"=>$uid])->value('code');
 		
 		if(!$code){
