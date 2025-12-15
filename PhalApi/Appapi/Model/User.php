@@ -30,7 +30,7 @@ class Model_User extends PhalApi_Model_NotORM {
                 }
 
                 if ($info['consumption'] < 1000) {
-                    $info['level'] = 0;
+                    $info['level'] = '0';
                 }
                 $info['level_thumb'] = get_upload_path('images/new_level/level_' . $level . '@2x.png');
                 $info['level_bg_thumb'] = get_upload_path('images/new_level/level_bg_' . $level . '@2x.png');
@@ -39,7 +39,7 @@ class Model_User extends PhalApi_Model_NotORM {
                     $info['level_anchor'] = getLevelAnchor($info['votestotal']);
                     $info['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_' . $info['level_anchor'] . '@3x.png');
                 } else {
-                    $info['level_anchor'] = 0;
+                    $info['level_anchor'] = '0';
                     $info['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_1@3x.png');
                 }
 
@@ -53,7 +53,7 @@ class Model_User extends PhalApi_Model_NotORM {
                     $info['level_team_thumb'] = get_upload_path('images/new_level/level_team_1@3x.png');
                 }
 
-                $info['level_family'] = 0;
+                $info['level_family'] = '0';
                 $family_user_count = 0;
                 // 公会信息获取
                 $family = DI()->notorm->family->select('id,votes')->where('uid = ?', $uid)->fetchOne();
