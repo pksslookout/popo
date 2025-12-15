@@ -282,46 +282,96 @@ use think\Db;
 	{
         $where['touid']=$uid;
 		return Db::name("user_attention")->where($where)->count();
-	} 
-	/* 用户基本信息 */
-    function getUserInfo($uid) {
-        $where['id']=$uid;
-        $info= Db::name("user")->field("id,user_nicename,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,user_status,city,birthday,issuper")->where($where)->find();
-		if(!$info){
-            $info['id']=$uid;
-            $info['user_nicename']='用户不存在';
-            $info['avatar']='/default.jpg';
-            $info['avatar_thumb']='/default_thumb.jpg';
-            $info['sex']='0';
-            $info['signature']='';
-            $info['consumption']='0';
-            $info['votestotal']='0';
-            $info['province']='';
-            $info['city']='';
-            $info['birthday']='';
-            $info['issuper']='0';
-			$info['user_status']='1';
-        }
-        
-        if($info){
-            $info['avatar']=get_upload_path($info['avatar']);
-			$info['avatar_thumb']=get_upload_path($info['avatar_thumb']);
-			$info['level']=getLevel($info['consumption']);
-			$info['level_anchor']=getLevelAnchor($info['votestotal']);
+	}
 
-			$info['vip']=getUserVip($uid);
-			$info['liang']=getUserLiang($uid);
-            
-            if($info['birthday']){
-                $info['birthday']=date('Y-m-d',$info['birthday']);   
-            }else{
-                $info['birthday']='';
+
+    /* 用户基本信息 */
+    function getUserInfo($uid,$type=0) {
+
+        if($uid==0){
+            if($uid==='goodsorder_admin'){
+
+//				$configpub=getConfigPub();
+
+                $info['user_nicename']=T("订单消息");
+                $info['avatar']=get_upload_path('/orderMsg.png');
+                $info['avatar_thumb']=get_upload_path('/orderMsg.png');
+                $info['id']="goodsorder_admin";
+
             }
-            
+
+            $info['id']=$uid;
+            $info['user_nicename']=T('用户不存在');
+            $info['coin']="0";
+            $info['sex']="1";
+            $info['signature']='';
+            $info['province']='';
+            $info['city']='城市未填写';
+            $info['age']='';
+            $info['birthday']='';
+            $info['issuper']="0";
+            $info['votestotal']="0";
+            $info['islive']="0";
+            $info['consumption']="0";
+            $info['location']='';
+            $info['user_status']='1';
+
+        }else{
+
+            $info=getcaches("userinfo_".$uid);
+
+            if(!$info){
+                $info=DI()->notorm->user
+                    ->select('id,bg_img,user_nicename,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive')
+                    ->where('id=?',$uid)
+                    ->fetchOne();
+                $where['id']=$uid;
+                $info= Db::name("user")->field("id,bg_img,user_nicename,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive")->where($where)->find();
+
+                if(!$info){
+                    $info['id']=$uid;
+                    $info['user_nicename']=T('用户不存在');
+                    $info['avatar']='/default.jpg';
+                    $info['avatar_thumb']='/default_thumb.jpg';
+                    $info['sex']='0';
+                    $info['signature']='';
+                    $info['consumption']='0';
+                    $info['votestotal']='0';
+                    $info['province']='';
+                    $info['city']='';
+                    $info['birthday']='';
+                    $info['issuper']='0';
+                }
+                setcaches("userinfo_".$uid,$info);
+            }
+            $info['bg_img']=get_upload_path($info['bg_img']);
+            $info['avatar']=get_upload_path($info['avatar']);
+            $info['avatar_thumb']=get_upload_path($info['avatar_thumb']);
+//            $lang=GL();
+//            if($lang!='zh_cn'){
+//                $info['user_nicename'] = str_replace('POPO用户', 'POPO-User-', $info['user_nicename']);
+//            }
+            if($type==1){
+                return 	$info;
+            }
+            if($info){
+                $info['level']=getLevel($info['consumption']);
+                $info['level_anchor']=getLevelAnchor($info['votestotal']);
+
+                $info['vip']=getUserVip($uid);
+                $info['liang']=getUserLiang($uid);
+                if($info['birthday']){
+                    $info['birthday']=date('Y-m-d',$info['birthday']);
+                    $info['age']=calculateAge($info['birthday']);
+                }else{
+                    $info['birthday']='';
+                    $info['age']='';
+                }
+            }
         }
-				
-		return 	$info;		
-    }	 
+        return 	$info;
+    }
+
 	/*获取收到礼物数量(tsd) 以及送出的礼物数量（tsc） */
 	function getgif($uid)
 	{

@@ -47,7 +47,7 @@ class AgentController extends HomebaseController {
             $qr=$user_information['agent_erm'];
         }
 
-        $outputImage = 'upload/agent/'.$uid.'_'.$lang.'.png';
+        $outputImage = 'upload/agent/'.$uid.'_zh_cn.png';
 
         if(empty($user_information['agent_url'])){
             // 加载海报背景图
