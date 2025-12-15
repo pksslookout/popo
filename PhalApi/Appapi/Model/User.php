@@ -1638,7 +1638,7 @@ class Model_User extends PhalApi_Model_NotORM {
             ->select("today_score")
             ->where('id=?',$uid)
             ->fetchOne();
-        $rs['today_score']=$userinfo['today_score'];
+        $rs['today_score']=dealPrice($userinfo['today_score']);
         return $rs;
     }
 
