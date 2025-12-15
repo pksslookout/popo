@@ -368,6 +368,15 @@ use think\Db;
         return 	$info;
     }
 
+
+    //计算年龄
+    function calculateAge($birthday) {
+        $today = new DateTime();
+        $diff = $today->diff(new DateTime($birthday));
+        return $diff->y;
+//        return $diff->y.'岁';
+    }
+
 	/*获取收到礼物数量(tsd) 以及送出的礼物数量（tsc） */
 	function getgif($uid)
 	{
