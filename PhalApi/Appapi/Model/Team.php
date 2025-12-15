@@ -40,6 +40,7 @@ class Model_Team extends PhalApi_Model_NotORM {
                 $info['level_team_thumb'] = get_upload_path('images/new_level/level_team_1@3x.png');
             }
             $info['vip']=getUserVip($uid);
+            $info['vip_thumb'] = get_upload_path('images/new_level/VIP@2x.png');
             $info['liang']=getUserLiang($uid);
             $info['level_famliy']=getLevelAnchor($info['votestotal']);
             if ($info['level_family'] != 0) {
