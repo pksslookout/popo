@@ -321,10 +321,6 @@ use think\Db;
             $info=getcaches("userinfo_".$uid);
 
             if(!$info){
-                $info=DI()->notorm->user
-                    ->select('id,bg_img,user_nicename,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive')
-                    ->where('id=?',$uid)
-                    ->fetchOne();
                 $where['id']=$uid;
                 $info= Db::name("user")->field("id,bg_img,user_nicename,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive")->where($where)->find();
 
