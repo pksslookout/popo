@@ -719,6 +719,7 @@ function connectionRedis(){
 			$info['sex']="1";
 			$info['signature']='';
 			$info['province']='';
+			$info['user_login']='';
 			$info['city']='城市未填写';
 			$info['age']='';
 			$info['birthday']='';
@@ -735,7 +736,7 @@ function connectionRedis(){
 
 			if(!$info){
 				$info=DI()->notorm->user
-						->select('id,bg_img,user_nicename,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive')
+						->select('id,bg_img,user_nicename,user_login,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive')
 						->where('id=?',$uid)
 						->fetchOne();
 				if(!$info){

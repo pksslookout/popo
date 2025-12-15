@@ -322,7 +322,7 @@ use think\Db;
 
             if(!$info){
                 $where['id']=$uid;
-                $info= Db::name("user")->field("id,bg_img,user_nicename,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive")->where($where)->find();
+                $info= Db::name("user")->field("id,bg_img,user_nicename,user_login,avatar,avatar_thumb,sex,signature,consumption,votestotal,province,city,birthday,user_status,issuper,location,islive")->where($where)->find();
 
                 if(!$info){
                     $info['id']=$uid;
