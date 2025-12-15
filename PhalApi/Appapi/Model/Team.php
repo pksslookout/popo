@@ -79,20 +79,20 @@ class Model_Team extends PhalApi_Model_NotORM {
                 if ($v['consumption'] < 1000) {
                     $list[$k]['level'] = 0;
                 }
-                $list[$k]['level_thumb'] = get_upload_path('/images/new_level/level_' . $level . '@2x.png');
-                $list[$k]['level_bg_thumb'] = get_upload_path('/images/new_level/level_bg_' . $level . '@2x.png');
+                $list[$k]['level_thumb'] = get_upload_path('images/new_level/level_' . $level . '@2x.png');
+                $list[$k]['level_bg_thumb'] = get_upload_path('images/new_level/level_bg_' . $level . '@2x.png');
                 if ($v['islive'] == 1 && $v['votestotal'] > 0) {
                     $list[$k]['level_anchor'] = getLevelAnchor($v['votestotal']);
-                    $list[$k]['level_anchor_thumb'] = get_upload_path('/images/new_level/level_anchor_' . $v['level_anchor'] . '@3x.png');
+                    $list[$k]['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_' . $v['level_anchor'] . '@3x.png');
                 } else {
                     $list[$k]['level_anchor'] = 0;
-                    $list[$k]['level_anchor_thumb'] = get_upload_path('/images/new_level/level_anchor_1@3x.png');
+                    $list[$k]['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_1@3x.png');
                 }
                 $list[$k]['level_team']=$v['team_level'];
                 if ($v['level_team'] > 0) {
-                    $list[$k]['level_team_thumb'] = get_upload_path('/images/new_level/level_team_' . $v['level_team'] . '@3x.png');
+                    $list[$k]['level_team_thumb'] = get_upload_path('images/new_level/level_team_' . $v['level_team'] . '@3x.png');
                 } else {
-                    $list[$k]['level_team_thumb'] = get_upload_path('/images/new_level/level_team_1@3x.png');
+                    $list[$k]['level_team_thumb'] = get_upload_path('images/new_level/level_team_1@3x.png');
                 }
                 $list[$k]['vip']=getUserVip($v['id']);
                 $list[$k]['addtime']=date('Y-m-d',$v['addtime']);
