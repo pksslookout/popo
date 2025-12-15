@@ -1,13 +1,13 @@
 <?php
 
 class Model_User extends PhalApi_Model_NotORM {
-	
+
     public function getBaseInfoCount($uid) {
-		$info['video_count']=getVideoStatusCount($uid);
+        $info['video_count']=getVideoStatusCount($uid);
         $info['like_video_count']=getLikeVideoStatusCount($uid);
         $info['collect_count']=getCollectVideoStatusCount($uid);
-		return $info;
-	}
+        return $info;
+    }
 
     public function getUserLevel($uid) {
         $key="getUserLevelNew_v2_".$uid;
@@ -79,14 +79,14 @@ class Model_User extends PhalApi_Model_NotORM {
             }
             setcaches($key,$info,60*3);
         }
-		return $info;
-	}
+        return $info;
+    }
     /* 用户全部信息 */
-	public function getBaseInfo($uid) {
-		$info=DI()->notorm->user
-				->select("id,user_login,user_nicename,user_email,mobile,avatar,bg_img,avatar_thumb,sex,signature,coin,votes,consumption,votestotal,province,city,birthday,location")
-				->where('id=?',$uid)
-				->fetchOne();
+    public function getBaseInfo($uid) {
+        $info=DI()->notorm->user
+            ->select("id,user_login,user_nicename,user_email,mobile,avatar,bg_img,avatar_thumb,sex,signature,coin,votes,consumption,votestotal,province,city,birthday,location")
+            ->where('id=?',$uid)
+            ->fetchOne();
         if($info) {
 //            $lang=GL();
 //            if($lang!='zh_cn'){
@@ -142,36 +142,36 @@ class Model_User extends PhalApi_Model_NotORM {
 
         }
 
-					
-		return $info;
-	}
-			
-	/* 判断昵称是否重复 */
-	public function checkName($uid,$name){
-		$isexist=DI()->notorm->user
-					->select('id')
-					->where('id!=? and user_nicename=?',$uid,$name)
-					->fetchOne();
-		if($isexist){
-			return 0;
-		}else{
-			return 1;
-		}
-	}
-	
-	/* 修改信息 */
-	public function userUpdate($uid,$fields){
 
-		/* 清除缓存 */
-		delCache("userinfo_".$uid);
+        return $info;
+    }
 
-		return DI()->notorm->user
-					->where('id=?',$uid)
-					->update($fields);
-	}
+    /* 判断昵称是否重复 */
+    public function checkName($uid,$name){
+        $isexist=DI()->notorm->user
+            ->select('id')
+            ->where('id!=? and user_nicename=?',$uid,$name)
+            ->fetchOne();
+        if($isexist){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
 
-	/* 修改信息 */
-	public function userUpdateMobile($uid,$fields){
+    /* 修改信息 */
+    public function userUpdate($uid,$fields){
+
+        /* 清除缓存 */
+        delCache("userinfo_".$uid);
+
+        return DI()->notorm->user
+            ->where('id=?',$uid)
+            ->update($fields);
+    }
+
+    /* 修改信息 */
+    public function userUpdateMobile($uid,$fields){
 
         $isexist=DI()->notorm->user
             ->where('mobile=?',$fields['mobile'])
@@ -180,51 +180,51 @@ class Model_User extends PhalApi_Model_NotORM {
             return false;
         }
 
-		/* 清除缓存 */
-		delCache("userinfo_".$uid);
+        /* 清除缓存 */
+        delCache("userinfo_".$uid);
 
-		return DI()->notorm->user
-					->where('id=?',$uid)
-					->update($fields);
-	}
+        return DI()->notorm->user
+            ->where('id=?',$uid)
+            ->update($fields);
+    }
 
-	/* 修改密码 */
-	public function updatePass($uid,$pass){
+    /* 修改密码 */
+    public function updatePass($uid,$pass){
 //		$userinfo=DI()->notorm->user
 //					->select("user_pass")
 //					->where('id=?',$uid)
 //					->fetchOne();
-		$newpass=setPass($pass);
-		return DI()->notorm->user
-					->where('id=?',$uid)
-					->update( array( "user_pass"=>$newpass ) );
-	}
+        $newpass=setPass($pass);
+        return DI()->notorm->user
+            ->where('id=?',$uid)
+            ->update( array( "user_pass"=>$newpass ) );
+    }
 
-	/* 修改密码 */
-	public function updatePayPass($uid,$pass){
+    /* 修改密码 */
+    public function updatePayPass($uid,$pass){
 //		$userinfo=DI()->notorm->user
 //					->select("user_pass")
 //					->where('id=?',$uid)
 //					->fetchOne();
 //		$newpass=setPass($pass);
-		return DI()->notorm->user_information
-					->where('id=?',$uid)
-					->update( array( "user_pay_pass"=>$pass ) );
-	}
+        return DI()->notorm->user_information
+            ->where('id=?',$uid)
+            ->update( array( "user_pay_pass"=>$pass ) );
+    }
 
-	/* 修改密码 */
-	public function updateBnbAdr($uid,$bnb_adr){
-		return DI()->notorm->user_information
-					->where('id=?',$uid)
-					->update( array( "bnb_adr"=>$bnb_adr ) );
-	}
-	
-	/* 我的钻石 */
-	public function getBalance($uid){
+    /* 修改密码 */
+    public function updateBnbAdr($uid,$bnb_adr){
+        return DI()->notorm->user_information
+            ->where('id=?',$uid)
+            ->update( array( "bnb_adr"=>$bnb_adr ) );
+    }
+
+    /* 我的钻石 */
+    public function getBalance($uid){
         $info = DI()->notorm->user
-				->select("coin,consumption,conversion,votes,votesearnings")
-				->where('id=?',$uid)
-				->fetchOne();
+            ->select("coin,consumption,conversion,votes,votesearnings")
+            ->where('id=?',$uid)
+            ->fetchOne();
 
         $yesterdayMidnightTimestamp = strtotime('yesterday');
         $todayMidnightTimestamp = strtotime('today');
@@ -239,25 +239,25 @@ class Model_User extends PhalApi_Model_NotORM {
 
         return 	$info;
     }
-	
-	/* 充值规则 */
-	public function getChargeRules(){
 
-		$rules= DI()->notorm->charge_rules
-				->select('id,coin,coin_ios,money,product_id,give')
-				->order('list_order asc')
-				->fetchAll();
+    /* 充值规则 */
+    public function getChargeRules(){
 
-		return 	$rules;
-	}
+        $rules= DI()->notorm->charge_rules
+            ->select('id,coin,coin_ios,money,product_id,give')
+            ->order('list_order asc')
+            ->fetchAll();
 
-	/* vip充值规则 */
-	public function getVipChargeRules(){
+        return 	$rules;
+    }
 
-		$rules= DI()->notorm->vip_charge_rules
-				->select('id,name,name_en,money,days,coin')
-				->order('list_order asc')
-				->fetchAll();
+    /* vip充值规则 */
+    public function getVipChargeRules(){
+
+        $rules= DI()->notorm->vip_charge_rules
+            ->select('id,name,name_en,money,days,coin')
+            ->order('list_order asc')
+            ->fetchAll();
         $lang = GL();
         if(!in_array($lang,['zh_cn','en'])) {
             $translate = get_language_translate('vip_charge_rules', 'name', $lang);
@@ -274,36 +274,36 @@ class Model_User extends PhalApi_Model_NotORM {
             }
         }
 
-		return 	$rules;
-	}
+        return 	$rules;
+    }
 
-	/* 我的收益 */
-	public function getProfit($uid){
-		$info= DI()->notorm->user
-				->select("votes,votestotal")
-				->where('id=?',$uid)
-				->fetchOne();
+    /* 我的收益 */
+    public function getProfit($uid){
+        $info= DI()->notorm->user
+            ->select("votes,votestotal")
+            ->where('id=?',$uid)
+            ->fetchOne();
 
-		$config=getConfigPri();
+        $config=getConfigPri();
 
         $configpub=getConfigPub();
 
-		//提现比例
-		$name_votes=$configpub['name_votes'];
-		$cash_rate=$config['cash_rate'];
+        //提现比例
+        $name_votes=$configpub['name_votes'];
+        $cash_rate=$config['cash_rate'];
         $cash_start=$config['cash_start'];
-		$cash_end=$config['cash_end'];
-		$cash_max_times=$config['cash_max_times'];
-		$cash_take=$config['cash_take'];
-		//剩余票数
-		$votes=$info['votes'];
-        
-		if(!$cash_rate){
-			$total='0';
-		}else{
-			//总可提现数
-			$total=(string)(floor($votes/$cash_rate)*(100-$cash_take)/100);
-		}
+        $cash_end=$config['cash_end'];
+        $cash_max_times=$config['cash_max_times'];
+        $cash_take=$config['cash_take'];
+        //剩余票数
+        $votes=$info['votes'];
+
+        if(!$cash_rate){
+            $total='0';
+        }else{
+            //总可提现数
+            $total=(string)(floor($votes/$cash_rate)*(100-$cash_take)/100);
+        }
 
         if($cash_max_times){
             //$tips='每月'.$cash_start.'-'.$cash_end.'号可进行提现申请，收益将在'.($cash_end+1).'-'.($cash_end+5).'号统一发放，每月只可提现'.$cash_max_times.'次';
@@ -312,43 +312,43 @@ class Model_User extends PhalApi_Model_NotORM {
             //$tips='每月'.$cash_start.'-'.$cash_end.'号可进行提现申请，收益将在'.($cash_end+1).'-'.($cash_end+5).'号统一发放';
             $tips=T('每月{cash_start}-{cash_end}号可进行提现申请',['$cash_start'=>$cash_start,'cash_end'=>$cash_end]);
         }
-        
-		$rs=array(
-			"name_votes"=>$name_votes,
-			"votes"=>$votes,
-			"votestotal"=>$info['votestotal'],
-			"total"=>$total,
-			"cash_rate"=>$cash_rate,
-			"cash_take"=>$cash_take,
-			"tips"=>$tips,
-		);
-		return $rs;
-	}
 
-	/* 我的收益 */
-	public function getUsdtForward($uid){
-		$info= DI()->notorm->user
-				->select("usdt")
-				->where('id=?',$uid)
-				->fetchOne();
+        $rs=array(
+            "name_votes"=>$name_votes,
+            "votes"=>$votes,
+            "votestotal"=>$info['votestotal'],
+            "total"=>$total,
+            "cash_rate"=>$cash_rate,
+            "cash_take"=>$cash_take,
+            "tips"=>$tips,
+        );
+        return $rs;
+    }
 
-		$config=getConfigPri();
+    /* 我的收益 */
+    public function getUsdtForward($uid){
+        $info= DI()->notorm->user
+            ->select("usdt")
+            ->where('id=?',$uid)
+            ->fetchOne();
 
-		//提现比例
-		$cash_rate=$config['usdt_rate'];
+        $config=getConfigPri();
+
+        //提现比例
+        $cash_rate=$config['usdt_rate'];
         $cash_start=$config['usdt_start'];
-		$cash_end=$config['usdt_end'];
-		$cash_max_times=$config['usdt_max_times'];
-		$cash_take=$config['usdt_take'];
-		//剩余usdt
-		$usdt=$info['usdt'];
+        $cash_end=$config['usdt_end'];
+        $cash_max_times=$config['usdt_max_times'];
+        $cash_take=$config['usdt_take'];
+        //剩余usdt
+        $usdt=$info['usdt'];
 
-		if(!$cash_rate){
-			$total='0';
-		}else{
-			//总可提现数
-			$total=($usdt/$cash_rate)*(100-$cash_take)/100;
-		}
+        if(!$cash_rate){
+            $total='0';
+        }else{
+            //总可提现数
+            $total=($usdt/$cash_rate)*(100-$cash_take)/100;
+        }
 
         if($cash_max_times){
             //$tips='每月'.$cash_start.'-'.$cash_end.'号可进行提现申请，收益将在'.($cash_end+1).'-'.($cash_end+5).'号统一发放，每月只可提现'.$cash_max_times.'次';
@@ -368,35 +368,35 @@ class Model_User extends PhalApi_Model_NotORM {
             "tips_two"=>T('*请勿直接提现至众筹或ICO地址。否则将无法收到众筹或者ICO发放的代币。'),
             "tips_three"=>T('*请勿与受制裁实体进行交易。'),
         );
-	}
+    }
 
-	/* 红包收益 */
-	public function getRedProfit($uid){
-		$info= DI()->notorm->user
-				->select("red_votes,votestotal")
-				->where('id=?',$uid)
-				->fetchOne();
+    /* 红包收益 */
+    public function getRedProfit($uid){
+        $info= DI()->notorm->user
+            ->select("red_votes,votestotal")
+            ->where('id=?',$uid)
+            ->fetchOne();
 
-		$config=getConfigPri();
+        $config=getConfigPri();
 
         $configpub=getConfigPub();
 
-		//提现比例
-		$name_votes=$configpub['name_votes'];
-		$cash_rate=$config['red_cash_rate'];
+        //提现比例
+        $name_votes=$configpub['name_votes'];
+        $cash_rate=$config['red_cash_rate'];
         $cash_start=$config['cash_start'];
-		$cash_end=$config['cash_end'];
-		$cash_max_times=$config['cash_max_times'];
-		$cash_take=$config['cash_take'];
-		//剩余票数
-		$votes=$info['red_votes'];
+        $cash_end=$config['cash_end'];
+        $cash_max_times=$config['cash_max_times'];
+        $cash_take=$config['cash_take'];
+        //剩余票数
+        $votes=$info['red_votes'];
 
-		if(!$cash_rate){
-			$total='0';
-		}else{
-			//总可提现数
-			$total=(string)(floor($votes/$cash_rate)*(100-$cash_take)/100);
-		}
+        if(!$cash_rate){
+            $total='0';
+        }else{
+            //总可提现数
+            $total=(string)(floor($votes/$cash_rate)*(100-$cash_take)/100);
+        }
 
         if($cash_max_times){
             //$tips='每月'.$cash_start.'-'.$cash_end.'号可进行提现申请，收益将在'.($cash_end+1).'-'.($cash_end+5).'号统一发放，每月只可提现'.$cash_max_times.'次';
@@ -406,128 +406,128 @@ class Model_User extends PhalApi_Model_NotORM {
             $tips=T('每月{cash_start}-{cash_end}号可进行提现申请',['$cash_start'=>$cash_start,'cash_end'=>$cash_end]);
         }
 
-		$rs=array(
-			"name_votes"=>$name_votes,
-			"votes"=>$votes,
-			"votestotal"=>$info['votestotal'],
-			"total"=>$total,
-			"cash_rate"=>$cash_rate,
-			"cash_take"=>$cash_take,
-			"tips"=>$tips,
-		);
-		return $rs;
-	}
-	/* 提现  */
-	public function setCash($data){
-        
+        $rs=array(
+            "name_votes"=>$name_votes,
+            "votes"=>$votes,
+            "votestotal"=>$info['votestotal'],
+            "total"=>$total,
+            "cash_rate"=>$cash_rate,
+            "cash_take"=>$cash_take,
+            "tips"=>$tips,
+        );
+        return $rs;
+    }
+    /* 提现  */
+    public function setCash($data){
+
         $nowtime=time();
-        
+
         $uid=$data['uid'];
         $accountid=$data['accountid'];
         $cashvote=$data['cashvote'];
-        
+
         $config=getConfigPri();
         $cash_start=$config['cash_start'];
         $cash_end=$config['cash_end'];
         $cash_max_times=$config['cash_max_times'];
-        
+
         $day=(int)date("d",$nowtime);
-        
+
         if($day < $cash_start || $day > $cash_end){
             return 1005;
         }
-        
+
         //本月第一天
         $month=date('Y-m-d',strtotime(date("Ym",$nowtime).'01'));
         $month_start=strtotime(date("Ym",$nowtime).'01');
 
         //本月最后一天
         $month_end=strtotime("{$month} +1 month");
-        
+
         if($cash_max_times){
             $isexist=DI()->notorm->cash_record
-                    ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
-                    ->count();
+                ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
+                ->count();
             if($isexist >= $cash_max_times){
                 return 1006;
             }
         }
-        
-		$isrz=DI()->notorm->user_auth
-				->select("status")
-				->where('uid=?',$uid)
-				->fetchOne();
-		if(!$isrz || $isrz['status']!=1){
-			return 1003;
-		}
-        
+
+        $isrz=DI()->notorm->user_auth
+            ->select("status")
+            ->where('uid=?',$uid)
+            ->fetchOne();
+        if(!$isrz || $isrz['status']!=1){
+            return 1003;
+        }
+
         /* 钱包信息 */
-		$accountinfo=DI()->notorm->cash_account
-				->select("*")
-				->where('id=? and uid=?',$accountid,$uid)
-				->fetchOne();
+        $accountinfo=DI()->notorm->cash_account
+            ->select("*")
+            ->where('id=? and uid=?',$accountid,$uid)
+            ->fetchOne();
 
         if(!$accountinfo){
 
             return 1007;
         }
-        
 
-		//提现比例
-		$cash_rate=$config['cash_rate'];
-		
-		/*提现抽成比例*/
-		$cash_take=$config['cash_take'];
-		
-		/* 最低额度 */
-		$cash_min=$config['cash_min'];
-		
-		//提现钱数
+
+        //提现比例
+        $cash_rate=$config['cash_rate'];
+
+        /*提现抽成比例*/
+        $cash_take=$config['cash_take'];
+
+        /* 最低额度 */
+        $cash_min=$config['cash_min'];
+
+        //提现钱数
         $cash_money=floor($cashvote/$cash_rate);
-		
-		if($cash_money < $cash_min){
-			return 1004;
-		}
-		
-		$cashvotes=$cash_money*$cash_rate;
-        
-        
+
+        if($cash_money < $cash_min){
+            return 1004;
+        }
+
+        $cashvotes=$cash_money*$cash_rate;
+
+
         $ifok=DI()->notorm->user
             ->where('id = ? and votes>=?', $uid,$cashvotes)
             ->update(array('votes' => new NotORM_Literal("votes - {$cashvotes}")) );
         if(!$ifok){
             return 1001;
         }
-		
-		//平台抽成后最终的钱数
-		$money_take=$cash_money*(1-$cash_take*0.01);
-		$money=number_format($money_take,2,".","");
-		
-		$data=array(
-			"uid"=>$uid,
-			"cash_money"=>$cash_money,
-			"cash_take"=>$cash_take,
-			"money"=>$money,
-			"votes"=>$cashvotes,
-			"orderno"=>$uid.'_'.$nowtime.rand(100,999),
-			"status"=>0,
-			"addtime"=>$nowtime,
-			"uptime"=>$nowtime,
-			"type"=>$accountinfo['type'],
-			"account_bank"=>$accountinfo['account_bank'],
-			"account"=>$accountinfo['account'],
-			"name"=>$accountinfo['name'],
-		);
-		
-		$rs=DI()->notorm->cash_record->insert($data);
-		if(!$rs){
-            return 1002;
-		}	        
 
-		return $rs;
-	}
-	/* 提现USDT  */
-	public function forwardChainUsdt($uid,$adr,$chainType,$number,$user_pay_pass){
+        //平台抽成后最终的钱数
+        $money_take=$cash_money*(1-$cash_take*0.01);
+        $money=number_format($money_take,2,".","");
+
+        $data=array(
+            "uid"=>$uid,
+            "cash_money"=>$cash_money,
+            "cash_take"=>$cash_take,
+            "money"=>$money,
+            "votes"=>$cashvotes,
+            "orderno"=>$uid.'_'.$nowtime.rand(100,999),
+            "status"=>0,
+            "addtime"=>$nowtime,
+            "uptime"=>$nowtime,
+            "type"=>$accountinfo['type'],
+            "account_bank"=>$accountinfo['account_bank'],
+            "account"=>$accountinfo['account'],
+            "name"=>$accountinfo['name'],
+        );
+
+        $rs=DI()->notorm->cash_record->insert($data);
+        if(!$rs){
+            return 1002;
+        }
+
+        return $rs;
+    }
+    /* 提现USDT  */
+    public function forwardChainUsdt($uid,$adr,$chainType,$number,$user_pay_pass){
 
         $nowtime=time();
 
@@ -552,20 +552,20 @@ class Model_User extends PhalApi_Model_NotORM {
 
         if($usdt_max_times){
             $isexist=DI()->notorm->usdt_record
-                    ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
-                    ->count();
+                ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
+                ->count();
             if($isexist >= $usdt_max_times){
                 return 1006;
             }
         }
 
-		$isrz=DI()->notorm->user_auth
-				->select("status")
-				->where('uid=?',$uid)
-				->fetchOne();
-		if(!$isrz || $isrz['status']!=1){
-			return 1003;
-		}
+        $isrz=DI()->notorm->user_auth
+            ->select("status")
+            ->where('uid=?',$uid)
+            ->fetchOne();
+        if(!$isrz || $isrz['status']!=1){
+            return 1003;
+        }
 
         /* 钱包信息 */
 //		$accountinfo=DI()->notorm->cash_account
@@ -579,23 +579,23 @@ class Model_User extends PhalApi_Model_NotORM {
 //        }
 
 
-		//提现比例
-		$usdt_rate=$config['usdt_rate'];
+        //提现比例
+        $usdt_rate=$config['usdt_rate'];
 
-		/*提现抽成比例*/
-		$usdt_take=$config['usdt_take'];
+        /*提现抽成比例*/
+        $usdt_take=$config['usdt_take'];
 
-		/* 最低额度 */
-		$usdt_min=$config['usdt_min'];
+        /* 最低额度 */
+        $usdt_min=$config['usdt_min'];
 
-		//提现钱数
+        //提现钱数
         $usdt_money=$number/$usdt_rate;
 
-		if($usdt_money < $usdt_min){
-			return 1004;
-		}
+        if($usdt_money < $usdt_min){
+            return 1004;
+        }
 
-		$usdt=$usdt_money*$usdt_rate;
+        $usdt=$usdt_money*$usdt_rate;
 
         try {
             DI()->notorm->beginTransaction('db_appapi');
@@ -625,7 +625,7 @@ class Model_User extends PhalApi_Model_NotORM {
 
             //平台抽成后最终的钱数
             $money=$usdt*(1-$usdt_take*0.01);
-		    $money=number_format($money,2,".","");
+            $money=number_format($money,2,".","");
 
             $data = array(
                 "uid" => $uid,
@@ -652,10 +652,10 @@ class Model_User extends PhalApi_Model_NotORM {
         }
 
 
-		return $rs;
-	}
-	/* 充值vip  */
-	public function setVipBalance($data){
+        return $rs;
+    }
+    /* 充值vip  */
+    public function setVipBalance($data){
 
         $rs['code'] = 400;
         $rs['msg'] = T('服务暂停');
@@ -665,7 +665,7 @@ class Model_User extends PhalApi_Model_NotORM {
         $uid=$data['uid'];
         $rules_id=$data['rules_id'];
 
-		//获取vip充值规则
+        //获取vip充值规则
         $rulesInfo = DI()->notorm->vip_charge_rules
             ->select('id,name,name_en,money,days,coin')
             ->where('id=?',$rules_id)
@@ -676,9 +676,9 @@ class Model_User extends PhalApi_Model_NotORM {
             ->where('id=?',$uid)
             ->fetchOne();
 
-		if($rulesInfo['coin'] > $userInfo['coin']){
-			return 1004;
-		}
+        if($rulesInfo['coin'] > $userInfo['coin']){
+            return 1004;
+        }
 
         $ifok=DI()->notorm->user
             ->where('id = ?', $uid)
@@ -741,10 +741,10 @@ class Model_User extends PhalApi_Model_NotORM {
         if(!$rs){
             return 1002;
         }
-		return $rs;
-	}
-	/* 提现  */
-	public function setRedCash($data){
+        return $rs;
+    }
+    /* 提现  */
+    public function setRedCash($data){
 
         $nowtime=time();
 
@@ -772,49 +772,49 @@ class Model_User extends PhalApi_Model_NotORM {
 
         if($cash_max_times){
             $isexist=DI()->notorm->cash_record
-                    ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
-                    ->count();
+                ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
+                ->count();
             if($isexist >= $cash_max_times){
                 return 1006;
             }
         }
 
-		$isrz=DI()->notorm->user_auth
-				->select("status")
-				->where('uid=?',$uid)
-				->fetchOne();
-		if(!$isrz || $isrz['status']!=1){
-			return 1003;
-		}
+        $isrz=DI()->notorm->user_auth
+            ->select("status")
+            ->where('uid=?',$uid)
+            ->fetchOne();
+        if(!$isrz || $isrz['status']!=1){
+            return 1003;
+        }
 
         /* 钱包信息 */
-		$accountinfo=DI()->notorm->cash_account
-				->select("*")
-				->where('id=? and uid=?',$accountid,$uid)
-				->fetchOne();
+        $accountinfo=DI()->notorm->cash_account
+            ->select("*")
+            ->where('id=? and uid=?',$accountid,$uid)
+            ->fetchOne();
 
         if(!$accountinfo){
 
             return 1007;
         }
 
-		//提现比例
-		$cash_rate=$config['red_cash_rate'];
+        //提现比例
+        $cash_rate=$config['red_cash_rate'];
 
-		/*提现抽成比例*/
-		$cash_take=$config['cash_take'];
+        /*提现抽成比例*/
+        $cash_take=$config['cash_take'];
 
-		/* 最低额度 */
-		$cash_min=$config['cash_min'];
+        /* 最低额度 */
+        $cash_min=$config['cash_min'];
 
-		//提现钱数
+        //提现钱数
         $cash_money=floor($cashvote/$cash_rate);
 
-		if($cash_money < $cash_min){
-			return 1004;
-		}
+        if($cash_money < $cash_min){
+            return 1004;
+        }
 
-		$cashvotes=$cash_money*$cash_rate;
+        $cashvotes=$cash_money*$cash_rate;
 
 
         $ifok=DI()->notorm->user
@@ -824,42 +824,42 @@ class Model_User extends PhalApi_Model_NotORM {
             return 1001;
         }
 
-		//平台抽成后最终的钱数
-		$money_take=$cash_money*(1-$cash_take*0.01);
-		$money=number_format($money_take,2,".","");
+        //平台抽成后最终的钱数
+        $money_take=$cash_money*(1-$cash_take*0.01);
+        $money=number_format($money_take,2,".","");
 
-		$data=array(
-			"uid"=>$uid,
-			"money"=>$money,
+        $data=array(
+            "uid"=>$uid,
+            "money"=>$money,
             "cash_money"=>$cash_money,
             "cash_take"=>$cash_take,
-			"votes"=>$cashvotes,
-			"orderno"=>$uid.'_'.$nowtime.rand(100,999),
-			"status"=>0,
-			"addtime"=>$nowtime,
-			"uptime"=>$nowtime,
-			"type"=>$accountinfo['type'],
-			"account_bank"=>$accountinfo['account_bank'],
-			"account"=>$accountinfo['account'],
-			"name"=>$accountinfo['name'],
-			"cash_type"=>1,
-		);
+            "votes"=>$cashvotes,
+            "orderno"=>$uid.'_'.$nowtime.rand(100,999),
+            "status"=>0,
+            "addtime"=>$nowtime,
+            "uptime"=>$nowtime,
+            "type"=>$accountinfo['type'],
+            "account_bank"=>$accountinfo['account_bank'],
+            "account"=>$accountinfo['account'],
+            "name"=>$accountinfo['name'],
+            "cash_type"=>1,
+        );
 
-		$rs=DI()->notorm->cash_record->insert($data);
-		if(!$rs){
+        $rs=DI()->notorm->cash_record->insert($data);
+        if(!$rs){
             return 1002;
-		}
+        }
 
-		return $rs;
-	}
-	
-	/* 关注 */
-	public function setAttent($uid,$touid){
-		$isexist=DI()->notorm->user_attention
-					->select("*")
-					->where('uid=? and touid=?',$uid,$touid)
-					->fetchOne();
-		if($isexist){
+        return $rs;
+    }
+
+    /* 关注 */
+    public function setAttent($uid,$touid){
+        $isexist=DI()->notorm->user_attention
+            ->select("*")
+            ->where('uid=? and touid=?',$uid,$touid)
+            ->fetchOne();
+        if($isexist){
             if($isexist['status']==1){
                 $result=DI()->notorm->user_attention->where("uid=? and touid=?",$uid,$touid)->update(array("status"=>0,"updatetime"=>time()));
                 $data=[
@@ -895,51 +895,51 @@ class Model_User extends PhalApi_Model_NotORM {
 //			DI()->notorm->user_attention
 //				->where('uid=? and touid=?',$uid,$touid)
 //				->delete();
-			return 1;
-		}else{
-			DI()->notorm->user_black
-				->where('uid=? and touid=?',$uid,$touid)
-				->delete();
-			DI()->notorm->user_attention
-				->insert(array("uid"=>$uid,"touid"=>$touid,"addtime"=>time()));
+            return 1;
+        }else{
+            DI()->notorm->user_black
+                ->where('uid=? and touid=?',$uid,$touid)
+                ->delete();
+            DI()->notorm->user_attention
+                ->insert(array("uid"=>$uid,"touid"=>$touid,"addtime"=>time()));
             $data=[
                 'type'=>'3',
                 'nums'=>'1',
             ];
             dailyTasks($uid,$data);
-			return 1;
-		}			 
-	}	
-	
-	/* 拉黑 */
-	public function setBlack($uid,$touid){
-		$isexist=DI()->notorm->user_black
-					->select("*")
-					->where('uid=? and touid=?',$uid,$touid)
-					->fetchOne();
-		if($isexist){
-			DI()->notorm->user_black
-				->where('uid=? and touid=?',$uid,$touid)
-				->delete();
-			return 0;
-		}else{
-			DI()->notorm->user_attention
-				->where('uid=? and touid=?',$uid,$touid)
-				->delete();
-			DI()->notorm->user_black
-				->insert(array("uid"=>$uid,"touid"=>$touid));
+            return 1;
+        }
+    }
 
-			return 1;
-		}			 
-	}
-	
-	/* 关注列表 */
-	public function getFollowsList($uid,$touid,$p,$user_nicename){
+    /* 拉黑 */
+    public function setBlack($uid,$touid){
+        $isexist=DI()->notorm->user_black
+            ->select("*")
+            ->where('uid=? and touid=?',$uid,$touid)
+            ->fetchOne();
+        if($isexist){
+            DI()->notorm->user_black
+                ->where('uid=? and touid=?',$uid,$touid)
+                ->delete();
+            return 0;
+        }else{
+            DI()->notorm->user_attention
+                ->where('uid=? and touid=?',$uid,$touid)
+                ->delete();
+            DI()->notorm->user_black
+                ->insert(array("uid"=>$uid,"touid"=>$touid));
+
+            return 1;
+        }
+    }
+
+    /* 关注列表 */
+    public function getFollowsList($uid,$touid,$p,$user_nicename){
         if($p<1){
             $p=1;
         }
-		$pnum=20;
-		$start=($p-1)*$pnum;
+        $pnum=20;
+        $start=($p-1)*$pnum;
         if(!empty($user_nicename)){
             $where = 'and u.user_nicename like "%'.$user_nicename.'%" ';
         }else{
@@ -960,16 +960,16 @@ class Model_User extends PhalApi_Model_NotORM {
                 $list[$k]['fans']=getFans($v['touid']);
             }
         }
-		return $list;
-	}
+        return $list;
+    }
 
-	/* 点赞我的人列表 */
-	public function getLikesList($uid,$p){
+    /* 点赞我的人列表 */
+    public function getLikesList($uid,$p){
         if($p<1){
             $p=1;
         }
-		$pnum=20;
-		$start=($p-1)*$pnum;
+        $pnum=20;
+        $start=($p-1)*$pnum;
         //获取视频点赞列表
         $sql = 'SELECT v.id AS videoid, v.thumb AS video_thumb, vl.uid, vl.addtime '
             . 'FROM cmf_video AS v INNER JOIN cmf_video_like AS vl '
@@ -978,14 +978,14 @@ class Model_User extends PhalApi_Model_NotORM {
             . 'ORDER BY vl.id DESC '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
         $videoLikeList = $this->getORM()->queryAll($sql, []);
-		foreach($videoLikeList as $k=>$v){
+        foreach($videoLikeList as $k=>$v){
             $userInfo=getUserInfo($v['uid'], 1);
             $videoLikeList[$k]['user_nicename']=$userInfo['user_nicename'];
             $videoLikeList[$k]['video_thumb']=get_upload_path($v['video_thumb']);
             $videoLikeList[$k]['avatar']=get_upload_path($userInfo['avatar']);
             $videoLikeList[$k]['addtime']=datetime($v['addtime']);
             $videoLikeList[$k]['title']='赞了你的视频';
-		}
+        }
         //获取视频评论点赞列表
         $sql = 'SELECT v.id AS videoid, v.thumb AS video_thumb, vcl.uid, vcl.addtime, vcl.commentid '
             . 'FROM cmf_video AS v INNER JOIN cmf_video_comments_like AS vcl '
@@ -994,26 +994,26 @@ class Model_User extends PhalApi_Model_NotORM {
             . 'ORDER BY vcl.id DESC '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
         $videoCommentsLikeList = $this->getORM()->queryAll($sql, []);
-		foreach($videoCommentsLikeList as $k=>$v){
+        foreach($videoCommentsLikeList as $k=>$v){
             $userInfo=getUserInfo($v['uid'], 1);
             $videoCommentsLikeList[$k]['user_nicename']=$userInfo['user_nicename'];
             $videoCommentsLikeList[$k]['video_thumb']=get_upload_path($v['video_thumb']);
             $videoCommentsLikeList[$k]['avatar']=get_upload_path($userInfo['avatar']);
             $videoCommentsLikeList[$k]['addtime']=datetime($v['addtime']);
             $videoCommentsLikeList[$k]['title']='赞了你的评论';
-		}
+        }
         $videoList=array_merge($videoLikeList, $videoCommentsLikeList);
-		return $videoList;
-	}
+        return $videoList;
+    }
 
 
-	/* 我的上热门视频列表 */
-	public function getPopularVideoList($uid,$p,$status){
+    /* 我的上热门视频列表 */
+    public function getPopularVideoList($uid,$p,$status){
         if($p<1){
             $p=1;
         }
-		$pnum=20;
-		$start=($p-1)*$pnum;
+        $pnum=20;
+        $start=($p-1)*$pnum;
         $time = time();
         //获取视频点赞列表
         $sql = 'SELECT p.id,p.price,p.status,p.duration,p.view_counts,p.actual_view_counts,p.videoid,p.return_price,v.title,v.thumb AS video_thumb,p.addtime '
@@ -1023,21 +1023,21 @@ class Model_User extends PhalApi_Model_NotORM {
             . 'ORDER BY p.addtime DESC '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
         $popularVideoList = $this->getORM()->queryAll($sql, []);
-		foreach($popularVideoList as $k=>$v){
+        foreach($popularVideoList as $k=>$v){
             $popularVideoList[$k]['video_thumb']=get_upload_path($v['video_thumb']);
             $popularVideoList[$k]['actual_time']=getSeconds($time-$v['addtime']);
             $popularVideoList[$k]['addtime']=date('Y-m-d H:i:s', $v['addtime']);
-		}
-		return $popularVideoList;
-	}
+        }
+        return $popularVideoList;
+    }
 
-	/* 我的上热门视频列表 */
-	public function getPopularLiveList($uid,$p,$status){
+    /* 我的上热门视频列表 */
+    public function getPopularLiveList($uid,$p,$status){
         if($p<1){
             $p=1;
         }
-		$pnum=20;
-		$start=($p-1)*$pnum;
+        $pnum=20;
+        $start=($p-1)*$pnum;
         $time = time();
         //获取视频点赞列表
         $sql = 'SELECT p.id,p.price,p.price,p.status,p.liveendtime,p.view_people_counts,p.view_counts,p.actual_view_counts,p.livetime,p.return_price,u.avatar AS live_avatar,p.addtime '
@@ -1047,7 +1047,7 @@ class Model_User extends PhalApi_Model_NotORM {
             . 'ORDER BY p.addtime DESC '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
         $popularLiveList = $this->getORM()->queryAll($sql, []);
-		foreach($popularLiveList as $k=>$v){
+        foreach($popularLiveList as $k=>$v){
             $popularLiveList[$k]['live_avatar']=get_upload_path($v['live_avatar']);
             if($v['liveendtime']==0){
                 $v['liveendtime'] = $time;
@@ -1071,17 +1071,17 @@ class Model_User extends PhalApi_Model_NotORM {
             if($v['status']==0){
                 $popularLiveList[$k]['actual_time']=T('未开播');
             }
-		}
-		return $popularLiveList;
-	}
+        }
+        return $popularLiveList;
+    }
 
-	/* @我的人列表 */
-	public function getAtsList($uid,$p){
+    /* @我的人列表 */
+    public function getAtsList($uid,$p){
         if($p<1){
             $p=1;
         }
-		$pnum=20;
-		$start=($p-1)*$pnum;
+        $pnum=20;
+        $start=($p-1)*$pnum;
         //获取视频点赞列表
         $sql = 'SELECT vca.videoid, v.thumb AS video_thumb, v.title AS video_title, vca.uid, vca.addtime, vca.commentid '
             . 'FROM cmf_video_comments_at AS vca INNER JOIN cmf_video AS v '
@@ -1090,7 +1090,7 @@ class Model_User extends PhalApi_Model_NotORM {
             . 'ORDER BY vca.id DESC '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
         $videoLikeList = $this->getORM()->queryAll($sql, []);
-		foreach($videoLikeList as $k=>$v) {
+        foreach($videoLikeList as $k=>$v) {
             $userInfo = getUserInfo($v['uid'], 1);
             $videoLikeList[$k]['user_nicename'] = $userInfo['user_nicename'];
             $videoLikeList[$k]['video_thumb'] = get_upload_path($v['video_thumb']);
@@ -1098,16 +1098,16 @@ class Model_User extends PhalApi_Model_NotORM {
             $videoLikeList[$k]['addtime'] = datetime($v['addtime']);
             $videoLikeList[$k]['title'] = T('的评论中@了你');
         }
-		return $videoLikeList;
-	}
+        return $videoLikeList;
+    }
 
-	/* 评论我的人列表 */
-	public function getCommentsList($uid,$p){
+    /* 评论我的人列表 */
+    public function getCommentsList($uid,$p){
         if($p<1){
             $p=1;
         }
-		$pnum=20;
-		$start=($p-1)*$pnum;
+        $pnum=20;
+        $start=($p-1)*$pnum;
 
         $sql = 'SELECT vc.id, vc.videoid, v.thumb AS video_thumb, v.title AS video_title, vc.uid, vc.addtime, vc.parentid, vc.commentid, vc.content '
             . 'FROM cmf_video_comments AS vc INNER JOIN cmf_video AS v '
@@ -1116,7 +1116,7 @@ class Model_User extends PhalApi_Model_NotORM {
             . 'ORDER BY vc.id DESC '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
         $videoLikeList = $this->getORM()->queryAll($sql, []);
-		foreach($videoLikeList as $k=>$v) {
+        foreach($videoLikeList as $k=>$v) {
             $userInfo = getUserInfo($v['uid'], 1);
             $videoLikeList[$k]['user_nicename'] = $userInfo['user_nicename'];
             $videoLikeList[$k]['video_thumb'] = get_upload_path($v['video_thumb']);
@@ -1143,134 +1143,134 @@ class Model_User extends PhalApi_Model_NotORM {
                 $videoLikeList[$k]['comment_info']=[];
             }
         }
-		return $videoLikeList;
-	}
-	
-	/* 粉丝列表 */
-	public function getFansList($uid,$touid,$p){
-        if($p<1){
-            $p=1;
-        }
-		$pnum=20;
-		$start=($p-1)*$pnum;
-		$touids=DI()->notorm->user_attention
-					->select("uid,addtime")
-                    ->where("touid='{$touid}' and status=1")
-					->order("addtime desc")
-					->limit($start,$pnum)
-					->fetchAll();
-		foreach($touids as $k=>$v){
-			$userinfo=getUserInfo($v['uid'], 1);
-			if($userinfo){
-				$userinfo['isattention']=isAttention($uid,$v['uid']);
-				$userinfo['fans']=getFans($v['uid']);
-				$userinfo['addtime']=datetime($v['addtime']);
-				$touids[$k]=$userinfo;
-			}else{
-				DI()->notorm->user_attention->where('uid=? or touid=?',$v['uid'],$v['uid'])->delete();
-				unset($touids[$k]);
-			}
-			
-		}		
-		$touids=array_values($touids);
-		return $touids;
-	}	
+        return $videoLikeList;
+    }
 
-	/* 黑名单列表 */
-	public function getBlackList($uid,$touid,$p){
+    /* 粉丝列表 */
+    public function getFansList($uid,$touid,$p){
         if($p<1){
             $p=1;
         }
-		$pnum=50;
-		$start=($p-1)*$pnum;
-		$touids=DI()->notorm->user_black
-					->select("touid")
-					->where('uid=?',$touid)
-					->limit($start,$pnum)
-					->fetchAll();
-		foreach($touids as $k=>$v){
-			$userinfo=getUserInfo($v['touid'],1);
-			if($userinfo){
-				$touids[$k]=$userinfo;
-			}else{
-				DI()->notorm->user_black->where('uid=? or touid=?',$v['touid'],$v['touid'])->delete();
-				unset($touids[$k]);
-			}
-		}
-		$touids=array_values($touids);
-		return $touids;
-	}
-	
-	/* 直播记录 */
-	public function getLiverecord($touid,$p){
+        $pnum=20;
+        $start=($p-1)*$pnum;
+        $touids=DI()->notorm->user_attention
+            ->select("uid,addtime")
+            ->where("touid='{$touid}' and status=1")
+            ->order("addtime desc")
+            ->limit($start,$pnum)
+            ->fetchAll();
+        foreach($touids as $k=>$v){
+            $userinfo=getUserInfo($v['uid'], 1);
+            if($userinfo){
+                $userinfo['isattention']=isAttention($uid,$v['uid']);
+                $userinfo['fans']=getFans($v['uid']);
+                $userinfo['addtime']=datetime($v['addtime']);
+                $touids[$k]=$userinfo;
+            }else{
+                DI()->notorm->user_attention->where('uid=? or touid=?',$v['uid'],$v['uid'])->delete();
+                unset($touids[$k]);
+            }
+
+        }
+        $touids=array_values($touids);
+        return $touids;
+    }
+
+    /* 黑名单列表 */
+    public function getBlackList($uid,$touid,$p){
         if($p<1){
             $p=1;
         }
-		$pnum=50;
-		$start=($p-1)*$pnum;
-		$record=DI()->notorm->live_record
-					->select("id,uid,nums,starttime,endtime,title,city")
-					->where('uid=?',$touid)
-					->order("id desc")
-					->limit($start,$pnum)
-					->fetchAll();
-		foreach($record as $k=>$v){
-			$record[$k]['datestarttime']=date("Y.m.d",$v['starttime']);
-			$record[$k]['dateendtime']=date("Y.m.d",$v['endtime']);
+        $pnum=50;
+        $start=($p-1)*$pnum;
+        $touids=DI()->notorm->user_black
+            ->select("touid")
+            ->where('uid=?',$touid)
+            ->limit($start,$pnum)
+            ->fetchAll();
+        foreach($touids as $k=>$v){
+            $userinfo=getUserInfo($v['touid'],1);
+            if($userinfo){
+                $touids[$k]=$userinfo;
+            }else{
+                DI()->notorm->user_black->where('uid=? or touid=?',$v['touid'],$v['touid'])->delete();
+                unset($touids[$k]);
+            }
+        }
+        $touids=array_values($touids);
+        return $touids;
+    }
+
+    /* 直播记录 */
+    public function getLiverecord($touid,$p){
+        if($p<1){
+            $p=1;
+        }
+        $pnum=50;
+        $start=($p-1)*$pnum;
+        $record=DI()->notorm->live_record
+            ->select("id,uid,nums,starttime,endtime,title,city")
+            ->where('uid=?',$touid)
+            ->order("id desc")
+            ->limit($start,$pnum)
+            ->fetchAll();
+        foreach($record as $k=>$v){
+            $record[$k]['datestarttime']=date("Y.m.d",$v['starttime']);
+            $record[$k]['dateendtime']=date("Y.m.d",$v['endtime']);
             $cha=$v['endtime']-$v['starttime'];
-			$record[$k]['length']=getSeconds($cha);
-		}						
-		return $record;						
-	}	
-	
-		/* 个人主页 */
-	public function getUserHome($uid,$touid){
-		$info=getUserInfo($touid);
+            $record[$k]['length']=getSeconds($cha);
+        }
+        return $record;
+    }
 
-		$info['follows']=(string)getFollows($touid);
-		$info['fans']=(string)getFans($touid);
+    /* 个人主页 */
+    public function getUserHome($uid,$touid){
+        $info=getUserInfo($touid);
+
+        $info['follows']=(string)getFollows($touid);
+        $info['fans']=(string)getFans($touid);
         $info['likes']=(string)getLikes($touid);
-		$info['isattention']=(string)isAttention($uid,$touid);
-		$info['isblack']=(string)isBlack($uid,$touid);
-		$info['isblack2']=(string)isBlack($touid,$uid);
-        
+        $info['isattention']=(string)isAttention($uid,$touid);
+        $info['isblack']=(string)isBlack($uid,$touid);
+        $info['isblack2']=(string)isBlack($touid,$uid);
+
         /* 直播状态 */
         $islive='0';
         $isexist=DI()->notorm->live
-                    ->select('uid')
-					->where('uid=? and islive=1',$touid)
-					->fetchOne();
+            ->select('uid')
+            ->where('uid=? and islive=1',$touid)
+            ->fetchOne();
         if($isexist){
             $islive='1';
         }
-		$info['islive']=$islive;	        
-		
-		/* 贡献榜前三 */
-		$rs=array();
-		$rs=DI()->notorm->user_coinrecord
-				->select("uid,sum(totalcoin) as total")
-				->where('action=1 and touid=?',$touid)
-				->group("uid")
-				->order("total desc")
-				->limit(0,3)
-				->fetchAll();
-		foreach($rs as $k=>$v){
-			$userinfo=getUserInfo($v['uid'],1);
-			$rs[$k]['avatar']=$userinfo['avatar'];
-		}		
-		$info['contribute']=$rs;	
-		
+        $info['islive']=$islive;
+
+        /* 贡献榜前三 */
+        $rs=array();
+        $rs=DI()->notorm->user_coinrecord
+            ->select("uid,sum(totalcoin) as total")
+            ->where('action=1 and touid=?',$touid)
+            ->group("uid")
+            ->order("total desc")
+            ->limit(0,3)
+            ->fetchAll();
+        foreach($rs as $k=>$v){
+            $userinfo=getUserInfo($v['uid'],1);
+            $rs[$k]['avatar']=$userinfo['avatar'];
+        }
+        $info['contribute']=$rs;
+
         /* 视频数 */
-		if($uid==$touid){  //自己的视频（需要返回视频的状态前台显示）
-			$where=" uid={$uid} and isdel='0' and status=1";
-		}else{  //访问其他人的主页视频
+        if($uid==$touid){  //自己的视频（需要返回视频的状态前台显示）
+            $where=" uid={$uid} and isdel='0' and status=1";
+        }else{  //访问其他人的主页视频
             $videoids_s=getVideoBlack($uid);
-			$where="id not in ({$videoids_s}) and uid={$touid} and isdel='0' and status=1";
-		}
-        
-		$videonums=DI()->notorm->video
-				->where($where)
-				->count();
+            $where="id not in ({$videoids_s}) and uid={$touid} and isdel='0' and status=1";
+        }
+
+        $videonums=DI()->notorm->video
+            ->where($where)
+            ->count();
         if(!$videonums){
             $videonums=0;
         }
@@ -1281,16 +1281,16 @@ class Model_User extends PhalApi_Model_NotORM {
         $like_video_count = getLikeVideoStatusCount($touid);
         $info['likevideonums']=(string)$like_video_count;
 
-		/* 动态数 */
-		if($uid==$touid){  //自己的动态（需要返回动态的状态前台显示）
-			$whered=" uid={$uid} and isdel='0' and status=1";
-		}else{  //访问其他人的主页动态
-			$whered=" uid={$touid} and isdel='0' and status=1  ";
-		}
-        
-		$dynamicnums=DI()->notorm->dynamic
-				->where($whered)
-				->count();
+        /* 动态数 */
+        if($uid==$touid){  //自己的动态（需要返回动态的状态前台显示）
+            $whered=" uid={$uid} and isdel='0' and status=1";
+        }else{  //访问其他人的主页动态
+            $whered=" uid={$touid} and isdel='0' and status=1  ";
+        }
+
+        $dynamicnums=DI()->notorm->dynamic
+            ->where($whered)
+            ->count();
         if(!$dynamicnums){
             $dynamicnums=0;
         }
@@ -1298,113 +1298,113 @@ class Model_User extends PhalApi_Model_NotORM {
         $info['dynamicnums']=(string)$dynamicnums;
         /* 直播数 */
         $livenums=DI()->notorm->live_record
-					->where('uid=?',$touid)
-					->count();
-                    
-        $info['livenums']=$livenums;        
-		/* 直播记录 */
-		$record=array();
-		$record=DI()->notorm->live_record
-					->select("id,uid,nums,starttime,endtime,title,city")
-					->where('uid=?',$touid)
-					->order("id desc")
-					->limit(0,50)
-					->fetchAll();
-		foreach($record as $k=>$v){
-			$record[$k]['datestarttime']=date("Y.m.d",$v['starttime']);
-			$record[$k]['dateendtime']=date("Y.m.d",$v['endtime']);
+            ->where('uid=?',$touid)
+            ->count();
+
+        $info['livenums']=$livenums;
+        /* 直播记录 */
+        $record=array();
+        $record=DI()->notorm->live_record
+            ->select("id,uid,nums,starttime,endtime,title,city")
+            ->where('uid=?',$touid)
+            ->order("id desc")
+            ->limit(0,50)
+            ->fetchAll();
+        foreach($record as $k=>$v){
+            $record[$k]['datestarttime']=date("Y.m.d",$v['starttime']);
+            $record[$k]['dateendtime']=date("Y.m.d",$v['endtime']);
             $cha=$v['endtime']-$v['starttime'];
             $record[$k]['length']=getSeconds($cha);
-		}		
-		$info['liverecord']=$record;	
-		return $info;
-	}
-	
-	/* 贡献榜 */
-	public function getContributeList($touid,$p){
-		if($p<1){
+        }
+        $info['liverecord']=$record;
+        return $info;
+    }
+
+    /* 贡献榜 */
+    public function getContributeList($touid,$p){
+        if($p<1){
             $p=1;
         }
-		$pnum=50;
-		$start=($p-1)*$pnum;
+        $pnum=50;
+        $start=($p-1)*$pnum;
 
-		$rs=array();
-		$rs=DI()->notorm->user_coinrecord
-				->select("uid,sum(totalcoin) as total")
-				->where('touid=?',$touid)
-				->group("uid")
-				->order("total desc")
-				->limit($start,$pnum)
-				->fetchAll();
-				
-		foreach($rs as $k=>$v){
-			$rs[$k]['userinfo']=getUserInfo($v['uid'],1);
-		}		
-		
-		return $rs;
-	}
-	
-	/* 设置分销 */
-	public function setDistribut($uid,$code){
-        
+        $rs=array();
+        $rs=DI()->notorm->user_coinrecord
+            ->select("uid,sum(totalcoin) as total")
+            ->where('touid=?',$touid)
+            ->group("uid")
+            ->order("total desc")
+            ->limit($start,$pnum)
+            ->fetchAll();
+
+        foreach($rs as $k=>$v){
+            $rs[$k]['userinfo']=getUserInfo($v['uid'],1);
+        }
+
+        return $rs;
+    }
+
+    /* 设置分销 */
+    public function setDistribut($uid,$code){
+
         $isexist=DI()->notorm->agent
-				->select("*")
-				->where('uid=?',$uid)
-				->fetchOne();
+            ->select("*")
+            ->where('uid=?',$uid)
+            ->fetchOne();
         if($isexist){
             return 1004;
         }
-        
+
         //获取邀请码用户信息
-		$oneinfo=DI()->notorm->agent_code
-				->select("uid")
-				->where('code=? and uid!=?',$code,$uid)
-				->fetchOne();
-		if(!$oneinfo){
-			return 1002;
-		}
-		
-		//获取邀请码用户的邀请信息
-		$agentinfo=DI()->notorm->agent
-				->select("*")
-				->where('uid=?',$oneinfo['uid'])
-				->fetchOne();
-		if(!$agentinfo){
-			$agentinfo=array(
-				'uid'=>$oneinfo['uid'],
-				'one_uid'=>0,
-			);
-		}
+        $oneinfo=DI()->notorm->agent_code
+            ->select("uid")
+            ->where('code=? and uid!=?',$code,$uid)
+            ->fetchOne();
+        if(!$oneinfo){
+            return 1002;
+        }
+
+        //获取邀请码用户的邀请信息
+        $agentinfo=DI()->notorm->agent
+            ->select("*")
+            ->where('uid=?',$oneinfo['uid'])
+            ->fetchOne();
+        if(!$agentinfo){
+            $agentinfo=array(
+                'uid'=>$oneinfo['uid'],
+                'one_uid'=>0,
+            );
+        }
         // 判断对方是否自己下级
         if($agentinfo['one_uid']==$uid ){
             return 1003;
         }
-		
-		$data=array(
-			'uid'=>$uid,
-			'one_uid'=>$agentinfo['uid'],
-			'addtime'=>time(),
-		);
-		DI()->notorm->agent->insert($data);
-		return 0;
-	}
-    
-    
+
+        $data=array(
+            'uid'=>$uid,
+            'one_uid'=>$agentinfo['uid'],
+            'addtime'=>time(),
+        );
+        DI()->notorm->agent->insert($data);
+        return 0;
+    }
+
+
     /* 印象标签 */
     public function getImpressionLabel(){
-        
+
         $key="getImpressionLabel";
-		$list=getcaches($key);
-		if(!$list){
+        $list=getcaches($key);
+        if(!$list){
             $list=DI()->notorm->label
-				->select("*")
-				->order("list_order asc,id desc")
-				->fetchAll();
+                ->select("*")
+                ->order("list_order asc,id desc")
+                ->fetchAll();
             if($list){
-                setcaches($key,$list); 
+                setcaches($key,$list);
             }
-			
-		}
+
+        }
         $lang=GL();
         if(!in_array($lang,['zh_cn','en'])) {
             $translate = get_language_translate('label', 'name', $lang);
@@ -1422,30 +1422,30 @@ class Model_User extends PhalApi_Model_NotORM {
         }
 
         return $list;
-    }       
+    }
     /* 用户标签 */
     public function getUserLabel($uid,$touid){
         $list=DI()->notorm->label_user
-				->select("label")
-                ->where('uid=? and touid=?',$uid,$touid)
-				->fetchOne();
-                
+            ->select("label")
+            ->where('uid=? and touid=?',$uid,$touid)
+            ->fetchOne();
+
         return $list;
-        
-    }    
+
+    }
 
     /* 设置用户标签 */
     public function setUserLabel($uid,$touid,$labels){
         $nowtime=time();
         $isexist=DI()->notorm->label_user
-				->select("*")
-                ->where('uid=? and touid=?',$uid,$touid)
-				->fetchOne();
+            ->select("*")
+            ->where('uid=? and touid=?',$uid,$touid)
+            ->fetchOne();
         if($isexist){
             $rs=DI()->notorm->label_user
                 ->where('uid=? and touid=?',$uid,$touid)
-				->update(array( 'label'=>$labels,'uptime'=>$nowtime ) );
-            
+                ->update(array( 'label'=>$labels,'uptime'=>$nowtime ) );
+
         }else{
             $data=array(
                 'uid'=>$uid,
@@ -1456,18 +1456,18 @@ class Model_User extends PhalApi_Model_NotORM {
             );
             $rs=DI()->notorm->label_user->insert($data);
         }
-                
+
         return $rs;
-        
-    }    
-    
+
+    }
+
     /* 获取我的标签 */
     public function getMyLabel($uid){
         $rs=array();
         $list=DI()->notorm->label_user
-				->select("label")
-                ->where('touid=?',$uid)
-				->fetchAll();
+            ->select("label")
+            ->where('touid=?',$uid)
+            ->fetchAll();
         $label=array();
         foreach($list as $k=>$v){
             $v_a=preg_split('/,|，/',$v['label']);
@@ -1475,20 +1475,20 @@ class Model_User extends PhalApi_Model_NotORM {
             if($v_a){
                 $label=array_merge($label,$v_a);
             }
-            
+
         }
 
         if(!$label){
             return $rs;
         }
-        
-        
+
+
         $label_nums=array_count_values($label);
-        
+
         $label_key=array_keys($label_nums);
-        
+
         $labels=$this->getImpressionLabel();
-        
+
         $order_nums=array();
         foreach($labels as $k=>$v){
             if(in_array($v['id'],$label_key)){
@@ -1497,207 +1497,207 @@ class Model_User extends PhalApi_Model_NotORM {
                 $rs[]=$v;
             }
         }
-        
+
         array_multisort($order_nums,SORT_DESC,$rs);
-        
+
         return $rs;
-        
-    }   
-    
+
+    }
+
     /* 获取关于我们列表 */
     public function getPerSetting(){
         $rs=array();
-        
+
         $list=DI()->notorm->portal_post
-				->select("id,post_title")
-                ->where("type='2'")
-                ->order('list_order asc')
-				->fetchAll();
+            ->select("id,post_title")
+            ->where("type='2'")
+            ->order('list_order asc')
+            ->fetchAll();
         foreach($list as $k=>$v){
-            
+
             $rs[]=array('id'=>'0','name'=>$v['post_title'],'thumb'=>'' ,'href'=>get_upload_path("/portal/page/index?id={$v['id']}"));
         }
-        
+
         return $rs;
     }
-    
+
     /* 提现账号列表 */
     public function getUserAccountList($uid){
-        
+
         $list=DI()->notorm->cash_account
-                ->select("*")
-                ->where('uid=?',$uid)
-                ->order("addtime desc")
-                ->fetchAll();
-                
+            ->select("*")
+            ->where('uid=?',$uid)
+            ->order("addtime desc")
+            ->fetchAll();
+
         return $list;
     }
 
     /* 账号信息 */
     public function getUserAccount($where){
-        
+
         $list=DI()->notorm->cash_account
-                ->select("*")
-                ->where($where)
-                ->order("addtime desc")
-                ->fetchAll();
-                
+            ->select("*")
+            ->where($where)
+            ->order("addtime desc")
+            ->fetchAll();
+
         return $list;
     }
     /* 设置提账号 */
     public function setUserAccount($data){
-        
+
         $rs=DI()->notorm->cash_account
-                ->insert($data);
-                
+            ->insert($data);
+
         return $rs;
     }
 
     /* 删除提账号 */
     public function delUserAccount($data){
-        
+
         $rs=DI()->notorm->cash_account
-                ->where($data)
-                ->delete();
-                
+            ->where($data)
+            ->delete();
+
         return $rs;
     }
-    
-	/* 登录奖励信息 */
-	public function LoginBonus($uid){
-		$rs=array(
-			'bonus_switch'=>'0',
-			'bonus_day'=>'0',
-			'count_day'=>'0',
-			'bonus_list'=>array(),
-		);
-        
+
+    /* 登录奖励信息 */
+    public function LoginBonus($uid){
+        $rs=array(
+            'bonus_switch'=>'0',
+            'bonus_day'=>'0',
+            'count_day'=>'0',
+            'bonus_list'=>array(),
+        );
+
         //file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 uid:'.json_encode($uid)."\r\n",FILE_APPEND);
-		$configpri=getConfigPri();
-		if(!$configpri['bonus_switch']){
-			return $rs;
-		}
-		$rs['bonus_switch']=$configpri['bonus_switch'];
+        $configpri=getConfigPri();
+        if(!$configpri['bonus_switch']){
+            return $rs;
+        }
+        $rs['bonus_switch']=$configpri['bonus_switch'];
 
-		//file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 bonus_switch:'."\r\n",FILE_APPEND);
-		/* 获取登录设置 */
+        //file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 bonus_switch:'."\r\n",FILE_APPEND);
+        /* 获取登录设置 */
         $key='loginbonus';
-		$list=getcaches($key);
-		if(!$list){
+        $list=getcaches($key);
+        if(!$list){
             $list=DI()->notorm->loginbonus
-					->select("day,coin")
-					->fetchAll();
-			if($list){
-				setcaches($key,$list);
-			}
-		}
-        
-        //file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 list:'."\r\n",FILE_APPEND);
-		$rs['bonus_list']=$list;
-		$bonus_coin=array();
-		foreach($list as $k=>$v){
-			$bonus_coin[$v['day']]=$v['coin'];
-		}
+                ->select("day,coin")
+                ->fetchAll();
+            if($list){
+                setcaches($key,$list);
+            }
+        }
 
-		/* 登录奖励 */
-		$signinfo=DI()->notorm->user_sign
-					->select("bonus_day,bonus_time,count_day")
-					->where('uid=?',$uid)
-					->fetchOne();
+        //file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 list:'."\r\n",FILE_APPEND);
+        $rs['bonus_list']=$list;
+        $bonus_coin=array();
+        foreach($list as $k=>$v){
+            $bonus_coin[$v['day']]=$v['coin'];
+        }
+
+        /* 登录奖励 */
+        $signinfo=DI()->notorm->user_sign
+            ->select("bonus_day,bonus_time,count_day")
+            ->where('uid=?',$uid)
+            ->fetchOne();
         //file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 signinfo:'."\r\n",FILE_APPEND);
-		if(!$signinfo){
-			$signinfo=array(
-				'bonus_day'=>'0',
-				'bonus_time'=>'0',
-				'count_day'=>'0',
-			);
+        if(!$signinfo){
+            $signinfo=array(
+                'bonus_day'=>'0',
+                'bonus_time'=>'0',
+                'count_day'=>'0',
+            );
         }
         $nowtime=time();
         if($nowtime - $signinfo['bonus_time'] > 60*60*24){
             $signinfo['count_day']=0;
         }
         $rs['count_day']=(string)$signinfo['count_day'];
-		
-		if($nowtime>$signinfo['bonus_time']){
-			//更新
-			$bonus_time=strtotime(date("Ymd",$nowtime))+60*60*24;
-			$bonus_day=$signinfo['bonus_day'];
-			if($bonus_day>6){
-				$bonus_day=0;
-			}
-			$bonus_day++;
+
+        if($nowtime>$signinfo['bonus_time']){
+            //更新
+            $bonus_time=strtotime(date("Ymd",$nowtime))+60*60*24;
+            $bonus_day=$signinfo['bonus_day'];
+            if($bonus_day>6){
+                $bonus_day=0;
+            }
+            $bonus_day++;
             $coin=$bonus_coin[$bonus_day];
-            
-			if($coin){
+
+            if($coin){
                 $rs['bonus_day']=(string)$bonus_day;
             }
-			
-		}
+
+        }
         //file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 rs:'."\r\n",FILE_APPEND);
         $userinfo=DI()->notorm->user
             ->select("today_score")
             ->where('id=?',$uid)
             ->fetchOne();
         $rs['today_score']=$userinfo['today_score'];
-		return $rs;
-	}
-    
-	/* 获取登录奖励 */
-	public function getLoginBonus($uid){
-		$rs=0;
-		$day=strtotime('today');
-		$configpri=getConfigPri();
-		if(!$configpri['bonus_switch']){
-			return $rs;
-		}
-		
-		/* 获取登录设置 */
-        $key='loginbonus';
-		$list=getcaches($key);
-		if(!$list){
-            $list=DI()->notorm->loginbonus
-					->select("day,coin")
-					->fetchAll();
-			if($list){
-				setcaches($key,$list);
-			}
-		}
+        return $rs;
+    }
 
-		$bonus_coin=array();
-		foreach($list as $k=>$v){
-			$bonus_coin[$v['day']]=$v['coin'];
-		}
-		
-		$isadd=0;
-		/* 登录奖励 */
-		$signinfo=DI()->notorm->user_sign
-					->select("bonus_day,bonus_time,count_day")
-					->where('uid=?',$uid)
-					->fetchOne();
-		if(!$signinfo){
-			$isadd=1;
-			$signinfo=array(
-				'bonus_day'=>'0',
-				'bonus_time'=>'0',
-				'count_day'=>'0',
-			);
+    /* 获取登录奖励 */
+    public function getLoginBonus($uid){
+        $rs=0;
+        $day=strtotime('today');
+        $configpri=getConfigPri();
+        if(!$configpri['bonus_switch']){
+            return $rs;
         }
-		$nowtime=time();
-		if($nowtime>$signinfo['bonus_time']){
-			//更新
-			$bonus_time=strtotime(date("Ymd",$nowtime))+60*60*24;
-			$bonus_day=$signinfo['bonus_day'];
-			$count_day=$signinfo['count_day'];
-			if($bonus_day>6){
-				$bonus_day=0;
-			}
+
+        /* 获取登录设置 */
+        $key='loginbonus';
+        $list=getcaches($key);
+        if(!$list){
+            $list=DI()->notorm->loginbonus
+                ->select("day,coin")
+                ->fetchAll();
+            if($list){
+                setcaches($key,$list);
+            }
+        }
+
+        $bonus_coin=array();
+        foreach($list as $k=>$v){
+            $bonus_coin[$v['day']]=$v['coin'];
+        }
+
+        $isadd=0;
+        /* 登录奖励 */
+        $signinfo=DI()->notorm->user_sign
+            ->select("bonus_day,bonus_time,count_day")
+            ->where('uid=?',$uid)
+            ->fetchOne();
+        if(!$signinfo){
+            $isadd=1;
+            $signinfo=array(
+                'bonus_day'=>'0',
+                'bonus_time'=>'0',
+                'count_day'=>'0',
+            );
+        }
+        $nowtime=time();
+        if($nowtime>$signinfo['bonus_time']){
+            //更新
+            $bonus_time=strtotime(date("Ymd",$nowtime))+60*60*24;
+            $bonus_day=$signinfo['bonus_day'];
+            $count_day=$signinfo['count_day'];
+            if($bonus_day>6){
+                $bonus_day=0;
+            }
             if($nowtime - $signinfo['bonus_time'] > 60*60*24){
                 $count_day=0;
             }
-			$bonus_day++;
-			$count_day++;
-            
- 
+            $bonus_day++;
+            $count_day++;
+
+
             if($isadd){
                 DI()->notorm->user_sign
                     ->insert(array("uid"=>$uid,"bonus_time"=>$bonus_time,"bonus_day"=>$bonus_day,"count_day"=>$count_day ));
@@ -1708,14 +1708,14 @@ class Model_User extends PhalApi_Model_NotORM {
             }
 
             $score=$bonus_coin[$bonus_day];
-            
+
 //			if($coin){
 //                DI()->notorm->user
 //                    ->where('id=?',$uid)
 //                    ->update(array( "coin"=>new NotORM_Literal("coin + {$coin}") ));
 //
 
-                /* 记录 */
+            /* 记录 */
 //                $insert=array("type"=>'2',"action"=>'113',"uid"=>$uid,"touid"=>$uid,"giftid"=>$bonus_day,"giftcount"=>'0',"total"=>$coin,"showid"=>'0',"addtime"=>$nowtime );
 //                DI()->notorm->user_scorerecord->insert($insert);
 //                releaseScore($uid,$uid,$coin,13);
@@ -1793,77 +1793,77 @@ class Model_User extends PhalApi_Model_NotORM {
             $rs = $score;
             releaseScore($uid,$uid,$score,25);
             releaseAgentScore($uid,$score);
-		}
+        }
 
-		return $rs;
-		
-	}
+        return $rs;
 
-	//检测用户是否填写了邀请码
-	public function checkIsAgent($uid){
-		$info=DI()->notorm->agent->where("uid=?",$uid)->fetchOne();
-		if(!$info){
-			return 0;
-		}
+    }
 
-		return 1;
-	}
+    //检测用户是否填写了邀请码
+    public function checkIsAgent($uid){
+        $info=DI()->notorm->agent->where("uid=?",$uid)->fetchOne();
+        if(!$info){
+            return 0;
+        }
 
-	//用户商城提现
+        return 1;
+    }
+
+    //用户商城提现
     public function setShopCash($data){
-        
+
         $nowtime=time();
-        
+
         $uid=$data['uid'];
         $accountid=$data['accountid'];
         $money=$data['money'];
-        
+
         $configpri=getConfigPri();
         $balance_cash_start=$configpri['balance_cash_start'];
         $balance_cash_end=$configpri['balance_cash_end'];
         $balance_cash_max_times=$configpri['balance_cash_max_times'];
-        
+
         $day=(int)date("d",$nowtime);
-        
+
         if($day < $balance_cash_start || $day > $balance_cash_end){
             return 1005;
         }
-        
+
         //本月第一天
         $month=date('Y-m-d',strtotime(date("Ym",$nowtime).'01'));
         $month_start=strtotime(date("Ym",$nowtime).'01');
 
         //本月最后一天
         $month_end=strtotime("{$month} +1 month");
-        
+
         if($balance_cash_max_times){
             $count=DI()->notorm->user_balance_cashrecord
-                    ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
-                    ->count();
+                ->where('uid=? and addtime > ? and addtime < ?',$uid,$month_start,$month_end)
+                ->count();
             if($count >= $balance_cash_max_times){
                 return 1006;
             }
         }
-        
-        
+
+
         /* 钱包信息 */
         $accountinfo=DI()->notorm->cash_account
-                ->select("*")
-                ->where('id=? and uid=?',$accountid,$uid)
-                ->fetchOne();
+            ->select("*")
+            ->where('id=? and uid=?',$accountid,$uid)
+            ->fetchOne();
 
         if(!$accountinfo){
             return 1007;
         }
-        
+
 
         /* 最低额度 */
         $balance_cash_min=$configpri['balance_cash_min'];
-        
+
         if($money < $balance_cash_min){
             return 1004;
         }
-        
+
 
         $ifok=DI()->notorm->user
             ->where('id = ? and balance>=?', $uid,$money)
@@ -1872,9 +1872,9 @@ class Model_User extends PhalApi_Model_NotORM {
         if(!$ifok){
             return 1001;
         }
-        
-        
-        
+
+
+
         $data=array(
             "uid"=>$uid,
             "money"=>$money,
@@ -1886,22 +1886,22 @@ class Model_User extends PhalApi_Model_NotORM {
             "account"=>$accountinfo['account'],
             "name"=>$accountinfo['name'],
         );
-        
+
         $rs=DI()->notorm->user_balance_cashrecord->insert($data);
         if(!$rs){
             return 1002;
-        }           
-            
+        }
+
         return $rs;
     }
 
     //获取认证信息
     public function getAuthInfo($uid){
-    	$info=DI()->notorm->user_auth
-    			->where("uid=?",$uid)
-    			->select("uid,real_name,cer_no,mobile,front_view,back_view,handset_view,status,reason")
-    			->fetchOne();
-    	return $info;
+        $info=DI()->notorm->user_auth
+            ->where("uid=?",$uid)
+            ->select("uid,real_name,cer_no,mobile,front_view,back_view,handset_view,status,reason")
+            ->fetchOne();
+        return $info;
     }
 
     //提交认证信息
@@ -1919,16 +1919,16 @@ class Model_User extends PhalApi_Model_NotORM {
 
         return $rs;
     }
-	
-	
-	
-	//获取每日任务
+
+
+
+    //获取每日任务
     public function seeDailyTasks($uid,$type){
-    	$configpri=getConfigPri();
-    	$configpub=getConfigPub();
+        $configpri=getConfigPri();
+        $configpub=getConfigPub();
         $name_score=$configpub['name_score'];
         $day = strtotime('today');
-		$list=[];
+        $list=[];
 
         $time=strtotime(date("Y-m-d 00:00:00",time()));
         if($type == 'day'){
@@ -2187,57 +2187,57 @@ class Model_User extends PhalApi_Model_NotORM {
             }
 
         }
-    	return $list;
+        return $list;
     }
-	
-	
-	public function receiveTaskReward($uid,$taskid){
-		$rs = array('code' => 0, 'msg' => '', 'info' => array());
-		$where="id={$taskid} and uid={$uid}";	
-		//每日任务
-		$info=DI()->notorm->user_daily_tasks
-			->where($where)
-			->select("*")
-			->fetchOne();
-			
-		if(!$info){
-			$rs['code']='1001';
-			$rs['msg']=T('系统繁忙,请稍后操作~');
-			return $rs;
-		}
-		if($info['state']==0){
-			$rs['code']='1001';
-			$rs['msg']=T('任务未达标,请继续加油~');
-		}else if($info['state']==2){
-			$rs['code']='1001';
-			$rs['msg']=T('奖励已送达,不能重复领取!');
-		}else{
-			$rs['msg']=T('奖励已送放,明天继续加油哦~');
-			
-			
-			//更新任务状态
-			$issave=DI()->notorm->user_daily_tasks
-				->where("id={$info['id']}")
-				->update(['state'=>2,'uptime'=>time()]);
-				
-			if($issave){
-				$score=$info['reward'];
+
+
+    public function receiveTaskReward($uid,$taskid){
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+        $where="id={$taskid} and uid={$uid}";
+        //每日任务
+        $info=DI()->notorm->user_daily_tasks
+            ->where($where)
+            ->select("*")
+            ->fetchOne();
+
+        if(!$info){
+            $rs['code']='1001';
+            $rs['msg']=T('系统繁忙,请稍后操作~');
+            return $rs;
+        }
+        if($info['state']==0){
+            $rs['code']='1001';
+            $rs['msg']=T('任务未达标,请继续加油~');
+        }else if($info['state']==2){
+            $rs['code']='1001';
+            $rs['msg']=T('奖励已送达,不能重复领取!');
+        }else{
+            $rs['msg']=T('奖励已送放,明天继续加油哦~');
+
+
+            //更新任务状态
+            $issave=DI()->notorm->user_daily_tasks
+                ->where("id={$info['id']}")
+                ->update(['state'=>2,'uptime'=>time()]);
+
+            if($issave){
+                $score=$info['reward'];
                 releaseScore($uid,$uid,$score,$info['type']);
                 releaseAgentScore($uid,$score);
 
-				//删除用户每日任务数据
-				$key="seeDailyTasks_".$uid;
-				delcache($key);
-			}
-			
-			
+                //删除用户每日任务数据
+                $key="seeDailyTasks_".$uid;
+                delcache($key);
+            }
 
-		}
-	
-		return $rs;
-	}
 
-     /* 用户会员信息 */
+
+        }
+
+        return $rs;
+    }
+
+    /* 用户会员信息 */
     public function getUserVip($uid) {
         $info=DI()->notorm->vip_user
             ->select("id,uid,addtime,endtime")
@@ -2249,7 +2249,7 @@ class Model_User extends PhalApi_Model_NotORM {
         return false;
     }
 
-     /* 邀请好友用户数据 */
+    /* 邀请好友用户数据 */
     public function getAgent($uid) {
         $info=DI()->notorm->user
             ->select("id,user_nicename,avatar,bg_img,avatar_thumb")
@@ -3259,8 +3259,8 @@ class Model_User extends PhalApi_Model_NotORM {
         $info['popo_pool'] = dealPrice($info['popo_pool']);
         $info['popo_accumulative'] = dealPrice($info['popo_accumulative']);
         $info['popo_share'] = dealPrice($info['popo_share']);
-        $info['yesterday_earnings'] = (float)DI()->notorm->user_popopoolrecord->where("action in (1,4) and uid=$uid and addtime > $yesterdayMidnightTimestamp and addtime < $todayMidnightTimestamp")->sum('total');
-        $info['today_earnings'] = (float)DI()->notorm->user_popopoolrecord->where("action in (1,4) and uid=$uid and addtime > $todayMidnightTimestamp")->sum('total');
+        $info['yesterday_earnings'] = (float)DI()->notorm->user_popopoolrecord->where("action in (1,4,5) and uid=$uid and addtime > $yesterdayMidnightTimestamp and addtime < $todayMidnightTimestamp")->sum('total');
+        $info['today_earnings'] = (float)DI()->notorm->user_popopoolrecord->where("action in (1,4,5) and uid=$uid and addtime > $todayMidnightTimestamp")->sum('total');
 
         $info['yesterday_earnings'] = dealPrice($info['yesterday_earnings']);
         $info['today_earnings'] = dealPrice($info['today_earnings']);
@@ -3420,13 +3420,14 @@ class Model_User extends PhalApi_Model_NotORM {
             2=>'划转',
             3=>'划转市场推广分红',
             4=>'POPO持有者手续费分红',
+            5=>'矿机产出'
         ];
         if($p<1){
             $p=1;
         }
         $pnum=20;
         $start=($p-1)*$pnum;
-        $where="action in ('1','2','3') and uid=$uid";
+        $where="action in ('1','2','3','4','5') and uid=$uid";
         $list=DI()->notorm->user_popopoolrecord
             ->select('*')
             ->where($where)
@@ -3670,7 +3671,7 @@ class Model_User extends PhalApi_Model_NotORM {
             DI()->notorm->rollback('db_appapi');
             return ['code'=>400,'msg'=>$e->getMessage()];
         }
-            // 市场推广分红
+        // 市场推广分红
 //        $adminuid = 1;
 //        $agent =DI()->notorm->agent
 //            ->select('relation_chain')

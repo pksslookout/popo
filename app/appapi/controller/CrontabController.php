@@ -8,16 +8,16 @@ use cmf\controller\HomeBaseController;
 use think\Db;
 
 class CrontabController extends HomebaseController {
-	
-	function resetScore(){
+
+    function resetScore(){
         Db::name("user")->where('today_score', '>', 0)->update(['today_score'=>0]);
     }
 
-	function resetTeamUpdateStatusDealTime(){
+    function resetTeamUpdateStatusDealTime(){
         Db::name("user")->where('team_update_status_deal_time', '>', 0)->update(['team_update_status_deal_time'=>0]);
     }
 
-	function checkUpgradeUser(){
+    function checkUpgradeUser(){
         $time = 3600;
         $key = 'checkUpgradeUser';
         $deal_arr=getcaches($key);
@@ -57,7 +57,7 @@ class CrontabController extends HomebaseController {
         header('Location: ' . $configpub['site'] . $_SERVER['REQUEST_URI']);
     }
 
-	function checkUpgradeUserTwo(){
+    function checkUpgradeUserTwo(){
         $time = 3600;
         $key = 'checkUpgradeUserTwo';
         $deal_arr=getcaches($key);
@@ -97,7 +97,7 @@ class CrontabController extends HomebaseController {
         header('Location: ' . $configpub['site'] . $_SERVER['REQUEST_URI']);
     }
 
-	function dealUpgradeUser($one_uid, $up_count, $team_level){
+    function dealUpgradeUser($one_uid, $up_count, $team_level){
         $up = 0;
         $up_level = $team_level-1;
         // 检测直推
@@ -140,7 +140,7 @@ class CrontabController extends HomebaseController {
         }
     }
 
-	function statistics(){
+    function statistics(){
         $sum_popo_pool = Db::name("user")->where('user_type', 2)->where('id', '>', 10)->where('popo_pool', '>', 0)->sum('popo_pool');
         Db::name("statistics")->where(["currency"=>'popo',"statistics_type"=>'accumulative_popo_output'])->update(['value'=>$sum_popo_pool]);
     }
@@ -350,7 +350,7 @@ class CrontabController extends HomebaseController {
 
     }
 
-	function rewardVideo(){
+    function rewardVideo(){
 
         $time = 3600;
         $key = 'CrontabRewardVideo';
@@ -409,33 +409,33 @@ class CrontabController extends HomebaseController {
                 $this->deal7($total,$min_id,$max_id,$deal_arr,$key,$key_r,'video');
             }
         }
-	}
+    }
 
-	function rewardVideoGift(){
+    function rewardVideoGift(){
 
 //        Db::startTrans();
 //
 //        try {
-            // 市场分红处理
-            $ratio=1; // 钻石：LALA
-            $list_gift=Db::name("video_gift")->where(["status"=>0])->limit(0,40)->select();
-            $id_arr=[];
-            foreach ($list_gift as $value) {
-                $id_arr[] = $value['id'];
-                $uid = $value['uid'];
-                $total = $value['coin'];
-                $ratio_total = $total*$ratio;
-                $action = 1;
-                $giftid = $value['giftid'];
-                $giftcount = $value['number'];
-                $showid=$value['videoid'];
-                $nowtime=time();
-                $this->dealGift($uid,$total,$ratio_total,$action,$giftid,$giftcount,$showid,$nowtime);
-            }
+        // 市场分红处理
+        $ratio=1; // 钻石：LALA
+        $list_gift=Db::name("video_gift")->where(["status"=>0])->limit(0,40)->select();
+        $id_arr=[];
+        foreach ($list_gift as $value) {
+            $id_arr[] = $value['id'];
+            $uid = $value['uid'];
+            $total = $value['coin'];
+            $ratio_total = $total*$ratio;
+            $action = 1;
+            $giftid = $value['giftid'];
+            $giftcount = $value['number'];
+            $showid=$value['videoid'];
+            $nowtime=time();
+            $this->dealGift($uid,$total,$ratio_total,$action,$giftid,$giftcount,$showid,$nowtime);
+        }
 
-            if(!empty($id_arr)){
-                Db::name("video_gift")->where('id', 'in', $id_arr)->update(['status'=>1]);
-            }
+        if(!empty($id_arr)){
+            Db::name("video_gift")->where('id', 'in', $id_arr)->update(['status'=>1]);
+        }
 
 //            Db::commit();
 //
@@ -446,12 +446,12 @@ class CrontabController extends HomebaseController {
 //
 //        }
 
-	}
+    }
 
-	function rewardLive(){
+    function rewardLive(){
         // 市场分红处理
         $time = 3600;
-        $key = 'CrontabRewardVideo';
+        $key = 'CrontabRewardLive';
         $deal_arr=getcaches($key);
         if(!$deal_arr){
             $deal_arr = [
@@ -468,7 +468,7 @@ class CrontabController extends HomebaseController {
         }
 
         // 市场分红处理
-        $key_r = 'CrontabRewardVideoResult';
+        $key_r = 'CrontabRewardLiveResult';
         $result=getcaches($key_r);
         if(!$result){
             $result = Db::query('SELECT MIN(id) AS min_id, MAX(id) AS max_id, SUM(coin) AS total_coin FROM cmf_live_gift WHERE status = 1;');
@@ -507,33 +507,33 @@ class CrontabController extends HomebaseController {
                 $this->deal7($total,$min_id,$max_id,$deal_arr,$key,$key_r,'live');
             }
         }
-	}
+    }
 
-	function rewardLiveGift(){
+    function rewardLiveGift(){
 
 //        Db::startTrans();
 //
 //        try {
-            // 市场分红处理
-            $ratio=1; // 钻石：LALA
-            $list_gift=Db::name("live_gift")->where(["status"=>0])->limit(0,40)->select();
-            $id_arr=[];
-            foreach ($list_gift as $key => $value) {
-                $id_arr[] = $value['id'];
-                $uid = $value['uid'];
-                $total = $value['coin'];
-                $ratio_total = $total*$ratio;
-                $action = 1;
-                $giftid = $value['giftid'];
-                $giftcount = $value['number'];
-                $showid=$value['showid'];
-                $nowtime=time();
-                $this->dealGift($uid,$total,$ratio_total,$action,$giftid,$giftcount,$showid,$nowtime);
-            }
+        // 市场分红处理
+        $ratio=1; // 钻石：LALA
+        $list_gift=Db::name("live_gift")->where(["status"=>0])->limit(0,40)->select();
+        $id_arr=[];
+        foreach ($list_gift as $key => $value) {
+            $id_arr[] = $value['id'];
+            $uid = $value['uid'];
+            $total = $value['coin'];
+            $ratio_total = $total*$ratio;
+            $action = 1;
+            $giftid = $value['giftid'];
+            $giftcount = $value['number'];
+            $showid=$value['showid'];
+            $nowtime=time();
+            $this->dealGift($uid,$total,$ratio_total,$action,$giftid,$giftcount,$showid,$nowtime);
+        }
 
-            if(!empty($id_arr)){
-                Db::name("live_gift")->where('id', 'in', $id_arr)->update(['status'=>1]);
-            }
+        if(!empty($id_arr)){
+            Db::name("live_gift")->where('id', 'in', $id_arr)->update(['status'=>1]);
+        }
 
 //            Db::commit();
 //
@@ -543,9 +543,9 @@ class CrontabController extends HomebaseController {
 //            echo '操作失败！';
 //
 //        }
-	}
+    }
 
-	function transferPoPoDividend(){
+    function transferPoPoDividend(){
 
         $time = 3600;
         $p_count = 1;
@@ -639,7 +639,7 @@ class CrontabController extends HomebaseController {
             exit;
         }
 
-	}
+    }
 
     protected function dealGift($uid,$total,$ratio_total,$action,$giftid,$giftcount,$showid,$nowtime){
 
