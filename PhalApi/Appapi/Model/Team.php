@@ -26,7 +26,6 @@ class Model_Team extends PhalApi_Model_NotORM {
             }
             $info['level_thumb'] = get_upload_path('images/new_level/level_' . $level . '@2x.png');
             $info['level_bg_thumb'] = get_upload_path('images/new_level/level_bg_' . $level . '@2x.png');
-            $info['level_anchor']=getLevelAnchor($info['votestotal']);
             if ($info['islive'] == 1 && $info['votestotal'] > 0) {
                 $info['level_anchor'] = getLevelAnchor($info['votestotal']);
                 $info['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_' . $info['level_anchor'] . '@3x.png');
