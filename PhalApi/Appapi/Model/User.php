@@ -84,7 +84,7 @@ class Model_User extends PhalApi_Model_NotORM {
     /* 用户全部信息 */
     public function getBaseInfo($uid) {
         $info=DI()->notorm->user
-            ->select("id,user_login,user_nicename,user_email,mobile,avatar,bg_img,avatar_thumb,sex,signature,coin,votes,consumption,votestotal,province,city,birthday,location")
+            ->select("id,user_login,user_nicename,user_email,islive,mobile,avatar,bg_img,avatar_thumb,sex,team_level,signature,coin,votes,consumption,votestotal,province,city,birthday,location")
             ->where('id=?',$uid)
             ->fetchOne();
         if($info) {
@@ -105,7 +105,26 @@ class Model_User extends PhalApi_Model_NotORM {
             $info['avatar'] = get_upload_path($info['avatar']);
             $info['avatar_thumb'] = get_upload_path($info['avatar_thumb']);
             $info['level'] = getLevel($info['consumption']);
-            $info['level_anchor'] = getLevelAnchor($info['votestotal']);
+            $level = 1;
+            for ($i = 1; $i <= 10; $i++) {
+                if ($info['level'] <= 10 * $i) {
+                    $level = $i;
+                    break;
+                }
+            }
+
+            if ($info['consumption'] < 1000) {
+                $info['level'] = '0';
+            }
+            $info['level_thumb'] = get_upload_path('images/new_level/level_' . $level . '@2x.png');
+            $info['level_bg_thumb'] = get_upload_path('images/new_level/level_bg_' . $level . '@2x.png');
+            if ($info['islive'] == 1 && $info['votestotal'] > 0) {
+                $info['level_anchor'] = getLevelAnchor($info['votestotal']);
+                $info['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_' . $info['level_anchor'] . '@3x.png');
+            } else {
+                $info['level_anchor'] = '0';
+                $info['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_1@3x.png');
+            }
             $info['lives'] = getLives($uid);
             $info['follows'] = getFollows($uid);
             $info['fans'] = getFans($uid);
@@ -114,6 +133,14 @@ class Model_User extends PhalApi_Model_NotORM {
             $info['like_video_count'] = getLikeVideoStatusCount($uid);
             $info['collect_count'] = getCollectVideoStatusCount($uid);
             $info['vip'] = getUserVip($uid);
+            $info['vip_thumb'] = get_upload_path('images/new_level/VIP@2x.png');
+
+            $info['level_team'] = $info['team_level'];
+            if ($info['level_team'] > 0) {
+                $info['level_team_thumb'] = get_upload_path('images/new_level/level_team_' . $info['level_team'] . '@3x.png');
+            } else {
+                $info['level_team_thumb'] = get_upload_path('images/new_level/level_team_1@3x.png');
+            }
             $info['liang'] = getUserLiang($uid);
             $info['bnb_adr'] = $user_information['bnb_adr'];
 
@@ -138,6 +165,11 @@ class Model_User extends PhalApi_Model_NotORM {
             if($family&&$family_user_count>3) {
                 $level_family = getLevelFamily($family['votestotal']);
                 $info['level_family'] = $level_family;
+            }
+            if ($info['level_family'] != 0) {
+                $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_' . $info['level_family'] . '@3x.png');
+            } else {
+                $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_1@3x.png');
             }
 
         }
