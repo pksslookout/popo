@@ -799,9 +799,9 @@ function connectionRedis(){
 		}
         
         foreach($level as $k=>$v){
-            $v['thumb']=get_upload_path($v['thumb']);
-            $v['thumb_mark']=get_upload_path($v['thumb_mark']);
-            $v['bg']=get_upload_path($v['bg']);
+            $v['thumb']=get_upload_path('images/new_level/level_' . $level . '@2x.png');
+            $v['thumb_mark']=get_upload_path('images/new_level/level_' . $level . '@2x.png');
+            $v['bg']=get_upload_path('images/new_level/level_bg_' . $level . '@2x.png');
             if($v['colour']){
                 $v['colour']='#'.$v['colour'];
             }else{
