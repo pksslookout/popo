@@ -109,6 +109,7 @@
                 <th>{:lang('USERNAME')}</th>
                 <th>{:lang('NICENAME')}</th>
                 <th>{:lang('AVATAR')}</th>
+                <th>邮箱</th>
                 <th>手机</th>
                 <th>{$name_coin}余额</th>
                 <th>累计消费{$name_coin}</th>
@@ -140,6 +141,7 @@
                     </td>
                     <td>{$vo['user_nicename']?$vo['user_nicename']:lang('NOT_FILLED')}</td>
                     <td><img onerror="this.onerror=null;this.src='/anonym.png';" src="{$vo['avatar']}" class="imgtip" /></td>
+                    <td>{$vo.user_email}</td>
                     <td>{$vo.mobile}</td>
                     <td>{$vo.coin}</td>
                     <td>{$vo.consumption}</td>
