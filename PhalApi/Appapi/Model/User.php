@@ -3595,10 +3595,10 @@ class Model_User extends PhalApi_Model_NotORM {
             $earningsInfo['share_earnings'] = DI()->notorm->user_scorerecord->where("uid=$uid and action=23")->sum('total');
             setCaches($key2,$earningsInfo,30);
         }
-        $info['score'] = dealPrice($earningsInfo['score']);
-        $info['warehouse_score'] = dealPrice($earningsInfo['warehouse_score']);
-        $info['blocked_score'] = dealPrice($earningsInfo['blocked_score']);
-        $info['locked_score'] = dealPrice($earningsInfo['locked_score']);
+        $info['score'] = dealPrice($info['score']);
+        $info['warehouse_score'] = dealPrice($info['warehouse_score']);
+        $info['blocked_score'] = dealPrice($info['blocked_score']);
+        $info['locked_score'] = dealPrice($info['locked_score']);
         $info['yesterday_earnings'] = dealPrice($earningsInfo['yesterday_earnings']);
         $info['today_earnings'] = dealPrice($earningsInfo['today_earnings']);
         $info['all_earnings'] = dealPrice($earningsInfo['all_earnings']);
