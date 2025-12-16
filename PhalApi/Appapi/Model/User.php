@@ -2253,7 +2253,7 @@ class Model_User extends PhalApi_Model_NotORM {
 
             if($issave){
                 $score=$info['reward'];
-                releaseScore($uid,$uid,$score,$info['type']);
+                releaseScore($uid,$uid,$score,28);
                 releaseAgentScore($uid,$score);
 
                 //删除用户每日任务数据
@@ -3518,6 +3518,7 @@ class Model_User extends PhalApi_Model_NotORM {
             25=>'签到释放积分',
             26=>'分享加速释放',
             27=>'团队加速释放',
+            28=>'任务释放积分',
             101=>'每日任务释放积分',
             102=>'每日任务释放积分',
             103=>'每日任务释放积分',
