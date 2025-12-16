@@ -818,8 +818,9 @@ function connectionRedis(){
 		foreach($level as $k=>$v){
 			if( ($v['level_up']*1000)<=$experience){
 				$levelid=$v['levelid'];
-				break;
-			}
+			}else{
+                break;
+            }
 		}
 		return (string)$levelid;
 	}
