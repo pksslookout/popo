@@ -799,15 +799,16 @@ function connectionRedis(){
 		}
         
         foreach($level as $k=>$v){
+            $levelid = 1;
             for ($i = 1; $i <= 10; $i++) {
                 if ($v['levelid'] <= 10 * $i) {
-                    $v['levelid'] = $i;
+                    $levelid = $i;
                     break;
                 }
             }
-            $v['thumb']=get_upload_path('images/new_level/level_' . $v['levelid'] . '@2x.png');
-            $v['thumb_mark']=get_upload_path('images/new_level/level_' . $v['levelid'] . '@2x.png');
-            $v['bg']=get_upload_path('images/new_level/level_bg_' . $v['levelid'] . '@2x.png');
+            $v['thumb']=get_upload_path('images/new_level/level_' . $levelid . '@2x.png');
+            $v['thumb_mark']=get_upload_path('images/new_level/level_' .$levelid. '@2x.png');
+            $v['bg']=get_upload_path('images/new_level/level_bg_' .$levelid. '@2x.png');
             if($v['colour']){
                 $v['colour']='#'.$v['colour'];
             }else{
