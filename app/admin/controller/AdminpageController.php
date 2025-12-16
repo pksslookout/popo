@@ -99,18 +99,27 @@ class AdminpageController extends AdminbaseController {
             $data['user_nicename']=$userinfo['user_nicename'];
             $data['addtime']=time();
             // 修改多国语言
-            $language = $data['language'];
-            $language_content = $data['language_content'];
-            unset($data['language']);
-            unset($data['language_content']);
+            if(!empty($data['language'])){
+                $language = $data['language'];
+                unset($data['language']);
+            }
+
+            if(!empty($data['language_content'])) {
+                $language_content = $data['language_content'];
+                unset($data['language_content']);
+            }
 
             $rs = DB::name('admin_post')->update($data);
             if(!$id){
                 $this->error("修改失败！");
             }
 
-            update_language_translate('admin_post', 'title', $id, $language);
-            update_language_translate('admin_post', 'content', $id, $language_content);
+            if(!empty($data['language'])){
+                update_language_translate('admin_post', 'title', $id, $language);
+            }
+            if(!empty($data['language_content'])) {
+                update_language_translate('admin_post', 'content', $id, $language_content);
+            }
             $action="修改页面：{$id}";
             setAdminLog($action);
 
