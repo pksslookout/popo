@@ -328,6 +328,7 @@ use think\Db;
                     $info['id']=$uid;
                     $info['user_nicename']=T('用户不存在');
                     $info['avatar']='/default.jpg';
+                    $info['bg_img']='/default.jpg';
                     $info['avatar_thumb']='/default_thumb.jpg';
                     $info['sex']='0';
                     $info['signature']='';

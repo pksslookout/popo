@@ -742,6 +742,7 @@ function connectionRedis(){
 				if(!$info){
 	                $info['id']=$uid;
 	                $info['user_nicename']=T('用户不存在');
+	                $info['bg_img']='/default.jpg';
 	                $info['avatar']='/default.jpg';
 	                $info['avatar_thumb']='/default_thumb.jpg';
 	                $info['sex']='0';

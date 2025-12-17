@@ -913,7 +913,7 @@ class AdminIndexController extends AdminBaseController{
 
 
             if($info){
-                setcaches("userinfo_".$data['id'],$info);
+                delcache("userinfo_".$data['id']);
             }
 
             $this->success("修改成功！");
