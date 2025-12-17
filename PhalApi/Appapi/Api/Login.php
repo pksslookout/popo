@@ -549,15 +549,6 @@ class Api_Login extends PhalApi_Api {
 			return $rs;
 		}
 
-
-        $checkuser = checkEmailUser($email);
-
-        if($checkuser){
-            $rs['code']=1004;
-            $rs['msg'] = T('该邮箱已被注册！');
-            return $rs;
-        }
-
         $code = random(6,1);
         $url = get_upload_path('/appapi/?service=Login.GetEmailCodeCurl');
 
