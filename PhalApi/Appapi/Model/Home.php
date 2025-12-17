@@ -455,6 +455,8 @@ class Model_Home extends PhalApi_Model_NotORM {
                     foreach ($result as $k => $v) {
                         $v['totalcoin'] = (int)$v['votestotal'];
                         $v['uid'] = $v['id'];
+                        $v['avatar']=get_upload_path($v['avatar']);
+                        $v['avatar_thumb']=get_upload_path($v['avatar_thumb']);
                         $v['isAttention'] = isAttention($uid, $v['id']);//判断当前用户是否关注了该主播
 
                         $result[$k] = $v;
@@ -581,6 +583,8 @@ class Model_Home extends PhalApi_Model_NotORM {
                     foreach ($result as $k => $v) {
                         $v['uid'] = $v['id'];
                         $v['totalcoin']=(int)$v['consumption'];
+                        $v['avatar']=get_upload_path($v['avatar']);
+                        $v['avatar_thumb']=get_upload_path($v['avatar_thumb']);
 
                         $v['isAttention']=isAttention($uid,$v['id']);//判断当前用户是否关注了该主播
 
