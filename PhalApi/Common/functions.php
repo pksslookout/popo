@@ -832,31 +832,26 @@ function connectionRedis(){
 		return (string)$levelid;
 	}
 	function getLevel2($experience){
-		$levelid=1;
-        $level_a=1;
+        $levelid=0;
 		$level=getLevelList();
-
         $parent = '0';
 		foreach($level as $k=>$v){
             $level_up = $v['level_up']*1000;
-			if($level_up>=$experience){
+			if($level_up<=$experience){
+                $levelid=$v['levelid'];
+			}else{
                 if(isset($level[$k-1]['level_up'])){
                     $level_up_q = $level[$k-1]['level_up']*1000;
                 }else{
                     $level_up_q = 0;
                 }
-				$levelid=$v['levelid'];
-				$level_q=$experience-$level_up_q;
+                $level_q=$experience-$level_up_q;
                 $level_h=$level_up-$level_up_q;
                 $p =$level_q/$level_h;
-                $parent = number_format($p,4)*100;
-				break;
-			}else{
-				$level_a = $v['levelid'];
-				$parent = 100;
+                $parent = number_format($p,2)*100;
+                break;
 			}
 		}
-		$levelid = $levelid < $level_a ? $level_a:$levelid;
         $data = [
             'levelid'=>$levelid,
             'parent'=>$parent,
