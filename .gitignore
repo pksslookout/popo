@@ -8,3 +8,5 @@ PhalApi/Runtime/
 node/node_modules/
 node/config.js
 public/upload/
+public/appapi/checkApiParams.php
+public/appapi/listAllApis.php
