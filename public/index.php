@@ -12,7 +12,7 @@ namespace think;
 // [ 入口文件 ]
 
 // 调试模式开关
-define('APP_DEBUG', 0);
+define('APP_DEBUG', 1);
 define('APP_TRACE', 0);
 
 // 定义CMF根目录,可更改此目录
