@@ -1471,6 +1471,8 @@ function connectionRedis(){
 		curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
 		curl_setopt($curl,CURLOPT_POST, 1);
 		curl_setopt($curl,CURLOPT_POSTFIELDS, $paramarr);
+        // 设置连接超时为5秒
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
 		$data = curl_exec($curl);
 		curl_close($curl);
 		$rs=json_decode($data,1);
@@ -4610,6 +4612,8 @@ function connectionRedis(){
         curl_setopt($curl, CURLOPT_POSTFIELDS, $curlPost);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证书
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2); // 检查证书中是否设置域名
+        // 设置连接超时为5秒
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
         $return_str = curl_exec($curl);
         curl_close($curl);
         return $return_str;
