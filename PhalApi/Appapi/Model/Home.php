@@ -446,20 +446,15 @@ class Model_Home extends PhalApi_Model_NotORM {
 
                 if(!$result) {
                     $result = DI()->notorm->user
-                        ->select('votestotal, id')
+                        ->select('votestotal,id,sex,avatar,avatar_thumb,user_nicename')
+                        ->where(['user_type' => 2])
                         ->order('votestotal desc')
                         ->limit($start, $pnum)
                         ->fetchAll();
 
                     foreach ($result as $k => $v) {
-                        $userinfo = getUserInfo($v['id'],1);
                         $v['totalcoin'] = (int)$v['votestotal'];
                         $v['uid'] = $v['id'];
-                        $v['avatar'] = $userinfo['avatar'];
-                        $v['avatar_thumb'] = $userinfo['avatar_thumb'];
-                        $v['user_nicename'] = $userinfo['user_nicename'];
-                        $v['sex'] = $userinfo['sex'];
-
                         $v['isAttention'] = isAttention($uid, $v['id']);//判断当前用户是否关注了该主播
 
                         $result[$k] = $v;
@@ -577,19 +572,15 @@ class Model_Home extends PhalApi_Model_NotORM {
                 $result = DI()->redis->Get($key);
                 if(!$result){
                     $result=DI()->notorm->user
-                        ->select('consumption, id')
+                        ->select('consumption,id,sex,avatar,avatar_thumb,user_nicename')
+                        ->where(['user_type' => 2])
                         ->order('consumption desc')
                         ->limit($start,$pnum)
                         ->fetchAll();
 
                     foreach ($result as $k => $v) {
-                        $userinfo=getUserInfo($v['id'],1);
                         $v['uid'] = $v['id'];
                         $v['totalcoin']=(int)$v['consumption'];
-                        $v['avatar']=$userinfo['avatar'];
-                        $v['avatar_thumb']=$userinfo['avatar_thumb'];
-                        $v['user_nicename']=$userinfo['user_nicename'];
-                        $v['sex']=$userinfo['sex'];
 
                         $v['isAttention']=isAttention($uid,$v['id']);//判断当前用户是否关注了该主播
 
@@ -830,6 +821,7 @@ class Model_Home extends PhalApi_Model_NotORM {
         $result = DI()->redis->Get($key);
 
         if(!$result) {
+            $where = 'user_type = 2 and'.$where;
             if (empty($where)) {
                 $result = DI()->notorm->live_record
                     ->select('sum(nums) as nums, uid')
