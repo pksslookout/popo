@@ -42,7 +42,22 @@ class Model_Team extends PhalApi_Model_NotORM {
             $info['vip']=getUserVip($uid);
             $info['vip_thumb'] = get_upload_path('images/new_level/VIP@2x.png');
             $info['liang']=getUserLiang($uid);
-            $info['level_famliy']=getLevelAnchor($info['votestotal']);
+
+            $info['level_family'] = '0';
+            $family_user_count = '0';
+            // 公会信息获取
+            $family = DI()->notorm->family->select('id,votes')->where('uid = ?', $uid)->fetchOne();
+            if (!$family) {
+                $family = DI()->notorm->family_user->select('familyid')->where('uid = ?', $uid)->fetchOne();
+                if ($family) {
+                    $family = DI()->notorm->family->select('id,votes')->where('id = ?', $family['familyid'])->fetchOne();
+                    $family_user_count = DI()->notorm->family_user->select('familyid')->where('familyid = ?', $family['familyid'])->count();
+                }
+            }
+            if ($family && $family_user_count > 10) {
+                $level_family = getLevelFamily($family['votestotal']);
+                $info['level_family'] = $level_family;
+            }
             if ($info['level_family'] != 0) {
                 $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_' . $info['level_family'] . '@3x.png');
             } else {
@@ -88,9 +103,10 @@ class Model_Team extends PhalApi_Model_NotORM {
         if(empty($sort)){
             $sort = 'addtime DESC';
         }
-        $sql = 'SELECT a.one_uid AS ouid,a.addtime,u.id,u.isauth,u.user_nicename,u.islive,u.user_login,u.avatar,u.bg_img,u.avatar_thumb,u.sex,u.consumption,u.votestotal,u.team_level,u.team_count,u.agent_count,u.team_live_count,u.team_vip_count '
+        $sql = 'SELECT a.one_uid AS ouid,a.addtime,fu.familyid,u.id,u.isauth,u.user_nicename,u.islive,u.user_login,u.avatar,u.bg_img,u.avatar_thumb,u.sex,u.consumption,u.votestotal,u.team_level,u.team_count,u.agent_count,u.team_live_count,u.team_vip_count '
             . 'FROM cmf_agent AS a INNER JOIN cmf_user AS u '
             . 'ON a.uid = u.id '
+            . 'LEFT JOIN cmf_family_user AS fu ON a.uid = fu.uid '
             . 'WHERE a.one_uid = '.$uid.' '.$where
             . ' ORDER BY a.'.$sort.' '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
@@ -122,6 +138,22 @@ class Model_Team extends PhalApi_Model_NotORM {
                     $list[$k]['level_team_thumb'] = get_upload_path('images/new_level/level_team_' . $v['level_team'] . '@3x.png');
                 } else {
                     $list[$k]['level_team_thumb'] = get_upload_path('images/new_level/level_team_1@3x.png');
+                }
+                $list[$k]['level_family'] = '0';
+                $family_user_count = '0';
+                // 公会信息获取
+                if ($list[$k]['familyid']) {
+                    $family = DI()->notorm->family->select('id,votes')->where('id = ?', $list[$k]['familyid'])->fetchOne();
+                    $family_user_count = DI()->notorm->family_user->select('familyid')->where('familyid = ?', $list[$k]['familyid'])->count();
+                }
+                if ($family && $family_user_count > 10) {
+                    $level_family = getLevelFamily($family['votestotal']);
+                    $info['level_family'] = $level_family;
+                }
+                if ($info['level_family'] != '0') {
+                    $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_' . $info['level_family'] . '@3x.png');
+                } else {
+                    $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_1@3x.png');
                 }
                 $list[$k]['vip']=getUserVip($v['id']);
                 $list[$k]['vip_thumb'] = get_upload_path('images/new_level/VIP@2x.png');
