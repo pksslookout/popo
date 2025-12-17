@@ -2,7 +2,7 @@
 /**
  * 短视频
  */
-if (!session_id()) session_start();
+//if (!session_id()) session_start();
 class Api_Video extends PhalApi_Api {
 
 	public function getRules() {

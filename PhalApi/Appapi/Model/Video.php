@@ -962,25 +962,25 @@ class Model_Video extends PhalApi_Model_NotORM {
                 return ['code'=>1001,'msg'=>$msg.T('观看视频需要付费{coin}{name_coin}，是否确定观看',['coin'=>$video['coin'],'name_coin'=>$infoConfigPub['name_coin']])];
             }
         }
-        if($count_status == 1){
-            if($uid == 0){
-                $name_view = 'video_view_'.date('Ymd',$now);
-                if(empty($_SESSION[$name_view])){
-                    $_SESSION[$name_view] = 1;
-                }
-                if($_SESSION[$name_view] >= $infoConfigPir['free_video_views_number']) {
-                    return ['code' => 1001, 'msg' => T('你已达当天最大免费观看视频次数，无法继续观看')];
-                }
-                $_SESSION[$name_view] = $_SESSION[$name_view]+1;
-            }else{
-                $videoViewCount = DI()->notorm->video_view
-                    ->where("uid = {$uid} and videoid = {$videoid} and addtime > $todayMidnight")
-                    ->count();
-                if ($videoViewCount >= $infoConfigPir['free_video_views_number']) {
-                    return ['code' => 1001, 'msg' => T('你已达当天最大免费观看视频次数，无法继续观看')];
-                }
-            }
-        }
+//        if($count_status == 1){
+//            if($uid == 0){
+//                $name_view = 'video_view_'.date('Ymd',$now);
+//                if(empty($_SESSION[$name_view])){
+//                    $_SESSION[$name_view] = 1;
+//                }
+//                if($_SESSION[$name_view] >= $infoConfigPir['free_video_views_number']) {
+//                    return ['code' => 1001, 'msg' => T('你已达当天最大免费观看视频次数，无法继续观看')];
+//                }
+//                $_SESSION[$name_view] = $_SESSION[$name_view]+1;
+//            }else{
+//                $videoViewCount = DI()->notorm->video_view
+//                    ->where("uid = {$uid} and videoid = {$videoid} and addtime > $todayMidnight")
+//                    ->count();
+//                if ($videoViewCount >= $infoConfigPir['free_video_views_number']) {
+//                    return ['code' => 1001, 'msg' => T('你已达当天最大免费观看视频次数，无法继续观看')];
+//                }
+//            }
+//        }
 
 		
 		$video=handleVideoInfo($uid,$video);
