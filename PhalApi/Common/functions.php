@@ -814,6 +814,7 @@ function connectionRedis(){
             }else{
                 $v['colour']='#ffdd00';
             }
+
             $level[$k]=$v;
         }
         

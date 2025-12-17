@@ -95,7 +95,7 @@ class Model_Team extends PhalApi_Model_NotORM {
         $start=($p-1)*$pnum;
         $where = '';
         if(!empty($key)){
-            $where = 'and (u.user_email='.$key.' or u.mobile='.$key.' or u.user_nicename like %'.$key.'%) ';
+            $where = 'and (u.user_email='.$key.' or u.mobile='.$key.' or u.user_nicename like "%'.$key.'%") ';
         }
         if(!empty($isauth)){
             $where = 'and u.isauth='.$isauth;
