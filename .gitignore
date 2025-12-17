@@ -6,4 +6,5 @@ vendor/
 PhalApi/Config/
 PhalApi/Runtime/
 node/node_modules/
+node/config.js
 public/upload/
