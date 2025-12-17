@@ -107,7 +107,7 @@ class PayController extends HomebaseController {
         $where = ['trade_no' => $contractAddress];
         Db::name("charge_user_usdt")->where($where)->update($data);
 
-        setAgentProfit($orderinfo['uid'],$orderinfo['coin']);
+//        setAgentProfit($orderinfo['uid'],$orderinfo['coin']);
 
         $result['code']=200;
         $result['data']=[];
