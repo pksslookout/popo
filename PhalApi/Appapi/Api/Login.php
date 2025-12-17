@@ -550,8 +550,7 @@ class Api_Login extends PhalApi_Api {
 		}
 
 
-        $where="user_email='{$email}'";
-        $checkuser = checkUser($where);
+        $checkuser = checkEmailUser($email);
 
         if($checkuser){
             $rs['code']=1004;
