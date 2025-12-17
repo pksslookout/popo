@@ -1624,21 +1624,19 @@ class Api_User extends PhalApi_Api {
         $curlPost['chainType'] = $id;
         $curlPost['userId'] = $uid;
         $curlPost = [];
-//        $re = curlPost($curlPost,'http://o326263123.imdo.co/api/wallet/query?chainType='.$id.'&userId='.$uid);
-//
-//        if(!$re){
-//            $rs['code'] = 403;
-//            $rs['msg'] = T('钱包中心数据异常');
-//            return $rs;
-//        }
-//        $re = json_decode($re,true);
-//        if($re['code']!=200){
-//            $rs['code'] = $re['code'];
-//            $rs['msg'] = T('获取失败！');
-//            return $rs;
-//        }
+        $re = curlPost($curlPost,'http://172.31.25.128:3010/api/wallet/query?chainType='.$id.'&userId='.$uid);
 
-        $re['content'] = 'test123';
+        if(!$re){
+            $rs['code'] = 403;
+            $rs['msg'] = T('钱包中心数据异常');
+            return $rs;
+        }
+        $re = json_decode($re,true);
+        if($re['code']!=200){
+            $rs['code'] = $re['code'];
+            $rs['msg'] = T('获取失败！');
+            return $rs;
+        }
 
         $content = $re['content'];
         require API_ROOT . '/../sdk/phpqrcode/phpqrcode.php';
