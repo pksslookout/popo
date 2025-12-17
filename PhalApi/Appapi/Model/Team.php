@@ -148,12 +148,12 @@ class Model_Team extends PhalApi_Model_NotORM {
                 }
                 if ($family && $family_user_count > 10) {
                     $level_family = getLevelFamily($family['votestotal']);
-                    $info['level_family'] = $level_family;
+                    $list[$k]['level_family'] = $level_family;
                 }
-                if ($info['level_family'] != '0') {
-                    $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_' . $info['level_family'] . '@3x.png');
+                if ($list[$k]['level_family'] != '0') {
+                    $list[$k]['level_family_thumb'] = get_upload_path('images/new_level/level_family_' . $list[$k]['level_family'] . '@3x.png');
                 } else {
-                    $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_1@3x.png');
+                    $list[$k]['level_family_thumb'] = get_upload_path('images/new_level/level_family_1@3x.png');
                 }
                 $list[$k]['vip']=getUserVip($v['id']);
                 $list[$k]['vip_thumb'] = get_upload_path('images/new_level/VIP@2x.png');
