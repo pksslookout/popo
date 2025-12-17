@@ -5,6 +5,7 @@ data/
 vendor/
 PhalApi/Config/
 PhalApi/Runtime/
+PhalApi/public/init.php
 node/node_modules/
 node/config.js
 public/upload/
