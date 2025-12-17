@@ -138,30 +138,30 @@ class Api_Login extends PhalApi_Api {
         $key = 'getEmailCode_'.md5($user_login);
         $get_code = getcaches($key);
 
-//        if (!$get_code) {
-//            $rs['code'] = 1001;
-//            $rs['msg'] = T('请先获取验证码');
-//            return $rs;
-//        }
+        if (!$get_code) {
+            $rs['code'] = 1001;
+            $rs['msg'] = T('请先获取验证码');
+            return $rs;
+        }
 
         $code_key = 'code_time_'.$user_login.'_'.date('Ymd',$now);
         $code_key_data = getcaches($code_key);
-//        if ($code != $get_code) {
-//            if(empty($code_key_data)){
-//                setcaches($code_key,1,24*3600);
-//            }else{
-//                setcaches($code_key,$code_key_data+1,24*3600);
-//                $code_key_data = $code_key_data+1;
-//            }
-//            if(!empty($code_key_data)&&$code_key_data >= 5) {
-//                $rs['code'] = 1002;
-//                $rs['msg'] = T('验证码错误次数5，明日再试');
-//                return $rs;
-//            }
-//            $rs['code'] = 1002;
-//            $rs['msg'] = T('验证码错误');
-//            return $rs;
-//        }
+        if ($code != $get_code) {
+            if(empty($code_key_data)){
+                setcaches($code_key,1,24*3600);
+            }else{
+                setcaches($code_key,$code_key_data+1,24*3600);
+                $code_key_data = $code_key_data+1;
+            }
+            if(!empty($code_key_data)&&$code_key_data >= 5) {
+                $rs['code'] = 1002;
+                $rs['msg'] = T('验证码错误次数5，明日再试');
+                return $rs;
+            }
+            $rs['code'] = 1002;
+            $rs['msg'] = T('验证码错误');
+            return $rs;
+        }
 
         if(!empty($code_key_data)&&$code_key_data >= 5) {
             $rs['code'] = 1002;
@@ -299,33 +299,33 @@ class Api_Login extends PhalApi_Api {
             return $rs;
         }
 
-//        $key = 'getEmailCode_'.md5($user_login);
-//        $get_code = getcaches($key);
-//
-//        if (!$get_code) {
-//            $rs['code'] = 1001;
-//            $rs['msg'] = T('请先获取验证码');
-//            return $rs;
-//        }
+        $key = 'getEmailCode_'.md5($user_login);
+        $get_code = getcaches($key);
 
-//        $code_key = 'code_time_'.$user_login.'_'.date('Ymd',$now);
-//        $code_key_data = getcaches($code_key);
-//        if ($code != $get_code) {
-//            if(empty($code_key_data)){
-//                setcaches($code_key,1,24*3600);
-//            }else{
-//                setcaches($code_key,$code_key_data+1,24*3600);
-//                $code_key_data = $code_key_data+1;
-//            }
-//            if(!empty($code_key_data)&&$code_key_data >= 5) {
-//                $rs['code'] = 1002;
-//                $rs['msg'] = T('验证码错误次数5，明日再试');
-//                return $rs;
-//            }
-//            $rs['code'] = 1002;
-//            $rs['msg'] = T('验证码错误');
-//            return $rs;
-//        }
+        if (!$get_code) {
+            $rs['code'] = 1001;
+            $rs['msg'] = T('请先获取验证码');
+            return $rs;
+        }
+
+        $code_key = 'code_time_'.$user_login.'_'.date('Ymd',$now);
+        $code_key_data = getcaches($code_key);
+        if ($code != $get_code) {
+            if(empty($code_key_data)){
+                setcaches($code_key,1,24*3600);
+            }else{
+                setcaches($code_key,$code_key_data+1,24*3600);
+                $code_key_data = $code_key_data+1;
+            }
+            if(!empty($code_key_data)&&$code_key_data >= 5) {
+                $rs['code'] = 1002;
+                $rs['msg'] = T('验证码错误次数5，明日再试');
+                return $rs;
+            }
+            $rs['code'] = 1002;
+            $rs['msg'] = T('验证码错误');
+            return $rs;
+        }
 
 		if($user_pass!=$user_pass2){
             $rs['code'] = 1003;
@@ -512,87 +512,6 @@ class Api_Login extends PhalApi_Api {
 		
 		return $rs;
 	}
-
-	/**
-	 * 获取注册短信验证码
-	 * @desc 用于注册获取短信验证码
-	 * @return int code 操作码，0表示成功,2发送失败
-	 * @return array info
-	 * @return string msg 提示信息
-	 */
-//	public function getCode() {
-//		$rs = array('code' => 0, 'msg' => T('发送成功'), 'info' => array(),"verificationcode"=>0);
-//
-//        $country_code = checkNull($this->country_code);
-//		$mobile = checkNull($this->mobile);
-//		$sign = checkNull($this->sign);
-//
-//        $sms_check=$this->checkSmsType($country_code,$mobile);
-//        if($sms_check['code'] !=0){
-//            return $sms_check;
-//        }
-//
-//        $checkdata=array(
-////            'country_code'=>$country_code,
-//            'mobile'=>$mobile
-//        );
-//
-//        $issign=checkSign($checkdata,$sign);
-//        if(!$issign){
-//            $rs['code']=1001;
-//			$rs['msg']=T('签名错误');
-//			return $rs;
-//        }
-//
-//        $where="country_code='{$country_code}' and user_login='{$mobile}'";
-//
-//		$checkuser = checkUser($where);
-//
-//        if($checkuser){
-//            $rs['code']=1004;
-//			$rs['msg']=T('该手机号已注册');
-//			return $rs;
-//        }
-//
-//		if($_SESSION['country_code']==$country_code && $_SESSION['reg_mobile']==$mobile && $_SESSION['reg_mobile_expiretime']> time() ){
-//			$rs['code']=1002;
-//			$rs['msg']=T('验证码5分钟有效，请勿多次发送');
-//			return $rs;
-//		}
-//
-//        $limit = ip_limit();
-//		if( $limit == 1){
-//			$rs['code']=1003;
-//			$rs['msg']=T('您已当日发送次数过多');
-//			return $rs;
-//		}
-//		$mobile_code = random(6,1);
-//
-//		/* 发送验证码 */
-// 		$result=sendCode($country_code,$mobile,$mobile_code);
-//		if($result['code']==0){
-//            $rs['verificationcode']=$mobile_code;
-//            $_SESSION['country_code'] = $country_code;
-//			$_SESSION['reg_mobile'] = $mobile;
-//			$_SESSION['reg_mobile_code'] = $mobile_code;
-//			$_SESSION['reg_mobile_expiretime'] = time() +60*5;
-//		}else if($result['code']==667){
-//            $_SESSION['country_code'] = $country_code;
-//			$_SESSION['reg_mobile'] = $mobile;
-//            $_SESSION['reg_mobile_code'] = $result['msg'];
-//            $_SESSION['reg_mobile_expiretime'] = time() +60*5;
-//
-//            $rs['verificationcode']='123456';
-//            $rs['code']=1002;
-//			$rs['msg']=T('验证码为：').$result['msg'];
-//		}else{
-//			$rs['code']=1002;
-//			$rs['msg']=$result['msg'];
-//		}
-//
-//
-//		return $rs;
-//	}
 
 	/**
 	 * 获取登录，注册邮箱验证码
