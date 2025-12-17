@@ -1661,7 +1661,7 @@ class Api_User extends PhalApi_Api {
             'id'=>$id,
             'adr'=>$content,
             'qr'=>$img,
-            'zx'=>'1 '.strtoupper($id),
+            'zx'=>'1 USDT',
             'cb'=>'20 '.T('个网络确认'),
             'tb'=>'2 '.T('个网络确认'),
             'tips'=>T('* 您只能向此地址充入 ').'USDT'.'-'.strtoupper($id).T('，充入其他资产将无法找回'),
