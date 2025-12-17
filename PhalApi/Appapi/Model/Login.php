@@ -25,7 +25,6 @@ class Model_Login extends PhalApi_Model_NotORM {
 		if(!$info){
             $reg_reward=$configpri['reg_reward'];
 
-
             $img_info = DI()->notorm->user_avatar
                 ->select('img_url,type')
                 ->where('id=?',rand(1,719))
