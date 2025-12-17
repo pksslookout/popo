@@ -185,8 +185,8 @@ class Api_Home extends PhalApi_Api {
 
         $info['cloudtype']=$info_pri['cloudtype'];//视频云存储类型
 
-        $info['qcloud_images_folder']='upload/images/';//腾讯云图片存储目录
-        $info['qcloud_video_folder']='upload/video/';//腾讯云视频存储目录
+        $info['qcloud_images_folder']='upload/images/'.date('Ymd', time()).'/';//腾讯云图片存储目录
+        $info['qcloud_video_folder']='upload/video/'.date('Ymd', time()).'/';//腾讯云视频存储目录
         $info['qcloud_appid']=$info_pri['qcloud_app_id'];//腾讯云视频APPID
         $info['qcloud_region']=$info_pri['qcloud_region'];//腾讯云视频地区
         $info['qcloud_bucket']=$info_pri['qcloud_bucket'];//腾讯云视频存储桶
