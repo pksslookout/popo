@@ -28,10 +28,11 @@ class AboutController extends HomebaseController {
 			return $this->fetch(':error');
 		}
 
+        $configPri = getConfigPub();
         $this->assign("lang",$lang);
 		$this->assign("uid",$uid);
 		$this->assign("token",$token);
-		$this->assign("version",$version);
+		$this->assign("version",$configPri['apk_ver']);
 		$this->assign("device",$device);
 
 		return $this->fetch();
