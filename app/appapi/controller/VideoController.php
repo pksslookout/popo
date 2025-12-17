@@ -500,7 +500,7 @@ class VideoController extends HomebaseController
             $curlPost['anyway'] = $anyway9[$k];
             $curlPost['classid'] = $goodsids9[$k];
             $curlPost['service'] = 'Video.SetVideo';
-            $re = curlPost($curlPost,'https://test.popolive.net/appapi/');
+//            $re = curlPost($curlPost,'https://test.popolive.net/appapi/');
 
         }
     }

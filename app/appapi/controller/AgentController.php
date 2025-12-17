@@ -106,7 +106,6 @@ class AgentController extends HomebaseController {
 
         $qr=get_upload_path($qr);
         $outputImage=get_upload_path($outputImage);
-//        $qr='https://test.popolive.net/'.$qr;
 		$this->assign("lang",$lang);
 		$this->assign("uid",$uid);
 		$this->assign("qr",$qr);
