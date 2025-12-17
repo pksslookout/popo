@@ -25,7 +25,7 @@ class PayController extends HomebaseController {
 //        $request = '{\"CallbackCommand\":\"Live.CallbackAfterDestroyRoom\",\"Operator_Account\":\"@TIM#SYSTEM\",\"RoomId\":\"436\",\"EventType\":\"DestroyBySystem\",\"EventTime\":1756986061775,\"RoomInfo\":{\"RoomId\":\"436\",\"RoomName\":\"\u590f\u5b6340\u5ea6\",\"RoomType\":\"Live\",\"Owner_Account\":\"10100015411\",\"IsSeatEnabled\":true,\"TakeSeatMode\":\"ApplyToTake\",\"MaxMemberCount\":100,\"MaxSeatCount\":9,\"CustomInfo\":\"\",\"IsMessageDisabled\":false,\"CoverURL\":\"\",\"ActivityStatus\":0,\"IsPublicVisible\":true,\"ViewCount\":1,\"BackgroundURL\":\"\",\"IsUnlimitedRoomEnabled\":true}}';
 //        $request = '{\n\t\"EventGroupId\":\t1,\n\t\"EventType\":\t102,\n\t\"CallbackTs\":\t1757479624820,\n\t\"EventInfo\":\t{\n\t\t\"RoomId\":\t43615,\n\t\t\"EventTs\":\t1757479624,\n\t\t\"EventMsTs\":\t1757479624611\n\t}\n}';
 //        $request = '{\n\t\"EventGroupId\":\t1,\n\t\"EventType\":\t102,\n\t\"CallbackTs\":\t1757479811023,\n\t\"EventInfo\":\t{\n\t\t\"RoomId\":\t43588,\n\t\t\"EventTs\":\t1757479811,\n\t\t\"EventMsTs\":\t1757479811018\n\t}\n}';
-        $request = str_replace('\"', '"', $request);
+//        $request = str_replace('\"', '"', $request);
 //        $request = str_replace('\n', '
 //        ', $request);
 //        $request = str_replace('\t', '  ', $request);
