@@ -3596,6 +3596,7 @@ class Model_User extends PhalApi_Model_NotORM {
             setCaches($key2,$earningsInfo,30);
         }
         $info['score'] = dealPrice($info['score']);
+        $info['all_score'] = dealPrice($info['all_score']);
         $info['warehouse_score'] = dealPrice($info['warehouse_score']);
         $info['blocked_score'] = dealPrice($info['blocked_score']);
         $info['locked_score'] = dealPrice($info['locked_score']);
