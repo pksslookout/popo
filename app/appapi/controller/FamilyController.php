@@ -4,11 +4,12 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 
-class FamilyController extends HomebaseController {
+class FamilyController extends Controller {
 
 	/* 家族驻地 */
 	function home(){

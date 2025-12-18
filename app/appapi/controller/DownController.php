@@ -4,10 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 
-class DownController extends HomebaseController {
+class DownController extends Controller {
 
 	function index(){       
 		return $this->fetch();

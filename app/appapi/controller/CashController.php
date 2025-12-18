@@ -4,10 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 
-class CashController extends HomebaseController {
+class CashController extends Controller {
     
     var $status=array(
         '0'=>'审核中',

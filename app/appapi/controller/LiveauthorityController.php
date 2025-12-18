@@ -5,10 +5,11 @@
 
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 
-class LiveauthorityController extends HomebaseController
+class LiveauthorityController extends Controller
 {
 
     function index(){

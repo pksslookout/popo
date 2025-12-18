@@ -4,10 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\facade\Db;
 
-class TeenagertimeController extends HomebaseController {
+class TeenagertimeController extends Controller {
 	
 	
 	public function index(){

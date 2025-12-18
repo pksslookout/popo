@@ -4,10 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 
-class GoodsorderrefundController extends HomebaseController{
+class GoodsorderrefundController extends Controller{
 
 
     function index(){

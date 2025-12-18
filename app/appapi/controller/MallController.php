@@ -4,11 +4,12 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 use think\Lang;
 
-class MallController extends HomebaseController {
+class MallController extends Controller {
 	public $long=array(
 		'1'=>'1个月',
 		'3'=>'3个月',

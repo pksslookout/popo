@@ -4,11 +4,12 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 use think\db\Query;
 
-class ShoporderController extends HomebaseController {
+class ShoporderController extends Controller {
 
 
 	//定时更新商品订单状态

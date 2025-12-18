@@ -4,11 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 
-class AuthController extends HomebaseController {
+class AuthController extends Controller {
 	
 	public function index(){
 		$data = $this->request->param();

@@ -5,7 +5,7 @@
 
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
 use think\Controller;
 use think\Db;
 

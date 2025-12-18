@@ -4,10 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 
-class HomeController extends HomebaseController {
+class HomeController extends Controller {
 	
 	function index(){       
         $touid = $this->request->param('touid', 0, 'intval');

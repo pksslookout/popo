@@ -4,7 +4,7 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
 use think\Db;
 
 class ShopcashController extends HomebaseController {

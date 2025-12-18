@@ -9,12 +9,13 @@
 
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 /**
  * 微信公众号支付
  */
-class WxpayController extends HomebaseController {
+class WxpayController extends Controller {
 	
 	
 	//微信公众号 扫码支付  回调

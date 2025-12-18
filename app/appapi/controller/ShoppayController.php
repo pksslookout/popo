@@ -9,12 +9,13 @@
 
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 /**
  * 商城订单支付回调
  */
-class ShoppayController extends HomebaseController {
+class ShoppayController extends Controller {
 	
 	
 	//支付宝 回调

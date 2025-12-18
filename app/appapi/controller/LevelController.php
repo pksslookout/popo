@@ -4,10 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+
+use think\Controller;
 use think\Db;
 
-class LevelController extends HomebaseController {
+class LevelController extends Controller {
 	
 	function index(){       
 		$data = $this->request->param();
