@@ -11,6 +11,12 @@ use cmf\lib\Upload;
 use Google\Cloud\Translate\V2\TranslateClient;
 
 class TranslateController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	public function index(){
 

@@ -9,6 +9,12 @@ use think\Controller;
 use think\Db;
 
 class HomeController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	function index(){       
         $touid = $this->request->param('touid', 0, 'intval');

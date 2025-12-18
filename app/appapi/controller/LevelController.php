@@ -9,6 +9,12 @@ use think\Controller;
 use think\Db;
 
 class LevelController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	function index(){       
 		$data = $this->request->param();

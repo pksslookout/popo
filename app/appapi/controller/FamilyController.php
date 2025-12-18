@@ -11,6 +11,12 @@ use cmf\lib\Upload;
 
 class FamilyController extends Controller {
 
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
+
 	/* 家族驻地 */
 	function home(){
 

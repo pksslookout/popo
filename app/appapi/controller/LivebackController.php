@@ -9,6 +9,12 @@ use think\Controller;
 use think\Db;
 
 class livebackController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	/* 
 		回调数据格式

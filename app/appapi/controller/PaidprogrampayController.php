@@ -16,6 +16,12 @@ use think\Db;
  * 付费内容支付回调
  */
 class PaidprogrampayController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	
 	//支付宝 回调

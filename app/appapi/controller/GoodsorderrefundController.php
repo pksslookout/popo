@@ -10,6 +10,12 @@ use think\Db;
 
 class GoodsorderrefundController extends Controller{
 
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
+
 
     function index(){
 

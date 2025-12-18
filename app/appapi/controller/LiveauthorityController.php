@@ -12,6 +12,12 @@ use think\Db;
 class LiveauthorityController extends Controller
 {
 
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
+
     function index(){
         $data = $this->request->param();
         $uid=isset($data['uid']) ? $data['uid']: '';

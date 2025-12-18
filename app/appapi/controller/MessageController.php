@@ -10,6 +10,12 @@ use think\Db;
 use cmf\lib\Upload;
 
 class MessageController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	public function msginfo(){
 		$data = $this->request->param();

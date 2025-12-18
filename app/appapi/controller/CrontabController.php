@@ -9,6 +9,12 @@ use think\Db;
 
 class CrontabController extends Controller {
 
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
+
     function resetScore(){
         Db::name("user")->where('today_score', '>', 0)->update(['today_score'=>0]);
     }

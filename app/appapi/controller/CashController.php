@@ -9,6 +9,12 @@ use think\Controller;
 use think\Db;
 
 class CashController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
     
     var $status=array(
         '0'=>'审核中',

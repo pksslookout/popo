@@ -17,6 +17,12 @@ use think\Db;
  */
 class PayController extends Controller {
 
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
+
 
     //链 回调
     public function notify_wallet() {

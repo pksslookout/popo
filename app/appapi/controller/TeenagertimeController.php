@@ -9,6 +9,12 @@ use think\Controller;
 use think\facade\Db;
 
 class TeenagertimeController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	
 	public function index(){

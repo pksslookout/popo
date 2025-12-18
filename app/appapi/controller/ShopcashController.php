@@ -5,9 +5,16 @@
 namespace app\appapi\controller;
 
 
+use think\Controller;
 use think\Db;
 
-class ShopcashController extends HomebaseController {
+class ShopcashController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
     
     var $status=array(
         '0'=>'审核中',

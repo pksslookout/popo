@@ -11,6 +11,12 @@ use think\db\Query;
 
 class ShoporderController extends Controller {
 
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
+
 
 	//定时更新商品订单状态
 	public function checkOrder(){

@@ -10,6 +10,12 @@ use think\Db;
 use think\Lang;
 
 class MallController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	public $long=array(
 		'1'=>'1个月',
 		'3'=>'3个月',

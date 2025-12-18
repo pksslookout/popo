@@ -16,6 +16,12 @@ use think\Db;
  * 商城订单支付回调
  */
 class ShoppayController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	
 	//支付宝 回调

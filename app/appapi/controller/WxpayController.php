@@ -16,6 +16,12 @@ use think\Db;
  * 微信公众号支付
  */
 class WxpayController extends Controller {
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	
 	//微信公众号 扫码支付  回调

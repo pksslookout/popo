@@ -9,6 +9,12 @@ use think\Db;
 use cmf\lib\Upload;
 
 class FeedbackController extends Controller{
+
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
 	
 	function index(){
         

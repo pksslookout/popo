@@ -12,6 +12,12 @@ use Qcloud\Cos\Client;
 class VideoController extends Controller
 {
 
+    protected function initialize()
+    {
+        /* redis缓存开启 */
+        connectionRedis();
+    }
+
     function index()
     {
         $data = $this->request->param();
