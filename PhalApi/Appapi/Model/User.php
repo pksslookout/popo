@@ -1724,6 +1724,7 @@ class Model_User extends PhalApi_Model_NotORM {
                 $bonus_day=0;
             }
             if($nowtime - $signinfo['bonus_time'] > 60*60*24){
+                $bonus_day=0;
                 $count_day=0;
             }
             $bonus_day++;
