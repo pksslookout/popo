@@ -2,7 +2,7 @@
 /**
  * 微信小程序接口
  */
-if (!session_id()) session_start();
+//if (!session_id()) session_start();
 class Api_Wxmini extends PhalApi_Api {
 
 	public function getRules() {

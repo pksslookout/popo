@@ -1,5 +1,5 @@
 <?php
-if (!session_id()) session_start();
+//if (!session_id()) session_start();
 class Model_Dynamic extends PhalApi_Model_NotORM {
 	/* 发布视频 */
 	public function setDynamic($data) {
