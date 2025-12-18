@@ -4,14 +4,16 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\BaseController;
+
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 
-class AboutController extends BaseController {
+class AboutController extends Controller {
 
     protected function initialize()
     {
+        parent::initialize();
         /* redis缓存开启 */
         connectionRedis();
     }
