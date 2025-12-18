@@ -4,11 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use think\Controller;
+use cmf\controller\BaseController;
 use think\Db;
 use cmf\lib\Upload;
 
-class AboutController extends Controller {
+class AboutController extends BaseController {
 
     protected function initialize()
     {
