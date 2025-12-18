@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html style="font-size: 55.2px;"><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link type="text/css" rel="stylesheet" href="__STATIC__/layui/layer.css">
+    <link href="__STATIC__/appapi/css/common.css" rel="stylesheet" type="text/css">
+    <!--公共css-->
+    <title>{:lang("邀请奖励")}</title>
+    <link href='__STATIC__/appapi/css/agent2.css?t=15617112925' rel="stylesheet" type="text/css" >
+
+<body >
+<div class="agent">
+    <div class="top">
+        <div class="top_img">
+            <img src="__STATIC__/appapi/images/agent/top.png">
+        </div>
+        <div class="agent_code">
+            <div class="tips_bd_title">
+                <img src="__STATIC__/appapi/images/agent/star.png">
+                {:lang("您的邀请码")}
+                <img src="__STATIC__/appapi/images/agent/star.png"></div>
+            <ul class="tips_bd_codes">
+
+                <volist name="code_a" id="vo">
+                    <li>{$vo}</li>
+                </volist>
+                <div class="clearboth"></div>
+            </ul>
+            <div class="tips_bd_title copy_btn copy" data-code="{$code}">{:lang("点击复制")}</div>
+
+        </div>
+        <div class="agent_top">
+            <div class="myagent">
+                <span class="li_l">{:lang("我的上级")}</span>
+
+                <a class="li_r" href="/Appapi/Agent/agent?uid={$uid}&token={$token}&lang={$lang}">{:lang("去设置")}</a>
+            </div>
+        </div>
+    </div>
+    <div class="info clearfix">
+        <div class="info_p">
+            <div class="info_p_t">{:lang("已邀请好友")}</div>
+            <div class="info_p_bd">
+                {$agent_count} >
+            </div>
+        </div>
+        <div class="info_p">
+            <div class="info_p_t">{:lang("昨日收益")}</div>
+            <div class="info_p_bd">
+                {$agent_sum} <img class="score" src="__STATIC__/appapi/images/agent/coin.png">
+            </div>
+        </div>
+        <div class="info_p">
+            <div class="info_p_t">{:lang("累计收益")}</div>
+            <div class="info_p_bd">
+                {$agent_all_sum} <img class="score" src="__STATIC__/appapi/images/agent/coin.png">
+            </div>
+        </div>
+        <div class="cash">{:lang("前往提现")} ></div>
+    </div>
+
+
+    <div class="top_tips_bg">
+        <div class="top_tips ">
+            <div class="tips_bd">
+                <div class="tips_label">{:lang("分享说明")}</div>
+                <ul>
+                    <li>
+                        <div class="li_n">1)</div>
+                        <div class="li_i">{:lang("分享链接发送给好友，好友通过链接下载填写邀请码注册App后，建立上下级关系。")}</div>
+                    </li>
+                    <li>
+                        <div class="li_n">2)</div>
+                        <div class="li_i">{:lang("每邀请一个好友，分享人可得到agent_rewardname_votes奖励。")}</div>
+                    </li>
+                    <li>
+                        <div class="li_n">3)</div>
+                        <div class="li_i">{:lang("好友观看视频获得金币奖励，分享人可得到相应提成。")}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="share_btn">
+        {:lang("分享赚钱")}        </div>
+
+</div>
+<include file="appapi@footer"/>
+
+<!--公共底-->
+<script>
+    (function(){
+        var code_str='{$code}';
+        var code_len=code_str.length;
+        for(var i=0;i<code_len;i++){
+            $(".tips_bd_codes").children().eq(i).text(code_str[i]);
+        }
+
+        $('.cash').click(function(){
+            location.href='cash://';
+        })
+        $('.share_btn').click(function(){
+            location.href='agentshare://';
+        })
+        $('.copy_btn').click(function(){
+            location.href='copycode://'+code_str;
+        })
+    })()
+</script>
+</body>
+</html>
