@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 class Model_Shop extends PhalApi_Model_NotORM {
 
     //检测用户是否缴纳保证金
@@ -448,13 +448,13 @@ class Model_Shop extends PhalApi_Model_NotORM {
             
         }
 
-        if($p>1){
-            $goodscomment_endtime=$_SESSION['goodscomment_endtime'];
-            if($goodscomment_endtime){
-                $where.=" and addtime<".$goodscomment_endtime;
-            }
-            
-        }
+//        if($p>1){
+//            $goodscomment_endtime=$_SESSION['goodscomment_endtime'];
+//            if($goodscomment_endtime){
+//                $where.=" and addtime<".$goodscomment_endtime;
+//            }
+//
+//        }
 
 
         if($type=='append'){
@@ -502,10 +502,10 @@ class Model_Shop extends PhalApi_Model_NotORM {
             
         }
 
-        $end=end($list);
-        if($end){
-            $_SESSION['goodscomment_endtime']=$end['addtime'];
-        }
+//        $end=end($list);
+//        if($end){
+//            $_SESSION['goodscomment_endtime']=$end['addtime'];
+//        }
 
         return $list;
 
@@ -983,12 +983,12 @@ class Model_Shop extends PhalApi_Model_NotORM {
 
         $where="uid=".$uid." and status=1";
 
-        if($p>1){
-            $onsale_platform_addtime=$_SESSION['onsale_platform_addtime'];
-            if($onsale_platform_addtime){
-                $where.=" and addtime<".$onsale_platform_addtime;
-            }  
-        }
+//        if($p>1){
+//            $onsale_platform_addtime=$_SESSION['onsale_platform_addtime'];
+//            if($onsale_platform_addtime){
+//                $where.=" and addtime<".$onsale_platform_addtime;
+//            }
+//        }
 
 
         $list=DI()->notorm->seller_platform_goods
@@ -1011,11 +1011,11 @@ class Model_Shop extends PhalApi_Model_NotORM {
 
         $goods_list=handlePlatformGoods($goods_list,[],1);
 
-        $end=end($list);
-        if($end){
-
-            $_SESSION['onsale_platform_addtime']=$end['addtime'];
-        }
+//        $end=end($list);
+//        if($end){
+//
+//            $_SESSION['onsale_platform_addtime']=$end['addtime'];
+//        }
 
         return $goods_list;
     }
