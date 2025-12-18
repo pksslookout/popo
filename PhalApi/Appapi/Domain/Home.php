@@ -9,47 +9,47 @@ class Domain_Home {
         return $rs;
     }
 		
-	public function getRecommendLive($p) {
+	public function getRecommendLive($p, $last) {
         $rs = array();
 
         $model = new Model_Home();
-        $rs = $model->getRecommendLive($p);
+        $rs = $model->getRecommendLive($p, $last);
 				
         return $rs;
     }
 	
-	public function getHot($p) {
+	public function getHot($p,$last) {
         $rs = array();
 
         $model = new Model_Home();
-        $rs = $model->getHot($p);
+        $rs = $model->getHot($p,$last);
 				
         return $rs;
     }
 		
-	public function getFollow($uid,$p) {
+	public function getFollow($uid,$p,$last) {
         $rs = array();
 				
         $model = new Model_Home();
-        $rs = $model->getFollow($uid,$p);
-				
-        return $rs;
-    }
-		
-	public function getNew($lng,$lat,$p) {
-        $rs = array();
-
-        $model = new Model_Home();
-        $rs = $model->getNew($lng,$lat,$p);
+        $rs = $model->getFollow($uid,$p,$last);
 				
         return $rs;
     }
 		
-	public function search($uid,$key,$p) {
+	public function getNew($lng,$lat,$p,$last) {
         $rs = array();
 
         $model = new Model_Home();
-        $rs = $model->search($uid,$key,$p);
+        $rs = $model->getNew($lng,$lat,$p,$last);
+				
+        return $rs;
+    }
+		
+	public function search($uid,$key,$p,$last) {
+        $rs = array();
+
+        $model = new Model_Home();
+        $rs = $model->search($uid,$key,$p,$last);
 				
         return $rs;
     }
@@ -108,11 +108,11 @@ class Domain_Home {
         return $rs;
     }
 
-    public function getClassLive($liveclassid,$p){
+    public function getClassLive($liveclassid,$p,$last){
         $rs = array();
 
         $model = new Model_Home();
-        $rs = $model->getClassLive($liveclassid,$p);
+        $rs = $model->getClassLive($liveclassid,$p,$last);
                 
         return $rs;
     }

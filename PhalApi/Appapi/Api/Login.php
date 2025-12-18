@@ -2,7 +2,7 @@
 /**
  * 登录、注册
  */
-if (!session_id()) session_start();
+//if (!session_id()) session_start();
 class Api_Login extends PhalApi_Api { 
 	public function getRules() {
         return array(

@@ -2,7 +2,7 @@
 /**
  * 用户信息
  */
-if (!session_id()) session_start();
+//if (!session_id()) session_start();
 class Api_User extends PhalApi_Api {
 
 	public function getRules() {

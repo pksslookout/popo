@@ -1,5 +1,5 @@
 <?php
-if (!session_id()) session_start();
+//if (!session_id()) session_start();
 class Model_Home extends PhalApi_Model_NotORM {
     protected $live_fields='uid,title,city,stream,pull,thumb,isvideo,type,type_val,goodnum,anyway,starttime,isshop,game_action';
      
@@ -20,35 +20,35 @@ class Model_Home extends PhalApi_Model_NotORM {
 	}
 
 	/* 热门主播 */
-    public function getHot($p) {
+    public function getHot($p, $last) {
         if($p<1){
             $p=1;
         }
-		$pnum=50;
+		$pnum=20;
 		$start=($p-1)*$pnum;
 		$where=" islive= '1' and ishot='1' ";
-        
+
         if($p==1){
-			$_SESSION['hot_starttime']=time();
-		}
-        
-		if($p!=0){
-			$endtime=$_SESSION['hot_starttime'];
+            $endtime=time();
             if($endtime){
                 $where.=" and starttime < {$endtime}";
-            }	
+            }
 		}
-        if($p!=1){
-			$hotvotes=$_SESSION['hot_hotvotes'];
+
+		if($p>1&&!empty($last)){
+            $last_explode = explode('-', $last);
+			$endtime=$last_explode[0];
+            if($endtime){
+                $where.=" and starttime < {$endtime}";
+            }
+            $hotvotes=$last_explode[1];
             if($hotvotes){
                 $where.=" and hotvotes < {$hotvotes}";
             }else{
                 $where.=" and hotvotes < 0";
             }
-			
 		}
-	
-		
+
 		$result=DI()->notorm->live
                     ->select($this->live_fields.',hotvotes')
                     ->where($where)
@@ -59,77 +59,79 @@ class Model_Home extends PhalApi_Model_NotORM {
 		foreach($result as $k=>$v){
 			$v=handleLive($v);     
             $result[$k]=$v;
-		}	
-		if($result){
-			$last=end($result);
-			//$_SESSION['hot_starttime']=$last['starttime'];
-			$_SESSION['hot_hotvotes']=$last['hotvotes'];
 		}
-		return $result;
+
+		if($result){
+			$last_result=end($result);
+            $last=$last_result['starttime'].'-'.$last_result['hotvotes'];
+		}
+
+        $rs['last']=$last;
+        $rs['result']=$result;
+
+		return $rs;
     }
 	
 	
 	/* 推荐主播 */
-    public function getRecommendLive($p) {
+    public function getRecommendLive($p, $last) {
         if($p<1){
             $p=1;
         }
-		$pnum=50;
+		$pnum=40;
 		$start=($p-1)*$pnum;
 		$where=" isrecommend='1' and islive= '1' and ishot='1' ";
-        
-//        if($p==1){
-//			$_SESSION['hot_starttime_liv']=time();
-//		}
-        
-//		if($p!=0){
-//			$endtime=$_SESSION['hot_starttime_liv'];
+
+//        if($p>1&&!empty($last)){
+//            $last_explode = explode('-', $last);
+//            $endtime=$last_explode[0];
 //            if($endtime){
 //                $where.=" and starttime < {$endtime}";
 //            }
-//		}
-//        if($p!=1){
-//			$hotvotes=$_SESSION['hot_hotvotes_live'];
+//            $hotvotes=$last_explode[1];
 //            if($hotvotes){
 //                $where.=" and hotvotes < {$hotvotes}";
 //            }else{
 //                $where.=" and hotvotes < 0";
 //            }
-//		}
+//        }
+
 		$result=DI()->notorm->live
                     ->select($this->live_fields.',hotvotes')
                     ->where($where)
                     ->order('is_popular desc,recommend_time desc,hotvotes desc,starttime desc')
-                    ->limit(0,$pnum)
+                    ->limit($start,$pnum)
                     ->fetchAll();
-                    
+
 		foreach($result as $k=>$v){
 			$v=handleLive($v);     
             $result[$k]=$v;
-		}	
-//		if($result){
-//			$last=end($result);
-			//$_SESSION['hot_starttime_liv']=$last['starttime'];
-//			$_SESSION['hot_hotvotes_live']=$last['hotvotes'];
-//		}
-		return $result;
+		}
+
+//        if($result){
+//            $last_result=end($result);
+//            $last=$last_result['starttime'].'-'.$last_result['hotvotes'];
+//        }
+
+        $rs['last']=$last;
+        $rs['result']=$result;
+
+        return $rs;
     }
-	
-	
-	
-	
-		/* 关注列表 */
-    public function getFollow($uid,$p) {
+
+	/* 关注列表 */
+    public function getFollow($uid,$p,$last) {
         $rs=array(
             'title'=>T('你关注的主播没有开播'),
             'des'=>T('赶快去看看其他主播的直播吧'),
             'list'=>array(),
+            'last'=>'',
         );
         if($p<1){
             $p=1;
         }
 		$result=array();
-		$pnum=50;
+		$pnum=20;
 		$start=($p-1)*$pnum;
 		
 		$touid=DI()->notorm->user_attention
@@ -143,16 +145,16 @@ class Model_Home extends PhalApi_Model_NotORM {
         
         $rs['title']=T('你关注的主播没有开播');
         $rs['des']=T('赶快去看看其他主播的直播吧');
-        $where=" islive='1' ";					
+        $where=" islive='1' ";
         if($p!=1){
-            $endtime=$_SESSION['follow_starttime'];
+            $endtime=$last;
             if($endtime){
                 $start=0;
                 $where.=" and starttime < {$endtime}";
             }
-            
-        }	
-    
+
+        }
+
         $touids=array_column($touid,"touid");
         $touidss=implode(",",$touids);
         $where.=" and uid in ({$touidss})";
@@ -164,33 +166,32 @@ class Model_Home extends PhalApi_Model_NotORM {
                 ->fetchAll();
 	
 		foreach($result as $k=>$v){
-            
 			$v=handleLive($v);
-            
             $result[$k]=$v;
-		}	
+		}
 
 		if($result){
 			$last=end($result);
-			$_SESSION['follow_starttime']=$last['starttime'];
+            $last=$last['starttime'];
 		}
-        
+
+        $rs['last']=$last;
         $rs['list']=$result;
 
 		return $rs;					
     }
 		
 		/* 最新 */
-    public function getNew($lng,$lat,$p) {
+    public function getNew($lng,$lat,$p,$last) {
         if($p<1){
             $p=1;
         }
-		$pnum=50;
+		$pnum=20;
 		$start=($p-1)*$pnum;
 		$where=" islive='1' ";
 
 		if($p!=1){
-			$endtime=$_SESSION['new_starttime'];
+			$endtime=$last;
             if($endtime){
                 $where.=" and starttime < {$endtime}";
             }
@@ -222,14 +223,16 @@ class Model_Home extends PhalApi_Model_NotORM {
 		}		
 		if($result){
 			$last=end($result);
-			$_SESSION['new_starttime']=$last['starttime'];
+            $last=$last['starttime'];
 		}
 
-		return $result;
+        $rs['last']=$last;
+        $rs['list']=$result;
+		return $rs;
     }
 		
 		/* 搜索 */
-    public function search($uid,$key,$p) {
+    public function search($uid,$key,$p,$last) {
         if($p<1){
             $p=1;
         }
@@ -238,7 +241,7 @@ class Model_Home extends PhalApi_Model_NotORM {
 //		$where=' user_type="2" and ( id=? or user_nicename like ?  or goodnum like ? ) and id!=?';
 		$where=' id=? or user_nicename like ?  or goodnum like ? ';
 		if($p!=1){
-			$id=$_SESSION['search'];
+			$id=$last;
             if($id){
                 $where.=" and id < {$id}";
             }
@@ -265,10 +268,11 @@ class Model_Home extends PhalApi_Model_NotORM {
 		
 		if($result){
 			$last=end($result);
-			$_SESSION['search']=$last['id'];
+            $last=$last['id'];
 		}
 
         $info['user'] = $result;
+        $info['last'] = $last;
 
         $uids = implode(',',$uids);
         if(!empty($uids)){
@@ -652,39 +656,39 @@ class Model_Home extends PhalApi_Model_NotORM {
 	}
     
     /* 分类下直播 */
-    public function getClassLive($liveclassid,$p) {
+    public function getClassLive($liveclassid,$p,$last) {
         if($p<1){
             $p=1;
         }
-		$pnum=50;
-		//$start=($p-1)*$pnum;
-		$start=0;
+		$pnum=40;
+		$start=($p-1)*$pnum;
 		$where=" islive='1' and liveclassid={$liveclassid} ";
         
-		if($p!=1){
-			$endtime=$_SESSION['getClassLive_starttime'];
-            if($endtime){
-                $where.=" and starttime < {$endtime}";
-            }
-			
-		}
+//		if($p!=1){
+//			$endtime=$last;
+//            if($endtime){
+//                $where.=" and starttime < {$endtime}";
+//            }
+//		}
 		$last_starttime=0;
 		$result=DI()->notorm->live
 				->select($this->live_fields)
 				->where($where)
 				->order("is_popular desc,starttime desc")
-				->limit(0,$pnum)
+				->limit($start,$pnum)
 				->fetchAll();	
 		foreach($result as $k=>$v){
 			$v=handleLive($v);
             $result[$k]=$v;
 		}		
-		if($result){
-            $last=end($result);
-			$_SESSION['getClassLive_starttime']=$last['starttime'];
-		}
+//		if($result){
+//            $last=end($result);
+//            $last=$last['starttime'];
+//		}
 
-		return $result;
+        $rs['last']=$last;
+        $rs['list']=$result;
+        return $rs;
     }
 	
 	/*商城-商品列表*/

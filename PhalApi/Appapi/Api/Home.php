@@ -8,27 +8,32 @@ class Api_Home extends PhalApi_Api {
 		return array(
 			'getRecommendLive' => array(
 				'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
+                'last' => array('name' => 'last', 'type' => 'string', 'default'=>'' ,'desc' => '上一页的last'),
 			),
 		
 			'getHot' => array(
 				'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
+				'last' => array('name' => 'last', 'type' => 'string', 'default'=>'' ,'desc' => '上一页的last'),
 			),
 			
 			'getFollow' => array(
 				'uid' => array('name' => 'uid', 'type' => 'int','min'=>1,'require' => true, 'desc' => '用户ID'),
 				'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
+                'last' => array('name' => 'last', 'type' => 'string', 'default'=>'' ,'desc' => '上一页的last'),
 			),
 			
 			'getNew' => array(
                 'lng' => array('name' => 'lng', 'type' => 'string', 'desc' => '经度值'),
                 'lat' => array('name' => 'lat', 'type' => 'string','desc' => '纬度值'),
 				'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
+                'last' => array('name' => 'last', 'type' => 'string', 'default'=>'' ,'desc' => '上一页的last'),
             ),
 			
 			'search' => array(
 				'uid' => array('name' => 'uid', 'type' => 'int', 'require' => true, 'min'=>1 ,'desc' => '用户ID'),
 				'key' => array('name' => 'key', 'type' => 'string', 'default'=>'' ,'desc' => '用户名称'),
 				'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
+                'last' => array('name' => 'last', 'type' => 'string', 'default'=>'' ,'desc' => '上一页的last'),
 			),
 
 			'searchVideo' => array(
@@ -75,6 +80,7 @@ class Api_Home extends PhalApi_Api {
             'getClassLive'=>array(
                 'liveclassid' => array('name' => 'liveclassid', 'type' => 'int', 'default'=>'0' ,'desc' => '直播分类ID'),
                 'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
+                'last' => array('name' => 'last', 'type' => 'string', 'default'=>'' ,'desc' => '上一页的last'),
             ),
 			'getShopList'=>array(
                 'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
@@ -331,6 +337,13 @@ class Api_Home extends PhalApi_Api {
         $rs = array('code' => 0, 'msg' => '', 'info' => array());
 
         $p=checkNull($this->p);
+        $last=checkNull($this->last);
+        if(!$p){
+            $p=1;
+        }
+        if($p==1){
+            $last='';
+        }
         $domain = new Domain_Home();
 		$key1='getSlide';
 		$slide=getcaches($key1);
@@ -345,7 +358,7 @@ class Api_Home extends PhalApi_Api {
 //		$key2="getHot_".$p;
 //		$list=getcaches($key2);
 //		if(!$list){
-			$list = $domain->getHot($p);
+			$list = $domain->getHot($p,$last);
 //			setCaches($key2,$list,2);
 //		}
 		
@@ -353,13 +366,14 @@ class Api_Home extends PhalApi_Api {
 //		$key3="getRecommendLive_1";
 //		$recommend_list=getcaches($key3);
 //		if(!$recommend_list){
-			$recommend_list = $domain->getRecommendLive(1);
+			$recommend_list = $domain->getRecommendLive($p,$last);
 //			setCaches($key3,$recommend_list,2);
 //		}
 
         $rs['info'][0]['slide'] = $slide;
-        $rs['info'][0]['list'] = $list;
-        $rs['info'][0]['recommend'] = $recommend_list;
+        $rs['info'][0]['list'] = $list['result'];
+        $rs['info'][0]['last'] = (string)$list['last'];
+        $rs['info'][0]['recommend'] = $recommend_list['result'];
 
         return $rs;
     }
@@ -392,14 +406,22 @@ class Api_Home extends PhalApi_Api {
     public function getRecommendLive() {
         $rs = array('code' => 0, 'msg' => '', 'info' => array());
         $p=checkNull($this->p);
+        $last=checkNull($this->last);
+        if(!$p){
+            $p=1;
+        }
+        if($p==1){
+            $last='';
+        }
         $domain = new Domain_Home();
-		$key2="getRecommendLive_".$p;
-		$list=getcaches($key2);
-		if(!$list){
-			$list = $domain->getRecommendLive($p);
-			setCaches($key2,$list,2); 
-		}
-        $rs['info']= $list;
+//		$key2="getRecommendLive_".$p;
+//		$list=getcaches($key2);
+//		if(!$list){
+			$list = $domain->getRecommendLive($p, $last);
+//			setCaches($key2,$list,2);
+//		}
+        $rs['info']= $list['result'];
+        $rs['last']= $list['last'];
 
         return $rs;
     }
@@ -432,9 +454,15 @@ class Api_Home extends PhalApi_Api {
 
         $uid=checkNull($this->uid);
         $p=checkNull($this->p);
+        $last=checkNull($this->last);
+        if(!$p){
+            $p=1;
+        }
+        if($p==1){
+            $last='';
+        }
         $domain = new Domain_Home();
-        $info = $domain->getFollow($uid,$p);
-
+        $info = $domain->getFollow($uid,$p,$last);
 
         $rs['info'][0] = $info;
 
@@ -468,21 +496,26 @@ class Api_Home extends PhalApi_Api {
 		$lng=checkNull($this->lng);
 		$lat=checkNull($this->lat);
 		$p=checkNull($this->p);
+        $last=checkNull($this->last);
 		
 		if(!$p){
 			$p=1;
 		}
+        if($p==1){
+            $last='';
+        }
 		
-		$key='getNew_'.$p;
-		$info=getcaches($key);
-		if(!$info){
+//		$key='getNew_'.$p;
+//		$info=getcaches($key);
+//		if(!$info){
 			$domain = new Domain_Home();
-			$info = $domain->getNew($lng,$lat,$p);
+			$info = $domain->getNew($lng,$lat,$p,$last);
 
-			setCaches($key,$info,2);
-		}
+//			setCaches($key,$info,2);
+//		}
 		
-        $rs['info'] = $info;
+        $rs['info'] = $info['list'];
+        $rs['last'] = (string)$info['last'];
 
         return $rs;
     }		
@@ -507,6 +540,13 @@ class Api_Home extends PhalApi_Api {
 		$uid=checkNull($this->uid);
 		$key=checkNull($this->key);
 		$p=checkNull($this->p);
+        $last=checkNull($this->last);
+        if(!$p){
+            $p=1;
+        }
+        if($p==1){
+            $last='';
+        }
 		if($key==''){
 			$rs['code'] = 1001;
 			$rs['msg'] = T("请填写关键词");
@@ -518,7 +558,7 @@ class Api_Home extends PhalApi_Api {
 		}
 		
         $domain = new Domain_Home();
-        $info = $domain->search($uid,$key,$p);
+        $info = $domain->search($uid,$key,$p,$last);
 
         $rs['info'] = $info;
 
@@ -754,17 +794,19 @@ class Api_Home extends PhalApi_Api {
      **/
     
     public function getClassLive(){
-        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+        $rs = array('code' => 0, 'msg' => '', 'last' => '', 'info' => array());
         $liveclassid=checkNull($this->liveclassid);
         $p=checkNull($this->p);
-        
+        $last=checkNull($this->last);
+
         if(!$liveclassid){
             return $rs;
         }
         $domain=new Domain_Home();
-        $res=$domain->getClassLive($liveclassid,$p);
+        $res=$domain->getClassLive($liveclassid,$p,$last);
 
-        $rs['info']=$res;
+        $rs['info']=$res['list'];
+        $rs['last']=(string)$res['last'];
         return $rs;
     }
 

@@ -2,7 +2,7 @@
 /**
  * 官方通知
  */
-if (!session_id()) session_start();
+//if (!session_id()) session_start();
 class Api_Official extends PhalApi_Api {
 
 	public function getRules() {
