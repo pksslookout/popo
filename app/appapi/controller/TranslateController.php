@@ -5,11 +5,12 @@
 namespace app\appapi\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 use Google\Cloud\Translate\V2\TranslateClient;
 
-class TranslateController extends HomebaseController {
+class TranslateController extends Controller {
 	
 	public function index(){
 

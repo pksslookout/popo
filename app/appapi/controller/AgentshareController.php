@@ -4,10 +4,10 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 
-class AgentshareController extends HomebaseController {
+class AgentshareController extends Controller {
 	
 	function index(){       
 		$data = $this->request->param();

@@ -5,9 +5,10 @@
 namespace app\appapi\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 
-class livebackController extends HomebaseController {
+class livebackController extends Controller {
 	
 	/* 
 		回调数据格式

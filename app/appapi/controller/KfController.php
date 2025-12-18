@@ -4,11 +4,11 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 
-class KfController extends HomebaseController{
+class KfController extends Controller{
 	
 	function index(){
         

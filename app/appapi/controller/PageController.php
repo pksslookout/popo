@@ -5,10 +5,11 @@
 namespace app\appapi\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 
-class PageController extends HomebaseController {
+class PageController extends Controller {
 	
 	public function news(){
 		$data = $this->request->param();

@@ -5,10 +5,11 @@
 namespace app\appapi\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 
-class UserreportController extends HomebaseController {
+class UserreportController extends Controller {
 	
 	public function index(){
 		$data = $this->request->param();

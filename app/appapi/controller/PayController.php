@@ -10,11 +10,12 @@
 namespace app\appapi\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 /**
  * 支付回调
  */
-class PayController extends HomebaseController {
+class PayController extends Controller {
 
 
     //链 回调

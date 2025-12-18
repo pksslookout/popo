@@ -5,10 +5,11 @@
 namespace app\appapi\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 use Qcloud\Cos\Client;
 
-class VideoController extends HomebaseController
+class VideoController extends Controller
 {
 
     function index()

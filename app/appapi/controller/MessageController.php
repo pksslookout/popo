@@ -5,10 +5,11 @@
 namespace app\appapi\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 use cmf\lib\Upload;
 
-class MessageController extends HomebaseController {
+class MessageController extends Controller {
 	
 	public function msginfo(){
 		$data = $this->request->param();
