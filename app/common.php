@@ -293,7 +293,7 @@
 
 //				$configpub=getConfigPub();
 
-                $info['user_nicename']=T("订单消息");
+                $info['user_nicename']="订单消息";
                 $info['avatar']=get_upload_path('/orderMsg.png');
                 $info['avatar_thumb']=get_upload_path('/orderMsg.png');
                 $info['id']="goodsorder_admin";
@@ -301,7 +301,7 @@
             }
 
             $info['id']=$uid;
-            $info['user_nicename']=T('用户不存在');
+            $info['user_nicename']='用户不存在';
             $info['coin']="0";
             $info['sex']="1";
             $info['signature']='';
@@ -326,7 +326,7 @@
 
                 if(!$info){
                     $info['id']=$uid;
-                    $info['user_nicename']=T('用户不存在');
+                    $info['user_nicename']='用户不存在';
                     $info['avatar']='/default.jpg';
                     $info['bg_img']='/default.jpg';
                     $info['avatar_thumb']='/default_thumb.jpg';
