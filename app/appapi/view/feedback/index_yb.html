@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html><head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link type="text/css" rel="stylesheet" href="__STATIC__/layui/layer.css"/>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/appapi/css/feedback2.css"/>
+    <title>{:lang("我要反馈")}</title>
+<body class="feedback" style="">
+<div class="feedback_body">
+    <div class="feedback_textarea">
+        <textarea class="textarea" id="content" placeholder="{:lang("请将您遇到的问题/产品建议反馈给我们。建议您尽可能详细的描述问题，便于运营童鞋帮你解决~")}" maxlength="200"></textarea>
+        <div class="tips">
+            <span id="input_nums">0</span>/200
+        </div>
+
+        <div class="feedback_img">
+            <div id="upload" ></div>
+            <input type="hidden" id="thumb" name="thumb" value="">
+            <img src="__STATIC__/appapi/images/feedback/upload.png" class="fl img-sfz" data-index="ipt-file1" id="img_file1" onclick="file_click($(this))">
+            <input type="file" id="ipt-file1" class="file_input" name="file"  accept="image/*" style="display:none;"/>
+            <div class="shad1 shadd" data-select="ipt-file1">
+                <div class="title-upload">{:lang("正在上传中...")}</div>
+                <div id="progress1">
+                    <div class="progress ipt-file1"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="feedback_body feedback_phone_tips" style="">
+    {:lang("您的联系方式有助于我们沟通改善问题，仅工作人员可见")}    </div>
+<div class="feedback_body" style="margin-top: 5px;">
+    <div class="feedback_tel">
+
+        <div class="feedback_tel_con" style="width: 368px;">
+            <input type="input" id="contactMsg" placeholder="{:lang("QQ/微信/邮箱/联系电话")}">
+        </div>
+        <div class="clearboth"></div>
+    </div>
+</div>
+
+<div class="feedback_body" style="margin-top:10px;">
+    <div id="save_btn" class="feedback_bottom">{:lang("提交反馈")}</div>
+</div>
+<input type="hidden" id="uid" value="{$uid}">
+<input type="hidden" id="token" value="{$token}">
+<input type="hidden" id="version" value="{$version}">
+<input type="hidden" id="model" value="{$model}">
+<script src="__STATIC__/js/jquery.js"></script>
+<script src="__STATIC__//js/layer/layer.js"></script>
+<script src="__STATIC__/js/ajaxfileupload.js?v=1"></script>
+<script src="__STATIC__/appapi/js/feedback.js?v=1"></script>
+
+</body></html>

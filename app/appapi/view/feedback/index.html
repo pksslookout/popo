@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html><head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link type="text/css" rel="stylesheet" href="__STATIC__/layui/layer.css"/>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/appapi/css/feedback2.css"/>
+    <title>{:lang("我要反馈")}</title>
+</head>
+<style>
+    body {
+        display: block;
+        margin: 12px;
+    }
+    .feedback {
+        background: #111111;
+        font-size: 14px;
+        color: #ffffff;
+    }
+    .feedback .feedback_body {
+        background: #292929;
+        font-size: 14px;
+        border-radius: 8px 8px 8px 8px;
+    }
+    .feedback .feedback_body .feedback_textarea {
+        position: relative;
+        border-bottom: 0px solid #bfbfbf;
+        padding: 15px;
+        border: none;
+        outline: none;
+        height: 217px;
+        margin-top: 10px;
+    }
+    .feedback .feedback_body .feedback_textarea textarea {
+        width: 100%;
+        height: 117px;
+        line-height: 25px;
+        color: white;
+        font-size: 14px;
+        resize: none;
+        border: none;
+        background: #292929;
+        overflow-y: auto;
+    }
+    textarea::placeholder {
+        color: rgba(255,255,255,0.5); /* 占位符文字颜色 */
+    }
+
+    .feedback .feedback_body .feedback_tel {
+        height: 44px;
+        line-height: 44px;
+    }
+    .feedback .feedback_body .feedback_tel .feedback_tel_con input {
+        color: white;
+    }
+    .feedback .feedback_body .feedback_tel .feedback_tel_con input::placeholder {
+        color: rgba(255,255,255,0.5);
+    }
+    .feedback .feedback_body .feedback_bottom {
+        position: fixed;
+        height: 48px;
+        line-height: 48px;
+        color: #ffffff;
+        text-align: center;
+        font-size: 1rem;
+        background: linear-gradient( 270deg, #49FF56 0%, #B8FF3C 100%);
+        border-radius: 182px 182px 182px 182px;
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        z-index: 1000;
+    }
+    .feedback .feedback_body .feedback_img .shadd {
+        width: 75px;
+        height: 75px;
+    }
+</style>
+
+<body class="feedback" style="">
+<div style="font-size: 16px;">
+    <span>{:lang("问题反馈")}</span>
+</div>
+<div class="feedback_body">
+    <div class="feedback_textarea">
+        <textarea class="textarea" id="content" placeholder="{:lang("请将您遇到的问题/产品建议反馈给我们。建议您尽可能详细的描述问题，便于运营童鞋帮你解决~")}" maxlength="200"></textarea>
+        <div class="tips">
+            <span id="input_nums">0</span>/200
+        </div>
+
+        <div class="feedback_img">
+            <div id="upload" ></div>
+            <input type="hidden" id="thumb" name="thumb" value="">
+            <img src="__STATIC__/appapi/images/feedback/upload.jpg" class="fl img-sfz" data-index="ipt-file1" id="img_file1" onclick="file_click($(this))">
+            <input type="file" id="ipt-file1" class="file_input" name="file"  accept="image/*" style="display:none;"/>
+            <div class="shad1 shadd" data-select="ipt-file1">
+                <div class="title-upload">{:lang("正在上传中...")}</div>
+                <div id="progress1">
+                    <div class="progress ipt-file1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="font-size: 16px;margin-top: 20px;line-height: 22px;">
+    <span>{:lang("联系方式")}</span>
+</div>
+<div class="feedback_body" style="margin-top: 10px;">
+    <div class="feedback_tel">
+
+        <div class="feedback_tel_con" style="width: 368px;">
+            <input type="input" id="contactMsg" placeholder="{:lang("QQ/微信/邮箱/联系电话")}">
+        </div>
+        <div class="clearboth"></div>
+    </div>
+</div>
+
+<div style="height: 17px;margin-top: 10px;
+font-size: 12px;
+color: #999999;
+line-height: 17px;
+text-align: left;">
+    {:lang("备注：")} {:lang("您的联系方式有助于我们沟通改善问题，仅工作人员可见")}    </div>
+<div class="feedback_body" style="bottom:15px;">
+    <div id="save_btn" class="feedback_bottom">{:lang("提交反馈")}</div>
+</div>
+<input type="hidden" id="uid" value="{$uid}">
+<input type="hidden" id="token" value="{$token}">
+<input type="hidden" id="version" value="{$version}">
+<input type="hidden" id="model" value="{$model}">
+<script src="__STATIC__/js/jquery.js"></script>
+<script src="__STATIC__//js/layer/layer.js"></script>
+<script src="__STATIC__/js/ajaxfileupload.js?v=1"></script>
+<script src="__STATIC__/appapi/js/feedback.js?v=4"></script>
+
+</body></html>

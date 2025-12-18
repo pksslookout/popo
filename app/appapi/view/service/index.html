@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link type="text/css" rel="stylesheet" href="__STATIC__/appapi/css/service.css?v=4"/>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/layui/layer.css"/>
+    <title>{:lang("关于短视频")}</title>
+</head>
+
+<body>
+
+<div class="shadow"></div>
+<ul class="service_list">
+
+
+    <li onclick="copy_qq()" style="background-image: none;">
+        <div class="service_list_left">
+            <p class="service_list_tips">{:lang("短视频官方客服QQ")}</p>
+            <p class="service_list_cons">124124124214</p>
+        </div>
+        <div class="service_list_right">{:lang("点击复制")}</div>
+    </li>
+
+    <li onclick="showConfirmCall()">
+        <div class="service_list_left">
+            <p class="service_list_tips">{:lang("短视频官方客服电话")}</p>
+            <p class="service_list_cons">1242141241241</p>
+        </div>
+        <div class="service_list_right"></div>
+    </li>
+
+</ul>
+
+<div class="confirmArea" style="">
+    <div class="confirmMobile" style="line-height: 67px; height: 67px;">124124214</div>
+    <div class="confirmBtnArea">
+        <p class="confirm_cancel" style="width: 165.5px; line-height: 66px; height: 66px;">{:lang("取消")}</p>
+        <p class="confirm_confirm" onclick="callMobile()" style="width: 165.5px; line-height: 66px; height: 66px;">{:lang("呼叫")}</p>
+    </div>
+</div>
+<script type="text/javascript" src="__STATIC__/appapi/js/jquery.js"></script>
+<script type="text/javascript" src="__STATIC__/appapi/js/service.js"></script>
+<script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
+
+<script type="text/javascript">
+
+    var mobile='17854813097';
+    var qq='3156743456';
+    function showConfirmCall(){
+        if(!mobile){
+            return;
+        }
+        $(".shadow").show();
+        $(".confirmArea").show();
+    }
+
+    function copy_qq(){
+        if(!qq){
+            return;
+        }
+        location.href="copy://"+qq;
+    }
+
+    function callMobile(){
+        if(!mobile){
+            return;
+        }
+        location.href='tel:'+mobile;
+    }
+
+</script>
+</body>
+</html>
