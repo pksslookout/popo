@@ -28,7 +28,7 @@ class PayController extends Controller {
     public function notify_wallet() {
 
         $request = file_get_contents("php://input");
-//        $request = '{\"quantity\":\"0.010000\",\"rechargeAddress\":\"0x4db5b21cd3303fc2a0e7eee271965c87e00b78fa\",\"receivingAddress\":\"0xb8615500ee614226acf3086e3c583374330f4311\",\"sign\":\"c5d76450f3688be24161365fa2f762cf\",\"contractAddress\":\"0x55d398326f99059ff775485246999027b3197955\",\"chainType\":\"BSC\",\"userId\":\"43588\",\"hash\":\"0x4ad472c2fbb9d01df2d2b34fc3eff235fd98735b45f08fe6f92f6367c428ee67\"}';
+//        $request = '{\"quantity\":\"0.0101000\",\"rechargeAddress\":\"0x4db5b21cd3303fc2a0e7eee271965c87e00b78fa\",\"receivingAddress\":\"0xb8615500ee614226acf3086e3c583374330f4311\",\"sign\":\"790ee335b99fb7d239bb380d2873914c\",\"contractAddress\":\"0x55d398326f99059ff775485246999027b3197955\",\"chainType\":\"BSC\",\"userId\":\"10\",\"hash\":\"0x4ad472c2fbb9d01df2d2b34fc3eff235fd98735b45f08fe6f92f6367c428ee67\"}';
 //        $request = '{\"CallbackCommand\":\"Live.CallbackAfterDestroyRoom\",\"Operator_Account\":\"@TIM#SYSTEM\",\"RoomId\":\"436\",\"EventType\":\"DestroyBySystem\",\"EventTime\":1756986061775,\"RoomInfo\":{\"RoomId\":\"436\",\"RoomName\":\"\u590f\u5b6340\u5ea6\",\"RoomType\":\"Live\",\"Owner_Account\":\"10100015411\",\"IsSeatEnabled\":true,\"TakeSeatMode\":\"ApplyToTake\",\"MaxMemberCount\":100,\"MaxSeatCount\":9,\"CustomInfo\":\"\",\"IsMessageDisabled\":false,\"CoverURL\":\"\",\"ActivityStatus\":0,\"IsPublicVisible\":true,\"ViewCount\":1,\"BackgroundURL\":\"\",\"IsUnlimitedRoomEnabled\":true}}';
 //        $request = '{\n\t\"EventGroupId\":\t1,\n\t\"EventType\":\t102,\n\t\"CallbackTs\":\t1757479624820,\n\t\"EventInfo\":\t{\n\t\t\"RoomId\":\t43615,\n\t\t\"EventTs\":\t1757479624,\n\t\t\"EventMsTs\":\t1757479624611\n\t}\n}';
 //        $request = '{\n\t\"EventGroupId\":\t1,\n\t\"EventType\":\t102,\n\t\"CallbackTs\":\t1757479811023,\n\t\"EventInfo\":\t{\n\t\t\"RoomId\":\t43588,\n\t\t\"EventTs\":\t1757479811,\n\t\t\"EventMsTs\":\t1757479811018\n\t}\n}';
@@ -57,70 +57,77 @@ class PayController extends Controller {
             $result['data']=[];
             $result['msg']='Fail signature error';
             echo json_encode($result);
+            exit();
         }
 
-        $where = ['trade_no' => $contractAddress];
-        $orderinfo=Db::name("charge_user_usdt")->where($where)->find();
+        Db::startTrans();
+        try {
+            $user = Db::name("user")->where("id='{$uid}'")->lock(true)->find();
 
-//        $where = ['hash_value' => $contractAddress];
-//        $walletbalanceinfo=Db::name("wallet_balance")->where($where)->find();
-//        if($walletbalanceinfo){
-//            $coin = $quantity*10;
-//        }else{
-//            $coin = $quantity*100;
-//        }
+            if(!empty($user)){
+                $where = ['trade_no' => $contractAddress];
+                $orderinfo=Db::name("charge_user_usdt")->where($where)->find();
 
-        if(!$orderinfo){
-            $orderno = $uid.'_'.date('YmdHis').rand(100,999);
-            $orderinfo=[
-                'uid'=>$uid,
-                'touid'=>$uid,
-                'money'=>$quantity,
-                'usdt'=>$quantity,
-                'usdt_give'=>0,
-                'orderno'=>$orderno,
-                'trade_no'=>$contractAddress,
-                'status'=>0,
-                'type'=>4,
-                'remark'=>$chainType,
-                'addtime'=>time(),
-            ];
+                if(!$orderinfo){
+                    $orderno = $uid.'_'.date('YmdHis').rand(100,999);
+                    $orderinfo=[
+                        'uid'=>$uid,
+                        'touid'=>$uid,
+                        'money'=>$quantity,
+                        'usdt'=>$quantity,
+                        'usdt_give'=>0,
+                        'orderno'=>$orderno,
+                        'trade_no'=>$contractAddress,
+                        'status'=>0,
+                        'type'=>4,
+                        'remark'=>$chainType,
+                        'addtime'=>time(),
+                    ];
 
-            Db::name("charge_user_usdt")->insert($orderinfo);
-        }
+                    Db::name("charge_user_usdt")->insert($orderinfo);
+                }
 
-        if($orderinfo['status']!=0){
-            $result['code']=201;
+                if($orderinfo['status']!=0){
+                    Db::rollback();
+                    $result['code']=201;
+                    $result['data']=[];
+                    $result['msg']='success';
+                    echo json_encode($result);
+                    exit;
+                }
+                $usdt=$orderinfo['usdt']+$orderinfo['usdt_give'];
+                Db::name("user")->where("id='{$orderinfo['touid']}'")->setInc("usdt",$usdt);
+
+                /* 更新 订单状态 */
+                $data['status']=1;
+                $where = ['trade_no' => $contractAddress];
+                Db::name("charge_user_usdt")->where($where)->update($data);
+                Db::commit();
+
+                $result['code']=200;
+                $result['data']=[];
+                $result['msg']='success';
+                echo json_encode($result);
+                exit;
+            }else{
+                Db::rollback();
+                $result['code']=404;
+                $result['data']=[];
+                $result['msg']='fail';
+                echo json_encode($result);
+                exit;
+            }
+        } catch (\Exception $e) {
+            Db::rollback();
+//            throw $e;
+            $result['code']=400;
             $result['data']=[];
-            $result['msg']='success';
+            $result['msg']='fail';
             echo json_encode($result);
             exit;
         }
 
-        /* 更新会员虚拟币 */
 
-//        if($walletbalanceinfo){
-//            $coin=$orderinfo['coin'];
-//            Db::name("user")->where("id='{$orderinfo['touid']}'")->setInc("balance",$coin);
-//        }else{
-//            $coin=$orderinfo['coin']+$orderinfo['coin_give'];
-//            Db::name("user")->where("id='{$orderinfo['touid']}'")->setInc("coin",$coin);
-//        }
-        $usdt=$orderinfo['usdt']+$orderinfo['usdt_give'];
-        Db::name("user")->where("id='{$orderinfo['touid']}'")->setInc("usdt",$usdt);
-
-        /* 更新 订单状态 */
-        $data['status']=1;
-        $where = ['trade_no' => $contractAddress];
-        Db::name("charge_user_usdt")->where($where)->update($data);
-
-//        setAgentProfit($orderinfo['uid'],$orderinfo['coin']);
-
-        $result['code']=200;
-        $result['data']=[];
-        $result['msg']='success';
-        echo json_encode($result);
-        exit;
     }
 
     public function callbacklog($msg){
