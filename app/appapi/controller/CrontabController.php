@@ -4,10 +4,10 @@
  */
 namespace app\appapi\controller;
 
-use cmf\controller\HomeBaseController;
+use think\Controller;
 use think\Db;
 
-class CrontabController extends HomebaseController {
+class CrontabController extends Controller {
 
     function resetScore(){
         Db::name("user")->where('today_score', '>', 0)->update(['today_score'=>0]);
