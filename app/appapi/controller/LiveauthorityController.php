@@ -34,13 +34,20 @@ class LiveauthorityController extends Controller
 
         $this->assign("uid",$uid);
         $this->assign("token",$token);
+        $configPri = getConfigPri();
 
         $fans = Db::name("user_attention")
             ->where("touid='{$uid}' and status=1")
             ->count();
+        if($fans>=$configPri['live_fans_number']){
+            $fans = 1;
+        }
         $video = Db::name("video")
             ->where(["uid"=>$uid])
             ->count();
+        if($video>=$configPri['live_video_number']){
+            $video = 1;
+        }
         $this->assign("fans",$fans);
         $this->assign("video",$video);
 
