@@ -3449,9 +3449,9 @@ class Model_User extends PhalApi_Model_NotORM {
     public function getPoPoDividendList($uid,$p){
         $title_array = [
             1=>'礼物打赏',
-            2=>'划转',
-            3=>'划转市场推广分红',
-            4=>'POPO持有者手续费分红',
+            2=>'分红池转出',
+            3=>'市场推广分红',
+            4=>'手续费分红',
             5=>'矿机产出'
         ];
         if($p<1){
