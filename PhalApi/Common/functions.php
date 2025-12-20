@@ -589,21 +589,11 @@ function connectionRedis(){
 		if(strpos($file,"http")===0){
 			return html_entity_decode($file);
 		}else if(strpos($file,"/")===0){
-			$filepath= get_host().$file;
+			$filepath= 'https://www.popolive.net'.$file;
 			return html_entity_decode($filepath);
 		}else{
-            $configpri=getConfigPri();
-            if($configpri['cloudtype']=='1'){
-                $space_host= DI()->config->get('app.Qiniu.space_host');
-                $filepath=$space_host."/".$file;
-            }else if($configpri['cloudtype']=='2'){
-                $filepath= $configpri['qcloud_scheme'].'://'.$configpri['qcloud_host_cdn'].'/'.$file;
-                return $filepath;
-            }else{
-                $filepath= get_host().'/upload/'.$file;
-            }
-
-			return html_entity_decode($filepath);
+            $filepath= 'https://popolive-1385521809.cos.ap-hongkong.myqcloud.com/'.$file;
+            return $filepath;
 		}
 	}
 	
