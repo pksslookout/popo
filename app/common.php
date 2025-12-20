@@ -138,32 +138,25 @@
         
 		return 	$config;
 	}
-    
-	/**
-	 * 转化数据库保存的文件路径，为可以访问的url
-	 */
-	function get_upload_path($file){
+
+    /**
+     * 转化数据库保存的文件路径，为可以访问的url
+     */
+    function get_upload_path($file){
         if($file==''){
             return $file;
         }
-		if(strpos($file,"http")===0){
-			return $file;
-		}else if(strpos($file,"/")===0){
-            $configpub=getConfigPub();
-			$filepath= $configpub['site'].$file;
-			return $filepath;
-		}else{
-            $configpri=getConfigPri();
-            if($configpri['cloudtype']=='2'){
-                $filepath= $configpri['qcloud_scheme'].'://'.$configpri['qcloud_host_cdn'].'/'.$file;
-                return $filepath;
-            }else{
-                $style='';
-                $storage = Storage::instance();
-                return $storage->getImageUrl($file, $style);
-            }
-		}
-	}	
+        if(strpos($file,"http")===0){
+            return html_entity_decode($file);
+        }else if(strpos($file,"/")===0){
+            $filepath= 'https://www.popolive.net'.$file;
+            return html_entity_decode($filepath);
+        }else{
+            $filepath= 'https://popolive-1385521809.cos.ap-hongkong.myqcloud.com/'.$file;
+            return $filepath;
+        }
+    }
+
 	/* 获取等级 */
 	function getLevelList(){
         $key='level';
