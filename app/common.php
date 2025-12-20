@@ -440,7 +440,6 @@
             $where['user_id']=$uid;
 			$userinfo=Db::name("user_token")->field('token,expire_time')->where($where)->find();
             if($userinfo){
-                $userinfo['uid']=$uid;
                 setcaches($key,$userinfo);
             }else{
 				delcache($key);
