@@ -431,15 +431,6 @@
 	}
 	/*判断token是否过期*/
 	function checkToken($uid,$token){
-
-		if(!$uid || !$token){
-            session('uid',null);		
-            session('token',null);
-            session('user',null);
-            cookie('uid',null);
-            cookie('token',null);
-			return 700;	
-		}
         
         $key="token_".$uid;
 		$userinfo=getcaches($key);
@@ -456,11 +447,6 @@
 		}
         
 		if(!$userinfo || $userinfo['token']!=$token || $userinfo['expire_time']<time()){
-            session('uid',null);		
-            session('token',null);
-            session('user',null);
-            cookie('uid',null);
-            cookie('token',null);
 			return 700;				
 		}else{
 			return 	0;				
