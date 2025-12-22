@@ -3916,7 +3916,7 @@ class Api_User extends PhalApi_Api {
 
         if (!empty($lang)) {
             SL($lang);
-            setcookie('language', $lang, time() + 86400 * 360, '/');
+//            setcookie('language', $lang, time() + 86400 * 360, '/');
         }
 
         $rs = array('code' => 0, 'msg' => T('切换成功'), 'info' => array());
