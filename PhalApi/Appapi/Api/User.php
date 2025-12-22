@@ -94,8 +94,8 @@ class Api_User extends PhalApi_Api {
                 'chainType' => array('name' => 'chainType', 'type' => 'string', 'require' => true, 'desc' => '主网络'),
                 'number' => array('name' => 'number', 'type' => 'float', 'min' => 1, 'require' => true, 'desc' => '充值数量'),
                 'user_pay_pass' => array('name' => 'user_pay_pass', 'type' => 'string', 'require' => true, 'desc' => '支付密码'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
                 'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(adr+number+timestamp+nonce)'),
             ),
 
@@ -476,8 +476,8 @@ class Api_User extends PhalApi_Api {
                 'conversion_source' => array('name' => 'conversion_source', 'type' => 'string', 'require' => true, 'desc' => 'popo,usdt,coin,lala'),
                 'conversion_location' => array('name' => 'conversion_location', 'type' => 'string', 'require' => true, 'desc' => 'popo,usdt,coin,lala'),
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '兑换数量'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
                 'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(conversion_source+conversion_location+number+timestamp+nonce)'),
             ),
 
@@ -543,8 +543,8 @@ class Api_User extends PhalApi_Api {
                 'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
                 'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '划转数量'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
                 'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(number+timestamp+nonce)'),
             ),
 

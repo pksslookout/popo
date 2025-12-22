@@ -56,8 +56,8 @@ class Api_Video extends PhalApi_Api {
                 'videoid' => array('name' => 'videoid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '视频ID'),
                 'price'=>array('name' => 'price', 'type' => 'int', 'min' => 100, 'require' => true, 'desc' => '投放金额'),
                 'duration'=>array('name' => 'duration', 'type' => 'int', 'min' => 6, 'require' => true, 'desc' => '投放时长'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
                 'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(videoid+price+timestamp+nonce)'),
             ),
             'getPopularRule' => array(
@@ -127,8 +127,8 @@ class Api_Video extends PhalApi_Api {
                 'giftcount' => array('name' => 'giftcount', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '礼物数量'),
                 'ispack' => array('name' => 'ispack', 'type' => 'int', 'default'=>'0', 'desc' => '是否背包'),
                 'is_sticker' => array('name' => 'is_sticker', 'type' => 'int', 'default'=>'0', 'desc' => '是否为贴纸礼物：0：否；1：是'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
                 'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(videoid+giftid+giftcount+timestamp+nonce)'),
             ),
 
