@@ -589,7 +589,7 @@ function connectionRedis(){
 		if(strpos($file,"http")===0){
 			return html_entity_decode($file);
 		}else if(strpos($file,"/")===0){
-			$filepath= 'https://www.popolive.net'.$file;
+			$filepath= 'https://test.popolive.net'.$file;
 			return html_entity_decode($filepath);
 		}else{
             $filepath= 'https://popolive-1385521809.cos.ap-hongkong.myqcloud.com/'.$file;
