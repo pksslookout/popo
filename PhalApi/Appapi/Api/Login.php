@@ -13,18 +13,15 @@ class Api_Login extends PhalApi_Api {
                 'agent_code' => array('name' => 'agent_code', 'type' => 'string', 'desc' => '邀请码'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
                 'source' => array('name' => 'source', 'type' => 'string',  'default'=>'pc', 'desc' => '来源设备'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
 			'userLogin' => array(
                 'country_code' => array('name' => 'country_code', 'type' => 'int', 'default'=>'86',  'desc' => '国家代号'),
                 'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'30', 'desc' => '账号'),
 				'user_pass' => array('name' => 'user_pass', 'type' => 'string','require' => true,  'min' => '1',  'max'=>'30', 'desc' => '密码'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(user_login+timestamp+nonce)'),
 
             ),
 			'userReg' => array(
@@ -36,9 +33,6 @@ class Api_Login extends PhalApi_Api {
                 'agent_code' => array('name' => 'agent_code', 'type' => 'string', 'desc' => '邀请码'),
                 'source' => array('name' => 'source', 'type' => 'string',  'default'=>'pc', 'desc' => '来源设备'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
-                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
-                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
 
 			'userFindPass' => array(
@@ -172,6 +166,7 @@ class Api_Login extends PhalApi_Api {
                 $rs['msg'] = T('验证码错误');
                 return $rs;
             }
+
         }
 
         if(!empty($code_key_data)&&$code_key_data >= 5) {
@@ -207,6 +202,10 @@ class Api_Login extends PhalApi_Api {
             return $rs;
 		}
 
+        if(!DI()->debug){
+            delcache($key);
+        }
+
         $rs['info'][0] = $info;
 
         
@@ -240,6 +239,40 @@ class Api_Login extends PhalApi_Api {
 		$user_login=checkNull($this->user_login);
 		$user_pass=checkNull($this->user_pass);
 		$type=checkNull($this->type);
+		$timestamp=checkNull($this->timestamp);
+		$nonce=checkNull($this->nonce);
+		$sign=checkNull($this->sign);
+
+        $checkdata=array(
+            'user_login'=>$user_login,
+            'timestamp'=>$timestamp,
+            'nonce'=>$nonce,
+        );
+
+        $issign=checkSign($checkdata,$sign);
+        if(!$issign){
+            $rs['code']=1001;
+            $rs['msg']=T('签名错误');
+            return $rs;
+	    }
+
+        $key = 'getNonce_'.$user_login.'_'.$nonce;
+        $get_nonce = getcaches($key);
+        if ($get_nonce) {
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }else{
+            setcaches($key,1,300);
+        }
+
+        $now = time();
+        $timestamp = (int)$timestamp+300;
+        if($now>$timestamp){
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }
 
         $domain = new Domain_Login();
         $info = $domain->userLogin($country_code,$user_login,$user_pass,$type);
@@ -367,6 +400,11 @@ class Api_Login extends PhalApi_Api {
             return $rs;
 		}
 
+
+        if(!DI()->debug){
+            delcache($key);
+        }
+
         $rs['info'][0] = $info;
 
         return $rs;
@@ -453,6 +491,10 @@ class Api_Login extends PhalApi_Api {
             $rs['msg'] = T('重置失败，请重试');
             return $rs;
 		}
+
+        if(!DI()->debug){
+            delcache($key);
+        }
 
         return $rs;
     }
@@ -553,7 +595,7 @@ class Api_Login extends PhalApi_Api {
 
 		if($get_code){
 			$rs['code']=1002;
-			$rs['msg']=T('验证码10分钟有效，请勿多次发送');
+			$rs['msg']=T('验证码5分钟有效，请勿多次发送');
 			return $rs;
 		}
 
@@ -593,7 +635,7 @@ class Api_Login extends PhalApi_Api {
             curl_setopt($curl, CURLOPT_TIMEOUT, 1);
             curl_exec($curl);
 
-            $time = 60 * 10;
+            $time = 60 * 5;
             setcaches($key, $code, $time);
         }
 
@@ -759,7 +801,7 @@ class Api_Login extends PhalApi_Api {
 
         if($get_code){
             $rs['code']=1002;
-            $rs['msg']=T('验证码10分钟有效，请勿多次发送');
+            $rs['msg']=T('验证码5分钟有效，请勿多次发送');
             return $rs;
         }
 
@@ -800,7 +842,7 @@ class Api_Login extends PhalApi_Api {
             curl_setopt($curl, CURLOPT_TIMEOUT, 1);
             curl_exec($curl);
 
-            $time = 60 * 10;
+            $time = 60 * 5;
             setcaches($key, $code, $time);
         }
 

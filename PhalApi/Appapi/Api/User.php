@@ -96,7 +96,7 @@ class Api_User extends PhalApi_Api {
                 'user_pay_pass' => array('name' => 'user_pay_pass', 'type' => 'string', 'require' => true, 'desc' => '支付密码'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(adr+number+timestamp+nonce)'),
             ),
 
 			'getAccountType' => array(
@@ -478,7 +478,7 @@ class Api_User extends PhalApi_Api {
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '兑换数量'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(conversion_source+conversion_location+number+timestamp+nonce)'),
             ),
 
             'getConversionList' => array(
@@ -545,7 +545,7 @@ class Api_User extends PhalApi_Api {
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '划转数量'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(number+timestamp+nonce)'),
             ),
 
             'getScoreInfo' => array(
