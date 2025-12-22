@@ -13,12 +13,18 @@ class Api_Login extends PhalApi_Api {
                 'agent_code' => array('name' => 'agent_code', 'type' => 'string', 'desc' => '邀请码'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
                 'source' => array('name' => 'source', 'type' => 'string',  'default'=>'pc', 'desc' => '来源设备'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
 			'userLogin' => array(
                 'country_code' => array('name' => 'country_code', 'type' => 'int', 'default'=>'86',  'desc' => '国家代号'),
                 'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'30', 'desc' => '账号'),
 				'user_pass' => array('name' => 'user_pass', 'type' => 'string','require' => true,  'min' => '1',  'max'=>'30', 'desc' => '密码'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
 
             ),
 			'userReg' => array(
@@ -30,6 +36,9 @@ class Api_Login extends PhalApi_Api {
                 'agent_code' => array('name' => 'agent_code', 'type' => 'string', 'desc' => '邀请码'),
                 'source' => array('name' => 'source', 'type' => 'string',  'default'=>'pc', 'desc' => '来源设备'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
 
 			'userFindPass' => array(

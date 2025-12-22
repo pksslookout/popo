@@ -81,8 +81,8 @@ class PhalApi_Api {
         $this->userCheck();
 
         // 设置语言包
-        if(isset($_COOKIE['language'])){
-            SL($_COOKIE['language']);
+        if(isset($_SERVER['HTTP_LANGUAGE'])){
+            SL($_SERVER['HTTP_LANGUAGE']);
         };
     }
 

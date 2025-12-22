@@ -94,7 +94,9 @@ class Api_User extends PhalApi_Api {
                 'chainType' => array('name' => 'chainType', 'type' => 'string', 'require' => true, 'desc' => '主网络'),
                 'number' => array('name' => 'number', 'type' => 'float', 'min' => 1, 'require' => true, 'desc' => '充值数量'),
                 'user_pay_pass' => array('name' => 'user_pay_pass', 'type' => 'string', 'require' => true, 'desc' => '支付密码'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'desc' => '签名 uid  adr chainType'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
 
 			'getAccountType' => array(
@@ -474,6 +476,9 @@ class Api_User extends PhalApi_Api {
                 'conversion_source' => array('name' => 'conversion_source', 'type' => 'string', 'require' => true, 'desc' => 'popo,usdt,coin,lala'),
                 'conversion_location' => array('name' => 'conversion_location', 'type' => 'string', 'require' => true, 'desc' => 'popo,usdt,coin,lala'),
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '兑换数量'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
 
             'getConversionList' => array(
@@ -538,6 +543,9 @@ class Api_User extends PhalApi_Api {
                 'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
                 'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '划转数量'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
 
             'getScoreInfo' => array(
@@ -2124,7 +2132,7 @@ class Api_User extends PhalApi_Api {
 	 */
 	public function setCash() {
 		$rs = array('code' => 0, 'msg' => T('提现成功'), 'info' => array());
-        
+        exit();
         $uid=checkNull($this->uid);
         $token=checkNull($this->token);		
         $accountid=checkNull($this->accountid);		

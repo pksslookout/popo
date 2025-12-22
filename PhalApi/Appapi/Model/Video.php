@@ -1392,8 +1392,6 @@ class Model_Video extends PhalApi_Model_NotORM {
 		$pnums=20;
 		$start=($p-1)*$pnums;
 
-
-		
 		$configPri=getConfigPri();
 		$video_showtype=$configPri['recommended_video_display_methods'];
 
@@ -1579,11 +1577,16 @@ class Model_Video extends PhalApi_Model_NotORM {
                 $infoAll[] = $v;
             }else{
                 $infoAll[] = $infoPopularVideoList[$k];
+                unset($infoPopularVideoList[$k]);
                 $infoAll[] = $v;
             }
         }
-
-        $info = $infoAll;
+        if(!empty($infoPopularVideoList)){
+            $info = array_merge($infoAll,$infoPopularVideoList);
+            $info = array_values($info);
+        }else{
+            $info = $infoAll;
+        }
 
         foreach ($info as $k => $v) {
             $v=handleVideo($uid,$v);

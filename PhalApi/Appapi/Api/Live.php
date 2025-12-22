@@ -119,6 +119,9 @@ class Api_Live extends PhalApi_Api {
 				'giftcount' => array('name' => 'giftcount', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '礼物数量'),
 				'ispack' => array('name' => 'ispack', 'type' => 'int', 'default'=>'0', 'desc' => '是否背包'),
 				'is_sticker' => array('name' => 'is_sticker', 'type' => 'int', 'default'=>'0', 'desc' => '是否为贴纸礼物：0：否；1：是'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+				'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
 			),
 			
 			'sendBarrage' => array(
@@ -127,6 +130,9 @@ class Api_Live extends PhalApi_Api {
 				'liveuid' => array('name' => 'liveuid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '主播ID'),
 				'stream' => array('name' => 'stream', 'type' => 'string', 'require' => true, 'desc' => '流名'),
 				'content' => array('name' => 'content', 'type' => 'string', 'min' => 1, 'require' => true, 'desc' => '弹幕内容'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
 			),
 			
 			'setAdmin' => array(
@@ -215,6 +221,9 @@ class Api_Live extends PhalApi_Api {
                 'uid' => array('name' => 'uid', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
                 'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户Token'),
                 'price'=>array('name' => 'price', 'type' => 'int', 'min' => 100, 'require' => true, 'desc' => '投放金额'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名'),
             ),
             'getPopular' => array(
                 'uid' => array('name' => 'uid', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
