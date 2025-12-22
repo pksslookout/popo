@@ -88,8 +88,7 @@
         var content = $('#content').val();
         var contactMsg = $('#contactMsg').val();
         var thumb = $('#thumb').val();
-        var token = $('#token').val();
-        var uid = encodeURIComponent($('#uid').val());
+        var user = encodeURIComponent($('#user').val());
         var version = encodeURIComponent($('#version').val());
         var model = encodeURIComponent($('#model').val());
 
@@ -106,8 +105,7 @@
                 content: content,
                 phone: contactMsg,
                 version: version,
-                uid: uid,
-                token: token,
+                user: user,
                 thumb: thumb,
                 model: model
             },

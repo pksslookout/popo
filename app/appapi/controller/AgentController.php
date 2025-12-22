@@ -17,19 +17,18 @@ class AgentController extends Controller {
 	
 	function index(){
 		$data = $this->request->param();
-        $uid=isset($data['uid']) ? $data['uid']: '';
-        $token=isset($data['token']) ? $data['token']: '';
+        $user=isset($data['user']) ? $data['user']: '';
         $lang=isset($data['lang']) ? $data['lang']: 'zh_cn';
-        $uid=(int)checkNull($uid);
-        $token=checkNull($token);
-        
-        $checkToken=checkToken($uid,$token);
-		if($checkToken==700){
-			$reason=lang('您的登陆状态失效，请重新登陆！');
-			$this->assign('reason', $reason);
-			return $this->fetch(':error');
-		}
-		  
+        $user=checkNull($user);
+        if(empty($user)){
+            echo '用户不存在！';
+            exit();
+        }
+        $uid=Db::name('user')->where(["user_login"=>$user])->value('id');
+        if(empty($uid)){
+            echo '用户不存在！';
+            exit();
+        }
 		$userinfo=getUserInfo($uid,1);
 		$code=Db::name('agent_code')->where(["uid"=>$uid])->value('code');
 		
@@ -116,7 +115,6 @@ class AgentController extends Controller {
 		$this->assign("uid",$uid);
 		$this->assign("qr",$qr);
 		$this->assign("downImg",$outputImage);
-		$this->assign("token",$token);
 		$this->assign("userinfo",$userinfo);
 		$this->assign("agentinfo",$agentinfo);
 

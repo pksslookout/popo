@@ -20,20 +20,19 @@ class LiveauthorityController extends Controller
 
     function index(){
         $data = $this->request->param();
-        $uid=isset($data['uid']) ? $data['uid']: '';
-        $token=isset($data['token']) ? $data['token']: '';
-        $uid=(int)checkNull($uid);
-        $token=checkNull($token);
-
-        $checkToken=checkToken($uid,$token);
-        if($checkToken==700){
-            $reason=lang('您的登陆状态失效，请重新登陆！');
-            $this->assign('reason', $reason);
-            return $this->fetch(':error');
+        $user=isset($data['user']) ? $data['user']: '';
+        $user=checkNull($user);
+        if(empty($user)){
+            echo '用户不存在！';
+            exit();
+        }
+        $uid=Db::name('user')->where(["user_login"=>$user])->value('id');
+        if(empty($uid)){
+            echo '用户不存在！';
+            exit();
         }
 
-        $this->assign("uid",$uid);
-        $this->assign("token",$token);
+
         $configPri = getConfigPri();
 
         $fans = Db::name("user_attention")

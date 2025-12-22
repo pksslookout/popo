@@ -20,27 +20,25 @@ class LiverecordController extends Controller
 
     function index(){
         $data = $this->request->param();
-        $uid=isset($data['uid']) ? $data['uid']: '';
-        $touid=isset($data['touid']) ? $data['touid']: '';
-        $token=isset($data['token']) ? $data['token']: '';
-        $uid=(int)checkNull($uid);
-        $token=checkNull($token);
-
-        $checkToken=checkToken($uid,$token);
-        if($checkToken==700){
-            $reason=lang('您的登陆状态失效，请重新登陆！');
-            $this->assign('reason', $reason);
-            return $this->fetch(':error');
+        $user=isset($data['user']) ? $data['user']: '';
+        $lang=isset($data['lang']) ? $data['lang']: 'zh_cn';
+        $user=checkNull($user);
+        if(empty($user)){
+            echo '用户不存在！';
+            exit();
         }
 
-        $this->assign("uid",$uid);
-        $this->assign("token",$token);
+        $uid=Db::name('user')->where(["user_login"=>$user])->value('id');
+        if(empty($uid)){
+            echo '用户不存在！';
+            exit();
+        }
 
-        $userinfo=getUserInfo($touid);
+        $userinfo=getUserInfo($uid);
 
         $this->assign("userinfo",$userinfo);
 
-        $list=Db::name("live_record")->where(["uid"=>$touid])->order("starttime desc")->limit(0,5000)->select()->toArray();
+        $list=Db::name("live_record")->where(["uid"=>$uid])->order("starttime desc")->limit(0,50)->select()->toArray();
         foreach($list as $k=>$v){
 
             $list[$k]['starttime_ymd']=date('Y-m-d',$v['starttime']);
