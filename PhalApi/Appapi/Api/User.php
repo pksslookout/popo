@@ -96,7 +96,7 @@ class Api_User extends PhalApi_Api {
                 'user_pay_pass' => array('name' => 'user_pay_pass', 'type' => 'string', 'require' => true, 'desc' => '支付密码'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(adr+number+timestamp+nonce)'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(uid+adr+number+timestamp+nonce)'),
             ),
 
 			'getAccountType' => array(
@@ -478,7 +478,7 @@ class Api_User extends PhalApi_Api {
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '兑换数量'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(conversion_source+conversion_location+number+timestamp+nonce)'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(uid+conversion_source+conversion_location+number+timestamp+nonce)'),
             ),
 
             'getConversionList' => array(
@@ -545,7 +545,7 @@ class Api_User extends PhalApi_Api {
                 'number' => array('name' => 'number', 'type' => 'float', 'require' => true, 'desc' => '划转数量'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(number+timestamp+nonce)'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(uid+number+timestamp+nonce)'),
             ),
 
             'getScoreInfo' => array(
@@ -1723,21 +1723,42 @@ class Api_User extends PhalApi_Api {
         $chainType=checkNull($this->chainType);
         $number=checkNull($this->number);
         $user_pay_pass=checkNull($this->user_pay_pass);
+        $timestamp=checkNull($this->timestamp);
+        $nonce=checkNull($this->nonce);
         $sign=checkNull($this->sign);
 
         $checkdata=array(
             'uid'=>$uid,
             'adr'=>$adr,
-            'chainType'=>$chainType,
             'number'=>$number,
+            'timestamp'=>$timestamp,
+            'nonce'=>$nonce,
         );
 
-//        $issign=checkSign($checkdata,$sign);
-//        if(!$issign){
-//            $rs['code']=1002;
-//            $rs['msg']=T('签名错误');
-//            return $rs;
-//        }
+        $issign=checkSign($checkdata,$sign);
+        if(!$issign){
+            $rs['code']=1001;
+            $rs['msg']=T('签名错误');
+            return $rs;
+        }
+
+        $key = 'getNonce_'.$uid.'_'.$nonce;
+        $get_nonce = getcaches($key);
+        if ($get_nonce) {
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }else{
+            setcaches($key,1,300);
+        }
+
+        $now = time();
+        $timestamp = (int)$timestamp+300;
+        if($now>$timestamp){
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }
 
         $checkToken=checkToken($uid,$token);
         if($checkToken==700){
@@ -4484,6 +4505,41 @@ class Api_User extends PhalApi_Api {
         $conversion_source=checkNull($this->conversion_source);
         $conversion_location=checkNull($this->conversion_location);
         $number=checkNull($this->number);
+        $timestamp=checkNull($this->timestamp);
+        $nonce=checkNull($this->nonce);
+        $sign=checkNull($this->sign);
+
+        $checkdata=array(
+            'uid'=>$uid,
+            'number'=>$number,
+            'timestamp'=>$timestamp,
+            'nonce'=>$nonce,
+        );
+
+        $issign=checkSign($checkdata,$sign);
+        if(!$issign){
+            $rs['code']=1001;
+            $rs['msg']=T('签名错误');
+            return $rs;
+        }
+
+        $key = 'getNonce_'.$uid.'_'.$nonce;
+        $get_nonce = getcaches($key);
+        if ($get_nonce) {
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }else{
+            setcaches($key,1,300);
+        }
+
+        $now = time();
+        $timestamp = (int)$timestamp+300;
+        if($now>$timestamp){
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }
 
         $checkToken=checkToken($this->uid,$this->token);
         if($checkToken==700){
@@ -4749,6 +4805,41 @@ class Api_User extends PhalApi_Api {
 
         $uid=checkNull($this->uid);
         $number=checkNull($this->number);
+        $timestamp=checkNull($this->timestamp);
+        $nonce=checkNull($this->nonce);
+        $sign=checkNull($this->sign);
+
+        $checkdata=array(
+            'uid'=>$uid,
+            'number'=>$number,
+            'timestamp'=>$timestamp,
+            'nonce'=>$nonce,
+        );
+
+        $issign=checkSign($checkdata,$sign);
+        if(!$issign){
+            $rs['code']=1001;
+            $rs['msg']=T('签名错误');
+            return $rs;
+        }
+
+        $key = 'getNonce_'.$uid.'_'.$nonce;
+        $get_nonce = getcaches($key);
+        if ($get_nonce) {
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }else{
+            setcaches($key,1,300);
+        }
+
+        $now = time();
+        $timestamp = (int)$timestamp+300;
+        if($now>$timestamp){
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }
 
         $checkToken=checkToken($this->uid,$this->token);
         if($checkToken==700){

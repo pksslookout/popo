@@ -1966,12 +1966,8 @@ function connectionRedis(){
         foreach($data as $k=>$v){
             $str.=$k.'='.$v.'&';
         }
-        
         $str.=$key;
         $newsign=md5($str);
-        //file_put_contents("33333.txt", $newsign);
-        /*var_dump($newsign);
-        die;*/
         if($sign==$newsign){
             return 1;
         }

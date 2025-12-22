@@ -121,7 +121,7 @@ class Api_Live extends PhalApi_Api {
 				'is_sticker' => array('name' => 'is_sticker', 'type' => 'int', 'default'=>'0', 'desc' => '是否为贴纸礼物：0：否；1：是'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(videoid+giftid+giftcount+timestamp+nonce)'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(uid+liveuid+giftid+giftcount+timestamp+nonce)'),
 			),
 			
 			'sendBarrage' => array(
@@ -132,7 +132,7 @@ class Api_Live extends PhalApi_Api {
 				'content' => array('name' => 'content', 'type' => 'string', 'min' => 1, 'require' => true, 'desc' => '弹幕内容'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(liveuid+stream+timestamp+nonce)'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(uid+liveuid+stream+timestamp+nonce)'),
 			),
 			
 			'setAdmin' => array(
@@ -223,7 +223,7 @@ class Api_Live extends PhalApi_Api {
                 'price'=>array('name' => 'price', 'type' => 'int', 'min' => 100, 'require' => true, 'desc' => '投放金额'),
                 'timestamp' => array('name' => 'timestamp', 'require' => true, 'type' => 'string', 'desc' => '秒级时间戳'),
                 'nonce' => array('name' => 'nonce', 'type' => 'string', 'require' => true, 'desc' => '8位随机数（包含字母数字）'),
-                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(price+timestamp+nonce)'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'require' => true, 'default'=>'', 'desc' => '签名(uid+price+timestamp+nonce)'),
             ),
             'getPopular' => array(
                 'uid' => array('name' => 'uid', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
@@ -1712,6 +1712,43 @@ class Api_Live extends PhalApi_Api {
 		$giftcount=checkNull($this->giftcount);
 		$ispack=checkNull($this->ispack);
 		$is_sticker=checkNull($this->is_sticker);
+        $timestamp=checkNull($this->timestamp);
+        $nonce=checkNull($this->nonce);
+        $sign=checkNull($this->sign);
+
+        $checkdata=array(
+            'uid'=>$uid,
+            'liveuid'=>$liveuid,
+            'giftid'=>$giftid,
+            'giftcount'=>$giftcount,
+            'timestamp'=>$timestamp,
+            'nonce'=>$nonce,
+        );
+
+        $issign=checkSign($checkdata,$sign);
+        if(!$issign){
+            $rs['code']=1001;
+            $rs['msg']=T('签名错误');
+            return $rs;
+        }
+
+        $key = 'getNonce_'.$uid.'_'.$nonce;
+        $get_nonce = getcaches($key);
+        if ($get_nonce) {
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }else{
+            setcaches($key,1,300);
+        }
+
+        $now = time();
+        $timestamp = (int)$timestamp+300;
+        if($now>$timestamp){
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }
         
 		
 		$checkToken=checkToken($uid,$token);
@@ -1807,6 +1844,50 @@ class Api_Live extends PhalApi_Api {
 		$token=checkNull($this->token);
 		$liveuid=checkNull($this->liveuid);
 		$stream=checkNull($this->stream);
+        $timestamp=checkNull($this->timestamp);
+        $nonce=checkNull($this->nonce);
+        $sign=checkNull($this->sign);
+
+        $checkdata=array(
+            'uid'=>$uid,
+            'liveuid'=>$liveuid,
+            'stream'=>$stream,
+            'timestamp'=>$timestamp,
+            'nonce'=>$nonce,
+        );
+
+        $issign=checkSign($checkdata,$sign);
+        if(!$issign){
+            $rs['code']=1001;
+            $rs['msg']=T('签名错误');
+            return $rs;
+        }
+
+        $key = 'getNonce_'.$uid.'_'.$nonce;
+        $get_nonce = getcaches($key);
+        if ($get_nonce) {
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }else{
+            setcaches($key,1,300);
+        }
+
+        $now = time();
+        $timestamp = (int)$timestamp+300;
+        if($now>$timestamp){
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }
+
+        $checkToken=checkToken($uid,$token);
+        if($checkToken==700){
+            $rs['code'] = $checkToken;
+            $rs['msg'] = T('您的登陆状态失效，请重新登陆！');
+            return $rs;
+        }
+
 		$giftid=0;
 		$giftcount=1;
 		
@@ -2442,6 +2523,41 @@ class Api_Live extends PhalApi_Api {
         $uid=checkNull($this->uid);
         $token=checkNull($this->token);
         $price=checkNull($this->price);
+        $timestamp=checkNull($this->timestamp);
+        $nonce=checkNull($this->nonce);
+        $sign=checkNull($this->sign);
+
+        $checkdata=array(
+            'uid'=>$uid,
+            'price'=>$price,
+            'timestamp'=>$timestamp,
+            'nonce'=>$nonce,
+        );
+
+        $issign=checkSign($checkdata,$sign);
+        if(!$issign){
+            $rs['code']=1001;
+            $rs['msg']=T('签名错误');
+            return $rs;
+        }
+
+        $key = 'getNonce_'.$uid.'_'.$nonce;
+        $get_nonce = getcaches($key);
+        if ($get_nonce) {
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }else{
+            setcaches($key,1,300);
+        }
+
+        $now = time();
+        $timestamp = (int)$timestamp+300;
+        if($now>$timestamp){
+            $rs['code']=1001;
+            $rs['msg']=T('非法操作');
+            return $rs;
+        }
 
         $checkToken=checkToken($uid,$token);
         if($checkToken==700){
