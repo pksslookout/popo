@@ -642,12 +642,17 @@ class Model_Login extends PhalApi_Model_NotORM {
                 ->where('id=?', $uid)
                 ->update(array('last_login_time' => $nowtime, "last_login_ip" => $_SERVER['REMOTE_ADDR']));
 
-            $isok = DI()->notorm->user_token
+            $isok=DI()->notorm->user_token
+                ->select("user_id")
                 ->where('user_id=?', $uid)
-                ->update(array("token" => $token, "expire_time" => $expiretime, 'create_time' => $nowtime));
+                ->fetchOne();
             if (!$isok) {
                 DI()->notorm->user_token
                     ->insert(array("user_id" => $uid, "token" => $token, "expire_time" => $expiretime, 'create_time' => $nowtime,));
+            }else{
+                DI()->notorm->user_token
+                    ->where('user_id=?', $uid)
+                    ->update(array("token" => $token, "expire_time" => $expiretime, 'create_time' => $nowtime));
             }
             DI()->notorm->commit('db_appapi');
         }catch(\Exception $e){

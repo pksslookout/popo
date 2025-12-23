@@ -431,19 +431,34 @@
 	}
 	/*判断token是否过期*/
 	function checkToken($uid,$token){
-        
+
+        $nowtime=time();
         $key="token_".$uid;
 		$userinfo=getcaches($key);
-
 
 		if(!$userinfo){
             $where['user_id']=$uid;
 			$userinfo=Db::name("user_token")->field('token,expire_time')->where($where)->find();
+            /* 是否禁用、拉黑$_SERVER['REMOTE_ADDR'] */
+            $info=Db::name("user")->field('user_login,user_status,end_bantime,last_login_ip')->where(['id'=>$uid])->find();
+
+            if( !$info || $info['user_status']==0 || $info['end_bantime'] > $nowtime){
+                return 700;
+            }
             if($userinfo){
-                setcaches($key,$userinfo);
+                if($info['last_login_ip']==$_SERVER['REMOTE_ADDR']&&$userinfo['expire_time']<$nowtime){
+                    $token=md5(md5($uid.$info['user_login'].$nowtime.'9522x'));
+                    $time = 60*60*24*7;
+                    $expiretime=$nowtime+$time;
+                    Db::name("user_token")->where(['user_id'=>$uid])
+                        ->update(array("token" => $token, "expire_time" => $expiretime, 'create_time' => $nowtime));
+                    $userinfo['expire_time']=$expiretime;
+                    $userinfo['token']=$token;
+                }
+                setcaches("token_".$uid,$userinfo,60*60*24*7);
             }else{
-				delcache($key);
-			}
+                return 700;
+            }
 		}
         
 		if(!$userinfo || $userinfo['token']!=$token || $userinfo['expire_time']<time()){

@@ -654,32 +654,45 @@ function connectionRedis(){
 	}
 	/* 判断token */
 	function checkToken($uid,$token) {
-        $now = time();
+
+        $nowtime=time();
 		$userinfo=getcaches("token_".$uid);
+
 		if(!$userinfo){
 			$userinfo=DI()->notorm->user_token
 						->select('token,expire_time')
 						->where('user_id = ?', $uid)
 						->fetchOne();
 
-            /* 是否禁用、拉黑 */
+            /* 是否禁用、拉黑$_SERVER['REMOTE_ADDR'] */
             $info=DI()->notorm->user
-                ->select('user_status,end_bantime')
+                ->select('user_login,user_status,end_bantime,last_login_ip')
                 ->where('id=?',$uid)
                 ->fetchOne();
-            if(!$info || $info['user_status']==0  || $info['end_bantime']>$now){
+
+            if( !$info || $info['user_status']==0 || $info['end_bantime'] > $nowtime){
                 return 700;
             }
 
             if($userinfo){
+                if($info['last_login_ip']==$_SERVER['REMOTE_ADDR']&&$userinfo['expire_time']<$nowtime){
+                    $token=md5(md5($uid.$info['user_login'].$nowtime.'9522x'));
+                    $time = 60*60*24*7;
+                    $expiretime=$nowtime+$time;
+                    DI()->notorm->user_token
+                        ->where('user_id=?', $uid)
+                        ->update(array("token" => $token, "expire_time" => $expiretime, 'create_time' => $nowtime));
+                    $userinfo['expire_time']=$expiretime;
+                    $userinfo['token']=$token;
+                }
                 setcaches("token_".$uid,$userinfo,60*60*24*7);
+            }else{
+                return 700;
             }
-			
 		}
 
-		if(!$userinfo || $userinfo['token']!=$token || $userinfo['expire_time']<$now){
-
-			return 700;				
+		if(!$userinfo || $userinfo['token']!=$token || $userinfo['expire_time']<$nowtime){
+			return 700;
 		}
 
 
