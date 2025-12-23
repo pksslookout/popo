@@ -432,11 +432,11 @@ class Api_Video extends PhalApi_Api {
 //		$ad_endtime=checkNull($this->ad_endtime);
 		$ad_url=checkNull($this->ad_url);
 
-        if($classid<1){
-            $rs['code'] = 10012;
-			$rs['msg'] = T('请选择分类');
-			return $rs;
-        }
+//        if($classid<1){
+//            $rs['code'] = 10012;
+//			$rs['msg'] = T('请选择分类');
+//			return $rs;
+//        }
 		
 		$checkToken=checkToken($uid,$token);
 		if($checkToken==700){
