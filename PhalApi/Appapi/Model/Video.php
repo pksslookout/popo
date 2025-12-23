@@ -621,7 +621,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 			return 1002;//不能给自己点赞
 		}
 		$like=DI()->notorm->video_like
-						->select("id")
+						->select("uid")
 						->where("uid='{$uid}' and videoid='{$videoid}'")
 						->fetchOne();
 		if($like){

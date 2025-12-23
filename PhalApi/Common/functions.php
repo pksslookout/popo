@@ -2039,7 +2039,7 @@ function connectionRedis(){
 	/* 视频是否点赞 */
 	function ifLike($uid,$videoid){
 		$like=DI()->notorm->video_like
-				->select("id")
+				->select("uid,videoid")
 				->where("uid='{$uid}' and videoid='{$videoid}'")
 				->fetchOne();
 		if($like){
@@ -2065,7 +2065,7 @@ function connectionRedis(){
 	/* 视频是否踩 */
 	function ifCollection($uid,$videoid){
 		$collection=DI()->notorm->video_collection
-				->select("id,status")
+				->select("uid,status")
 				->where("uid='{$uid}' and videoid='{$videoid}'")
 				->fetchOne();
 		if($collection&&$collection['status']==1){
