@@ -1581,12 +1581,7 @@ class Model_Video extends PhalApi_Model_NotORM {
                 $infoAll[] = $v;
             }
         }
-        if(!empty($infoPopularVideoList)){
-            $info = array_merge($infoAll,$infoPopularVideoList);
-            $info = array_values($info);
-        }else{
-            $info = $infoAll;
-        }
+        $info = $infoAll;
 
         foreach ($info as $k => $v) {
             $v=handleVideo($uid,$v);
