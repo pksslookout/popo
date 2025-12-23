@@ -1226,6 +1226,24 @@ function connectionRedis(){
 		return $num;
 	}
 
+	/* K */
+	function NumberFormatT($num){
+		if($num<1000){
+
+		}else if($num<10000){
+			$num=round($num/1000,2).T('K');
+		}else if($num<1000000){
+			$num=round($num/10000,2).T('W');
+		}else if($num<100000000){
+			$num=round($num/10000,1).T('W');
+		}else if($num<10000000000){
+			$num=round($num/100000000,2).T('B');
+		}else{
+			$num=round($num/100000000,1).T('B');
+		}
+		return (string)$num;
+	}
+
 	/**
 	*  @desc 获取推拉流地址
 	*  @param string $host 协议，如:http、rtmp

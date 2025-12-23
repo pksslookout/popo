@@ -206,7 +206,6 @@ class Model_Video extends PhalApi_Model_NotORM {
             /* 打赏映票 作者分红*/
             $adminuid = 1;
             if ($videouid != 0) {
-                // 获取主播信息
                 $userinfo = DI()->notorm->user
                     ->select('votestotal')
                     ->where('id = ?', $videouid)
@@ -231,7 +230,7 @@ class Model_Video extends PhalApi_Model_NotORM {
                 DI()->notorm->user_voterecord->insert($insert_votes);
                 DI()->notorm->user
                     ->where('id = ?', $videouid)
-                    ->update(array('votes' => new NotORM_Literal("votes + {$anthor_total}"), 'votestotal' => new NotORM_Literal("votestotal + {$total}"), 'votesearnings' => new NotORM_Literal("votesearnings + {$anthor_total}")));
+                    ->update(array('votes' => new NotORM_Literal("votes + {$anthor_total}"), 'votestotal' => new NotORM_Literal("votestotal + {$total}"), 'votesearnings' => new NotORM_Literal("votesearnings + {$anthor_total}"), 'votescreateearnings' => new NotORM_Literal("votescreateearnings + {$anthor_total}")));
                 // 接收滑落映票到管理员账号
                 if ($ratio_anchor < 0.6) {
                     $ratio_anchor = 0.6 - $level_anchor_ratio[$level_anchor];

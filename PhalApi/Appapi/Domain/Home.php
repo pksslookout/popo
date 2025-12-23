@@ -99,6 +99,15 @@ class Domain_Home {
         return $rs;
     }
 
+    public function creationList($uid,$type,$p){
+        $rs = array();
+
+        $model = new Model_Home();
+        $rs = $model->creationList($uid,$type,$p);
+
+        return $rs;
+    }
+
     public function consumeList($uid,$type,$p){
         $rs = array();
 

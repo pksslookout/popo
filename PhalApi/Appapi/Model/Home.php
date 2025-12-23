@@ -401,44 +401,32 @@ class Model_Home extends PhalApi_Model_NotORM {
 		$pnum=50;
 		$start=($p-1)*$pnum;
 		switch ($type) {
-			case 'hours':
-				//获取今天开始结束时间
-				$dayStart=time()-(60*60);
-				$where=" and addtime >={$dayStart}";
-
-			break;
+//			case 'hours':
+//				//获取今天开始结束时间
+//				$dayStart=time()-(60*60);
+//				$where=" and addtime >={$dayStart}";
+//
+//			break;
 			case 'day':
 				//获取今天开始结束时间
 				$dayStart=strtotime(date("Y-m-d"));
-				$dayEnd=strtotime(date("Y-m-d 23:59:59"));
                 $where=" and addtime >={$dayStart}";
 
 			break;
 
 			case 'week':
-                $w=date('w'); 
+                $w=date('w');
                 //获取本周开始日期，如果$w是0，则表示周日，减去 6 天 
                 $first=1;
-                //周一
-                $week=date('Y-m-d H:i:s',strtotime( date("Ymd")."-".($w ? $w - $first : 6).' days')); 
-                $week_start=strtotime( date("Ymd")."-".($w ? $w - $first : 6).' days'); 
+                $week_start=strtotime( date("Ymd")."-".($w ? $w - $first : 6).' days');
 
-                //本周结束日期 
-                //周天
-                $week_end=strtotime("{$week} +1 week")-1;
-                
                 $where=" and addtime >={$week_start}";
 
 			break;
 
 			case 'month':
                 //本月第一天
-                $month=date('Y-m-d',strtotime(date("Ym").'01'));
                 $month_start=strtotime(date("Ym").'01');
-
-                //本月最后一天
-                $month_end=strtotime("{$month} +1 month")-1;
-
                 $where=" and addtime >={$month_start}";
 
 			break;
@@ -457,12 +445,12 @@ class Model_Home extends PhalApi_Model_NotORM {
                         ->fetchAll();
 
                     foreach ($result as $k => $v) {
-                        $v['totalcoin'] = (int)$v['votestotal'];
+                        $v['totalcoin'] = NumberFormatT((int)$v['votestotal']);
                         $v['uid'] = $v['id'];
                         $v['avatar']=get_upload_path($v['avatar']);
                         $v['avatar_thumb']=get_upload_path($v['avatar_thumb']);
                         $v['isAttention'] = isAttention($uid, $v['id']);//判断当前用户是否关注了该主播
-
+                        unset($v['votestotal']);
                         $result[$k] = $v;
                     }
 
@@ -480,7 +468,6 @@ class Model_Home extends PhalApi_Model_NotORM {
 			default:
 				//获取今天开始结束时间
 				$dayStart=strtotime(date("Y-m-d"));
-				$dayEnd=strtotime(date("Y-m-d 23:59:59"));
                 $where=" and addtime >={$dayStart}";
 			break;
 		}
@@ -490,7 +477,7 @@ class Model_Home extends PhalApi_Model_NotORM {
         $key='getProfitList_'.$type;
         $result = DI()->redis->Get($key);
 
-		$where ="action in (1,2)".$where;
+		$where ="action = 1".$where;
 
 
         if(!$result) {
@@ -504,7 +491,7 @@ class Model_Home extends PhalApi_Model_NotORM {
 
             foreach ($result as $k => $v) {
                 $userinfo = getUserInfo($v['uid'],1);
-                $v['totalcoin'] = (int)$v['totalcoin'];
+                $v['totalcoin'] = NumberFormatT((int)$v['totalcoin']);
                 $v['avatar'] = $userinfo['avatar'];
                 $v['avatar_thumb'] = $userinfo['avatar_thumb'];
                 $v['user_nicename'] = $userinfo['user_nicename'];
@@ -526,6 +513,61 @@ class Model_Home extends PhalApi_Model_NotORM {
 		return $result;
 	}
 
+	/*获取创作排行榜*/
+	public function creationList($uid,$type,$p){
+        if($p<1){
+            $p=1;
+        }
+		$pnum=50;
+		$start=($p-1)*$pnum;
+		switch ($type) {
+			case 'create':
+
+                $key='getCreationList_total';
+                $result = DI()->redis->Get($key);
+                if(!$result){
+                    $result=DI()->notorm->user
+                        ->select('votescreateearnings,id,sex,avatar,avatar_thumb,user_nicename')
+                        ->where(['user_type' => 2])
+                        ->order('votescreateearnings desc')
+                        ->limit($start,$pnum)
+                        ->fetchAll();
+
+                    foreach ($result as $k => $v) {
+                        $v['uid'] = $v['id'];
+                        $v['totalcoin'] = NumberFormatT((int)$v['votescreateearnings']);
+                        $v['avatar']=get_upload_path($v['avatar']);
+                        $v['avatar_thumb']=get_upload_path($v['avatar_thumb']);
+
+                        $v['isAttention']=isAttention($uid,$v['id']);//判断当前用户是否关注了该主播
+                        unset($v['votescreateearnings']);
+
+                        $result[$k]=$v;
+                    }
+
+                    if($result){
+                        DI()->redis->set($key, json_encode($result));
+                        DI()->redis->expire($key, 600);
+                    }
+                }else{
+                    $result = json_decode($result,true);
+
+                }
+                return $result;
+
+			break;
+
+			default:
+
+			break;
+		}
+
+
+
+
+		return [];
+	}
+
 
 
 	/*获取消费排行榜*/
@@ -539,37 +581,25 @@ class Model_Home extends PhalApi_Model_NotORM {
 		switch ($type) {
 			case 'day':
 				//获取今天开始结束时间
-				$dayStart=strtotime(date("Y-m-d"));
-				$dayEnd=strtotime(date("Y-m-d 23:59:59"));
-				$where=" addtime >={$dayStart} and addtime<={$dayEnd} and ";
+                $dayStart=strtotime(date("Y-m-d"));
+                $where=" and addtime >={$dayStart}";
 
 			break;
             
             case 'week':
-                $w=date('w'); 
-                //获取本周开始日期，如果$w是0，则表示周日，减去 6 天 
+                $w=date('w');
+                //获取本周开始日期，如果$w是0，则表示周日，减去 6 天
                 $first=1;
-                //周一
-                $week=date('Y-m-d H:i:s',strtotime( date("Ymd")."-".($w ? $w - $first : 6).' days')); 
-                $week_start=strtotime( date("Ymd")."-".($w ? $w - $first : 6).' days'); 
+                $week_start=strtotime( date("Ymd")."-".($w ? $w - $first : 6).' days');
 
-                //本周结束日期 
-                //周天
-                $week_end=strtotime("{$week} +1 week")-1;
-                
-				$where=" addtime >={$week_start} and addtime<={$week_end} and ";
+                $where=" and addtime >={$week_start}";
 
 			break;
 
 			case 'month':
                 //本月第一天
-                $month=date('Y-m-d',strtotime(date("Ym").'01'));
                 $month_start=strtotime(date("Ym").'01');
-
-                //本月最后一天
-                $month_end=strtotime("{$month} +1 month")-1;
-
-				$where=" addtime >={$month_start} and addtime<={$month_end} and ";
+                $where=" and addtime >={$month_start}";
 
 			break;
 
@@ -586,11 +616,12 @@ class Model_Home extends PhalApi_Model_NotORM {
 
                     foreach ($result as $k => $v) {
                         $v['uid'] = $v['id'];
-                        $v['totalcoin']=(int)$v['consumption'];
+                        $v['totalcoin'] = NumberFormatT((int)$v['consumption']);
                         $v['avatar']=get_upload_path($v['avatar']);
                         $v['avatar_thumb']=get_upload_path($v['avatar_thumb']);
 
                         $v['isAttention']=isAttention($uid,$v['id']);//判断当前用户是否关注了该主播
+                        unset($v['consumption']);
 
                         $result[$k]=$v;
                     }
@@ -606,15 +637,14 @@ class Model_Home extends PhalApi_Model_NotORM {
                 return $result;
 
 			default:
-				//获取今天开始结束时间
-				$dayStart=strtotime(date("Y-m-d"));
-				$dayEnd=strtotime(date("Y-m-d 23:59:59"));
-				$where=" addtime >={$dayStart} and addtime<={$dayEnd} and ";
+                //获取今天开始结束时间
+                $dayStart=strtotime(date("Y-m-d"));
+                $where=" and addtime >={$dayStart}";
 			break;
 		}
-        return [];
 
-		$where.=" type=0 and action in ('1','2')";
+
+        $where ="action = 1".$where;
 
         $key='getConsumeList_'.$type;
         $result = DI()->redis->Get($key);
@@ -632,7 +662,7 @@ class Model_Home extends PhalApi_Model_NotORM {
 
             foreach ($result as $k => $v) {
                 $userinfo=getUserInfo($v['uid']);
-                $v['totalcoin']=(int)$v['totalcoin'];
+                $v['totalcoin'] = NumberFormatT((int)$v['totalcoin']);
                 $v['avatar']=$userinfo['avatar'];
                 $v['avatar_thumb']=$userinfo['avatar_thumb'];
                 $v['user_nicename']=$userinfo['user_nicename'];

@@ -62,6 +62,11 @@ class Api_Home extends PhalApi_Api {
                 'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
                 'type' => array('name' => 'type', 'type' => 'string', 'default'=>'day' ,'desc' => '参数类型，hour表示小时榜，day表示日榜，week表示周榜，month代表月榜，total代表总榜'),
             ),
+            'creationList'=>array(
+                'uid' => array('name' => 'uid', 'type' => 'int','min'=>1,'require' => true, 'desc' => '用户ID'),
+                'p' => array('name' => 'p', 'type' => 'int', 'default'=>'1' ,'desc' => '页数'),
+                'type' => array('name' => 'type', 'type' => 'string', 'default'=>'day' ,'desc' => '参数类型，create表示创收榜'),
+            ),
 
             
             'consumeList'=>array(
@@ -739,6 +744,26 @@ class Api_Home extends PhalApi_Api {
         $type=checkNull($this->type);
         $domain=new Domain_Home();
         $res=$domain->profitList($uid,$type,$p);
+
+        $rs['info']=$res;
+        return $rs;
+    }
+
+    /**
+     * 创作榜单
+     * @desc 获取收益榜单
+     * @return int code 操作码 0表示成功
+     * @return string msg 提示信息
+     * @return array info
+     **/
+
+    public function creationList(){
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+        $uid=checkNull($this->uid);
+        $p=checkNull($this->p);
+        $type=checkNull($this->type);
+        $domain=new Domain_Home();
+        $res=$domain->creationList($uid,$type,$p);
 
         $rs['info']=$res;
         return $rs;
