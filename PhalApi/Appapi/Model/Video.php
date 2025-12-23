@@ -1433,10 +1433,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 
 			//将两数组合并
 			$where2=array_merge($where,$where1);
-
 			DI()->redis -> set('readvideo_'.$uid,json_encode($where2));
-
-
 
 		}else{
 
@@ -1450,7 +1447,6 @@ class Model_Video extends PhalApi_Model_NotORM {
 			//转化率 = 完整观看次数/总观看次数
 			//排序规则：（曝光值+热度值）*转化率
 			//曝光值从视频发布开始，每小时递减1，直到0为止
-
 
 			/*废弃$info=DI()->notorm->video->queryAll("select *,format(watch_ok/views,2) as aaa, (ceil(comments *".$comment_weight." + likes *".$like_weight." + shares *".$share_weight.") )*format(watch_ok/views,2) as recomend from ".$prefix."video where isdel=0 and status=1  order by recomend desc,addtime desc limit ".$start.",".$pnums);*/
 
@@ -1591,17 +1587,18 @@ class Model_Video extends PhalApi_Model_NotORM {
             }
         }
         $info = $infoAll;
-
+        $info1 = [];
         foreach ($info as $k => $v) {
             $v=handleVideo($uid,$v);
             $info[$k]=$v;
+            $info1[$k]=$v['id'];
         }
-		if(!$info){
+		if(!$info1){
             return 1001;
 		}
 
 
-		return $info;
+		return $info1;
 	}
 
 	/*获取附近的视频*/

@@ -1760,7 +1760,7 @@ class Api_Video extends PhalApi_Api {
 
 		$info=getcaches($key);
 
-		if(!$info){
+//		if(!$info){
 
 			$domain=new Domain_Video();
 			$info=$domain->getRecommendVideos($uid,$p,$isstart);
@@ -1770,10 +1770,10 @@ class Api_Video extends PhalApi_Api {
 				$rs['msg']=T("暂无视频列表");
 				return $rs;
 			}
-
-			setcaches($key,$info,30);
-
-		}
+//
+//			setcaches($key,$info,30);
+//
+//		}
 
 		
 
