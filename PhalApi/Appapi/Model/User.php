@@ -1007,7 +1007,7 @@ class Model_User extends PhalApi_Model_NotORM {
             . 'FROM cmf_video AS v INNER JOIN cmf_video_like AS vl '
             . 'ON v.id = vl.videoid '
             . 'WHERE v.uid = '.$uid.' '
-            . 'ORDER BY vl.id DESC '
+            . 'ORDER BY vl.addtime DESC '
             . 'LIMIT '.$pnum.' OFFSET '.$start;
         $videoLikeList = $this->getORM()->queryAll($sql, []);
         foreach($videoLikeList as $k=>$v){
