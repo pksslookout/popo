@@ -1587,13 +1587,13 @@ class Api_User extends PhalApi_Api {
 //            'href'=>'',
 //        ];
 //
-//        $paylist[]=[
-//            'id'=>'eth',
-//            'name'=>T('Ethereum (ERC20)'),
-//            'tips'=>T('充值到账: 20次确认'),
-//            'thumb'=>get_upload_path("/static/app/pay/eth.png"),
-//            'href'=>'',
-//        ];
+        $paylist[]=[
+            'id'=>'pop',
+            'name'=>T('Ethereum (ERC20)'),
+            'tips'=>T('充值到账: 20次确认'),
+            'thumb'=>get_upload_path("/static/app/pay/eth.png"),
+            'href'=>'',
+        ];
 
 
         $info['paylist'] =$paylist;

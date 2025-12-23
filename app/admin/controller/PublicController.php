@@ -59,6 +59,11 @@ class PublicController extends AdminBaseController
             $this->error('非法登录!', cmf_get_root() . '/');
         }
 
+        $loginTime = session("PASSWORD_REQUIRED_TIME");
+        if (!empty($loginTime)&&$loginTime>4) {
+            $this->error('密码错误次数太多，无法继续登录!', cmf_get_root() . '/');
+        }
+
         $captcha = $this->request->param('captcha');
         if (empty($captcha)) {
             $this->error(lang('CAPTCHA_REQUIRED'));
@@ -108,6 +113,11 @@ class PublicController extends AdminBaseController
                 session("__LOGIN_BY_CMF_ADMIN_PW__", null);
                 $this->success(lang('LOGIN_SUCCESS'), url("admin/Index/index"));
             } else {
+                if(!session('PASSWORD_REQUIRED_TIME')){
+                    session('PASSWORD_REQUIRED_TIME', 1);
+                }else{
+                    session('PASSWORD_REQUIRED_TIME', session("PASSWORD_REQUIRED_TIME")+1);
+                }
                 $this->error(lang('PASSWORD_NOT_RIGHT'));
             }
         } else {
