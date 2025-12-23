@@ -1406,6 +1406,9 @@ class Model_Video extends PhalApi_Model_NotORM {
 			$readLists=DI()->redis -> Get('readvideo_'.$uid);
 			if($readLists){
 				$where=json_decode($readLists,true);
+                if(count($where)>300){
+                    DI()->redis -> del('readvideo_'.$uid);
+                }
 			}
 
 			$info=DI()->notorm->video
