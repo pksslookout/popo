@@ -230,6 +230,7 @@ class Model_Login extends PhalApi_Model_NotORM {
 		if($info['user_status']=='3'){
 			return 1004;
 		}
+
         $uid=$info['id'];
 
 		unset($info['user_status']);
@@ -237,13 +238,11 @@ class Model_Login extends PhalApi_Model_NotORM {
 		unset($info['end_bantime']);
 		
 		$info['isreg']='0';
-		
-        
+
 		if($info['last_login_time']==0){
 			$info['isreg']='1';
 		}
-		
-        
+
         if($info['birthday']){
             $info['birthday']=date('Y-m-d',$info['birthday']);   
         }else{
@@ -253,7 +252,7 @@ class Model_Login extends PhalApi_Model_NotORM {
 		$info['level']=getLevel($info['consumption']);
 		$info['level_anchor']=getLevelAnchor($info['votestotal']);
 
-		$token=md5(md5($info['id'].$user_login.time()));
+        $token=md5(md5($info['id'].$user_login.time().'9522x'));
 		
 		$info['token']=$token;
 		$info['bg_img']=get_upload_path($info['bg_img']);
@@ -333,7 +332,7 @@ class Model_Login extends PhalApi_Model_NotORM {
 		$info['level']=getLevel($info['consumption']);
 		$info['level_anchor']=getLevelAnchor($info['votestotal']);
 
-		$token=md5(md5($info['id'].$user_login.time()));
+		$token=md5(md5($info['id'].$user_login.time().'9522x'));
 
 		$info['token']=$token;
 		$info['avatar']=get_upload_path($info['avatar']);
@@ -633,8 +632,9 @@ class Model_Login extends PhalApi_Model_NotORM {
 
 	/* 更新token 登陆信息 */
     public function updateToken($uid,$token,$data=array()) {
+        $time = 60*60*24*7;
         $nowtime=time();
-		$expiretime=$nowtime+60*60*24*300;
+		$expiretime=$nowtime+$time;
 
         try {
             DI()->notorm->beginTransaction('db_appapi');
@@ -660,7 +660,7 @@ class Model_Login extends PhalApi_Model_NotORM {
 			'expire_time'=>$expiretime,
 		);
 		
-		setcaches("token_".$uid,$token_info);		
+		setcaches("token_".$uid,$token_info,$time);
         
 		return 1;
     }	
