@@ -1587,18 +1587,16 @@ class Model_Video extends PhalApi_Model_NotORM {
             }
         }
         $info = $infoAll;
-        $info1 = [];
         foreach ($info as $k => $v) {
             $v=handleVideo($uid,$v);
             $info[$k]=$v;
-            $info1[$k]=$v['id'];
         }
-		if(!$info1){
+		if(!$info){
             return 1001;
 		}
 
 
-		return $info1;
+		return $info;
 	}
 
 	/*获取附近的视频*/
