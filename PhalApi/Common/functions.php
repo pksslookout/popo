@@ -672,7 +672,7 @@ function connectionRedis(){
             }
 
             if($userinfo){
-                setcaches("token_".$uid,$userinfo);
+                setcaches("token_".$uid,$userinfo,60*60*24*7);
             }
 			
 		}
