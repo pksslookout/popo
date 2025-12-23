@@ -44,7 +44,7 @@ class Model_User extends PhalApi_Model_NotORM {
                 }
 
                 $info['vip'] = getUserVip($uid);
-                $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP@2x.png');
+                $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP1@2x.png');
 
                 $info['level_team'] = $info['team_level'];
                 if ($info['level_team'] > 0) {
@@ -133,7 +133,7 @@ class Model_User extends PhalApi_Model_NotORM {
             $info['like_video_count'] = getLikeVideoStatusCount($uid);
             $info['collect_count'] = getCollectVideoStatusCount($uid);
             $info['vip'] = getUserVip($uid);
-            $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP@2x.png');
+            $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP1@2x.png');
 
             $info['level_team'] = $info['team_level'];
             if ($info['level_team'] > 0) {

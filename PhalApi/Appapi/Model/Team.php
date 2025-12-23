@@ -40,7 +40,7 @@ class Model_Team extends PhalApi_Model_NotORM {
                 $info['level_team_thumb'] = get_upload_path('images/new_level_v2/level_team_1@3x.png');
             }
             $info['vip']=getUserVip($uid);
-            $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP@2x.png');
+            $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP1@2x.png');
             $info['liang']=getUserLiang($uid);
 
             $info['level_family'] = '0';
@@ -156,7 +156,7 @@ class Model_Team extends PhalApi_Model_NotORM {
                     $list[$k]['level_family_thumb'] = get_upload_path('images/new_level_v2/level_family_1@3x.png');
                 }
                 $list[$k]['vip']=getUserVip($v['id']);
-                $list[$k]['vip_thumb'] = get_upload_path('images/new_level_v2/VIP@2x.png');
+                $list[$k]['vip_thumb'] = get_upload_path('images/new_level_v2/VIP1@2x.png');
                 $list[$k]['addtime']=date('Y-m-d',$v['addtime']);
                 $list[$k]['avatar']=get_upload_path($v['avatar']);
                 $list[$k]['avatar_thumb']=get_upload_path($v['avatar_thumb']);
