@@ -24,23 +24,23 @@ class Model_Team extends PhalApi_Model_NotORM {
             if ($info['consumption'] < 1000) {
                 $info['level'] = '0';
             }
-            $info['level_thumb'] = get_upload_path('images/new_level/level_' . $level . '@2x.png');
-            $info['level_bg_thumb'] = get_upload_path('images/new_level/level_bg_' . $level . '@2x.png');
+            $info['level_thumb'] = get_upload_path('images/new_level_v2/level_' . $level . '@2x.png');
+            $info['level_bg_thumb'] = get_upload_path('images/new_level_v2/level_bg_' . $level . '@2x.png');
             if ($info['islive'] == 1 && $info['votestotal'] > 0) {
                 $info['level_anchor'] = getLevelAnchor($info['votestotal']);
-                $info['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_' . $info['level_anchor'] . '@3x.png');
+                $info['level_anchor_thumb'] = get_upload_path('images/new_level_v2/level_anchor_' . $info['level_anchor'] . '@3x.png');
             } else {
                 $info['level_anchor'] = '0';
-                $info['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_1@3x.png');
+                $info['level_anchor_thumb'] = get_upload_path('images/new_level_v2/level_anchor_1@3x.png');
             }
             $info['level_team']=$info['team_level'];
             if ($info['level_team'] > 0) {
-                $info['level_team_thumb'] = get_upload_path('images/new_level/level_team_' . $info['level_team'] . '@3x.png');
+                $info['level_team_thumb'] = get_upload_path('images/new_level_v2/level_team_' . $info['level_team'] . '@3x.png');
             } else {
-                $info['level_team_thumb'] = get_upload_path('images/new_level/level_team_1@3x.png');
+                $info['level_team_thumb'] = get_upload_path('images/new_level_v2/level_team_1@3x.png');
             }
             $info['vip']=getUserVip($uid);
-            $info['vip_thumb'] = get_upload_path('images/new_level/VIP@2x.png');
+            $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP@2x.png');
             $info['liang']=getUserLiang($uid);
 
             $info['level_family'] = '0';
@@ -59,9 +59,9 @@ class Model_Team extends PhalApi_Model_NotORM {
                 $info['level_family'] = $level_family;
             }
             if ($info['level_family'] != 0) {
-                $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_' . $info['level_family'] . '@3x.png');
+                $info['level_family_thumb'] = get_upload_path('images/new_level_v2/level_family_' . $info['level_family'] . '@3x.png');
             } else {
-                $info['level_family_thumb'] = get_upload_path('images/new_level/level_family_1@3x.png');
+                $info['level_family_thumb'] = get_upload_path('images/new_level_v2/level_family_1@3x.png');
             }
 
             // 获取我的邀请人
@@ -124,20 +124,20 @@ class Model_Team extends PhalApi_Model_NotORM {
                 if ($v['consumption'] < 1000) {
                     $list[$k]['level'] = '0';
                 }
-                $list[$k]['level_thumb'] = get_upload_path('images/new_level/level_' . $level . '@2x.png');
-                $list[$k]['level_bg_thumb'] = get_upload_path('images/new_level/level_bg_' . $level . '@2x.png');
+                $list[$k]['level_thumb'] = get_upload_path('images/new_level_v2/level_' . $level . '@2x.png');
+                $list[$k]['level_bg_thumb'] = get_upload_path('images/new_level_v2/level_bg_' . $level . '@2x.png');
                 if ($v['islive'] == 1 && $v['votestotal'] > 0) {
                     $list[$k]['level_anchor'] = getLevelAnchor($v['votestotal']);
-                    $list[$k]['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_' . $v['level_anchor'] . '@3x.png');
+                    $list[$k]['level_anchor_thumb'] = get_upload_path('images/new_level_v2/level_anchor_' . $v['level_anchor'] . '@3x.png');
                 } else {
                     $list[$k]['level_anchor'] = '0';
-                    $list[$k]['level_anchor_thumb'] = get_upload_path('images/new_level/level_anchor_1@3x.png');
+                    $list[$k]['level_anchor_thumb'] = get_upload_path('images/new_level_v2/level_anchor_1@3x.png');
                 }
                 $list[$k]['level_team']=$v['team_level'];
                 if ($v['level_team'] > 0) {
-                    $list[$k]['level_team_thumb'] = get_upload_path('images/new_level/level_team_' . $v['level_team'] . '@3x.png');
+                    $list[$k]['level_team_thumb'] = get_upload_path('images/new_level_v2/level_team_' . $v['level_team'] . '@3x.png');
                 } else {
-                    $list[$k]['level_team_thumb'] = get_upload_path('images/new_level/level_team_1@3x.png');
+                    $list[$k]['level_team_thumb'] = get_upload_path('images/new_level_v2/level_team_1@3x.png');
                 }
                 $list[$k]['level_family'] = '0';
                 $family_user_count = '0';
@@ -151,12 +151,12 @@ class Model_Team extends PhalApi_Model_NotORM {
                     $list[$k]['level_family'] = $level_family;
                 }
                 if ($list[$k]['level_family'] != '0') {
-                    $list[$k]['level_family_thumb'] = get_upload_path('images/new_level/level_family_' . $list[$k]['level_family'] . '@3x.png');
+                    $list[$k]['level_family_thumb'] = get_upload_path('images/new_level_v2/level_family_' . $list[$k]['level_family'] . '@3x.png');
                 } else {
-                    $list[$k]['level_family_thumb'] = get_upload_path('images/new_level/level_family_1@3x.png');
+                    $list[$k]['level_family_thumb'] = get_upload_path('images/new_level_v2/level_family_1@3x.png');
                 }
                 $list[$k]['vip']=getUserVip($v['id']);
-                $list[$k]['vip_thumb'] = get_upload_path('images/new_level/VIP@2x.png');
+                $list[$k]['vip_thumb'] = get_upload_path('images/new_level_v2/VIP@2x.png');
                 $list[$k]['addtime']=date('Y-m-d',$v['addtime']);
                 $list[$k]['avatar']=get_upload_path($v['avatar']);
                 $list[$k]['avatar_thumb']=get_upload_path($v['avatar_thumb']);

@@ -784,31 +784,30 @@ function connectionRedis(){
 					->select("*")
 					->order("level_up asc")
 					->fetchAll();
+            foreach($level as $k=>$v){
+                $levelid = 1;
+                for ($i = 1; $i <= 10; $i++) {
+                    if ($v['levelid'] <= 10 * $i) {
+                        $levelid = $i;
+                        break;
+                    }
+                }
+                $v['thumb']=get_upload_path('images/new_level_v2/level_' . $levelid . '@2x.png');
+                $v['thumb_mark']=get_upload_path('images/new_level_v2/level_' .$levelid. '@2x.png');
+                $v['bg']=get_upload_path('images/new_level_v2/level_bg_' .$levelid. '@2x.png');
+                if($v['colour']){
+                    $v['colour']='#'.$v['colour'];
+                }else{
+                    $v['colour']='#ffdd00';
+                }
+
+                $level[$k]=$v;
+            }
             if($level){
                 setcaches($key,$level);	
             }
 					 
 		}
-        
-        foreach($level as $k=>$v){
-            $levelid = 1;
-            for ($i = 1; $i <= 10; $i++) {
-                if ($v['levelid'] <= 10 * $i) {
-                    $levelid = $i;
-                    break;
-                }
-            }
-            $v['thumb']=get_upload_path('images/new_level/level_' . $levelid . '@2x.png');
-            $v['thumb_mark']=get_upload_path('images/new_level/level_' .$levelid. '@2x.png');
-            $v['bg']=get_upload_path('images/new_level/level_bg_' .$levelid. '@2x.png');
-            if($v['colour']){
-                $v['colour']='#'.$v['colour'];
-            }else{
-                $v['colour']='#ffdd00';
-            }
-
-            $level[$k]=$v;
-        }
         
         return $level;
     }
