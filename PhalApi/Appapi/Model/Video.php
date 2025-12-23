@@ -1414,16 +1414,6 @@ class Model_Video extends PhalApi_Model_NotORM {
 			->order("rand()")
 			->limit($pnums)
 			->fetchAll();
-            if(empty($info)){
-                DI()->redis -> del('readvideo_'.$uid);
-                $where=array();
-                $info=DI()->notorm->video
-                    ->where("isdel=0 and status=1 and is_ad=0")
-                    ->where('not id',$where)
-                    ->order("rand()")
-                    ->limit($pnums)
-                    ->fetchAll();
-            }
 			$where1=array();
 			foreach ($info as $k => $v) {
 				if(!in_array($v['id'],$where)){
