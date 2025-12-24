@@ -3398,7 +3398,7 @@ class Model_User extends PhalApi_Model_NotORM {
         }
         $pnum=20;
         $start=($p-1)*$pnum;
-        $where="action = 1 and uid=$uid";
+        $where="action = 1";
         $list=DI()->notorm->user_voterecord
             ->select('*')
             ->where($where)
