@@ -185,25 +185,26 @@ class AgentController extends Controller {
         $qrHeight = imagesy($qrCodeImage);
 
         // 设置二维码在海报上的位置（例如在右下角）
-        $x = imagesx($poster) - $qrWidth - 245; // 留出20px的边距
-        $y = imagesy($poster) - $qrHeight - 350; // 留出20px的边距
+        $x = imagesx($poster) - $qrWidth - 35; // 留出20px的边距
+        $y = imagesy($poster) - $qrHeight - 35; // 留出20px的边距
 
         // 将二维码复制到海报上
         imagecopy($poster, $qrCodeImage, $x, $y, 0, 0, $qrWidth, $qrHeight);
 
         // 将文字绘制到图片上
-        $black = imagecolorallocate($poster, 0, 0, 0);
+        $black = imagecolorallocate($poster, 252, 1, 252);
         $font_path = CMF_ROOT.'public/ttf/wryh.ttf'; // 字体文件的路径
 //            if(!file_exists($font_path)){
 //                var_dump(1);
 //                exit();
 //            }
-        $font_size = 22;
+        $font_size = 25;
         $text = lang('邀请码').' '. $code;
-        imagettftext($poster, $font_size, 0, 268, 955, $black, $font_path, $text);
-        $font_size = 19;
+        imagettftext($poster, $font_size, 0, 38, 1060, $black, $font_path, $text);
+        $font_size = 22;
+        $black = imagecolorallocate($poster, 255, 255, 255);
         $text = lang("长按或扫描识别二维码下载");
-        imagettftext($poster, $font_size, 0, 225, 1359, $black, $font_path, $text);
+        imagettftext($poster, $font_size, 0, 40, 1120, $black, $font_path, $text);
 
         // 保存或显示合并后的图像
         imagejpeg($poster, $outputImage); // 保存文件或使用imagejpeg($poster);直接显示

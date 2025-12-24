@@ -3436,7 +3436,7 @@ class Model_User extends PhalApi_Model_NotORM {
             ->fetchAll();
         foreach($list as $k=>$v){
             $v['giftcount']=dealPrice($v['giftcount']);
-            $v['totalcoin']=dealPrice($v['totalcoin']);
+            $v['totalcoin']=dealPrice($v['totalcoin']/1000);
             $v['title']=$title_array[$v['action']];
             $v['addtime']=date('Y年m月d日 H:i',$v['addtime']);
             $v['total']=$v['totalcoin'];
