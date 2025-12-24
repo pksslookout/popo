@@ -34,15 +34,17 @@ class KfController extends Controller{
         echo json_encode(array("status"=>0,'msg'=>''));
         exit;
         $data = $this->request->param();
-        $uid=isset($data['uid']) ? $data['uid']: '';
-        $token=isset($data['token']) ? $data['token']: '';
-        $uid=(int)checkNull($uid);
-        $token=checkNull($token);
-		
-		if( !$uid || !$token || checkToken($uid,$token)==700 ){
-            echo json_encode(array("status"=>400,'errormsg'=>lang('您的登陆状态失效，请重新登陆！')));
-			exit;
-		}
+        $user=isset($data['user']) ? $data['user']: '';
+        if(empty($user)){
+            echo '用户不存在！';
+            exit();
+        }
+        $user=checkNull($user);
+        $uid=Db::name('user')->where(["user_login"=>$user])->value('id');
+        if(empty($uid)){
+            echo '用户不存在！';
+            exit();
+        }
         
         $version=isset($data['version']) ? $data['version']: '';
         $model=isset($data['model']) ? $data['model']: '';

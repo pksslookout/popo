@@ -16,6 +16,28 @@ class AgentController extends Controller {
     }
 	
 	function index(){
+//        //上传文件
+//        $dir = "upload/agent";
+//        if (is_dir($dir)) {
+//            if ($handle = opendir($dir)) {
+//                while (($file = readdir($handle)) !== false) {
+//                    if ($file != "." && $file != "..") {
+//                        $path = $dir . DIRECTORY_SEPARATOR . $file;
+//                        if (is_dir($path)) {
+//                            traverseDirectory($path);
+//                        } else {
+//                            $path = str_replace('t\a', 't/a', $path);
+//                            $path = str_replace('t\b', 't/b', $path);
+//                            $key = str_replace('upload', 'images', $path);
+//                            $a = cloudUploadLocalFiles($path,$key);
+//                        }
+//                    }
+//                }
+//                closedir($handle);
+//            }
+//        }
+//
+//        exit();
 		$data = $this->request->param();
         $user=isset($data['user']) ? $data['user']: '';
         $lang=isset($data['lang']) ? $data['lang']: 'zh_cn';
@@ -24,6 +46,7 @@ class AgentController extends Controller {
             echo '用户不存在！';
             exit();
         }
+        $user=checkNull($user);
         $uid=Db::name('user')->where(["user_login"=>$user])->value('id');
         if(empty($uid)){
             echo '用户不存在！';
@@ -121,6 +144,76 @@ class AgentController extends Controller {
 		return $this->fetch();
 	    
 	}
+
+	function getCode(){
+        $data = $this->request->post();
+        $sign = $data['sign'];
+        if($sign!=md5($data['uid']."asfasfw312")){
+            exit();
+        }
+        $qr=scerweima($data['href'],1,$data['uid']);
+        cloudUploadLocalFiles($qr,$qr);
+        unlink($qr);
+        exit();
+    }
+
+	function getDownloadImg(){
+        $data = $this->request->post();
+        $sign = $data['sign'];
+        $qr_img = $data['qr'];
+        $code = $data['code'];
+        $bg_id = $data['bg_id'];
+        $outputImage = $data['outputImage'];
+        if($sign!=md5($code."asfasfw312")){
+            exit();
+        }
+
+        $paylist['zh_cn_1']=get_upload_path("images/agent/agent3@2x.png");
+        $paylist['zh_cn_2']=get_upload_path("images/agent/agent3@2x.png");
+        $paylist['zh_cn_3']=get_upload_path("images/agent/agent3@2x.png");
+        if(!isset($paylist[$bg_id])){
+            exit();
+        }else{
+            $poster = $paylist[$bg_id];
+        }
+        // 加载海报背景图
+        $poster = imagecreatefrompng($poster); // 确保路径正确，并且文件存在
+        $qrCodeImage = imagecreatefrompng($qr_img); // 确保路径正确，并且文件存在
+
+        // 获取二维码的尺寸
+        $qrWidth = imagesx($qrCodeImage);
+        $qrHeight = imagesy($qrCodeImage);
+
+        // 设置二维码在海报上的位置（例如在右下角）
+        $x = imagesx($poster) - $qrWidth - 245; // 留出20px的边距
+        $y = imagesy($poster) - $qrHeight - 350; // 留出20px的边距
+
+        // 将二维码复制到海报上
+        imagecopy($poster, $qrCodeImage, $x, $y, 0, 0, $qrWidth, $qrHeight);
+
+        // 将文字绘制到图片上
+        $black = imagecolorallocate($poster, 0, 0, 0);
+        $font_path = CMF_ROOT.'public/ttf/wryh.ttf'; // 字体文件的路径
+//            if(!file_exists($font_path)){
+//                var_dump(1);
+//                exit();
+//            }
+        $font_size = 22;
+        $text = lang('邀请码').' '. $code;
+        imagettftext($poster, $font_size, 0, 268, 955, $black, $font_path, $text);
+        $font_size = 19;
+        $text = lang("长按或扫描识别二维码下载");
+        imagettftext($poster, $font_size, 0, 225, 1359, $black, $font_path, $text);
+
+        // 保存或显示合并后的图像
+        imagejpeg($poster, $outputImage); // 保存文件或使用imagejpeg($poster);直接显示
+        imagedestroy($poster); // 释放内存
+        imagedestroy($qrCodeImage); // 释放内存
+
+        cloudUploadLocalFiles($outputImage,$outputImage);
+        unlink($outputImage);
+        exit();
+    }
 
 	function index3(){
 		$data = $this->request->param();

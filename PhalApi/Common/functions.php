@@ -5542,3 +5542,8 @@ function connectionRedis(){
         } while ($exists);
         return $user_login;
     }
+
+    function urlExists($url) {
+        $headers = @get_headers($url);
+        return stripos($headers[0], '200') !== false;
+    }

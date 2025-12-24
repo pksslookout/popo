@@ -25,6 +25,7 @@ class AboutController extends Controller {
             echo '用户不存在！';
             exit();
         }
+        $user=checkNull($user);
         $device=isset($data['device']) ? $data['device']: '';
         $lang=isset($data['lang']) ? $data['lang']: 'zh_cn';
 

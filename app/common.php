@@ -3086,6 +3086,11 @@
         }
     }
 
+    function urlExists($url) {
+        $headers = @get_headers($url);
+        return stripos($headers[0], '200') !== false;
+    }
+
     /**
     * @desc 获取数据库中的存储方式
     * @return string 存储方式字符串

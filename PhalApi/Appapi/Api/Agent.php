@@ -12,8 +12,23 @@ class Api_Agent extends PhalApi_Api {
 			),
 
 			'checkAgent'=>array(
-				'uid' => array('name' => 'uid', 'type' => 'int', 'desc' => '用户ID'),
-                'token' => array('name' => 'token', 'type' => 'string', 'desc' => '用户token'),
+				'uid' => array('name' => 'uid', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
+                'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
+			),
+
+			'getAgentBg'=>array(
+			),
+
+			'getAgentCode'=>array(
+				'uid' => array('name' => 'uid', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
+                'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
+                'bg_id' => array('name' => 'bg_id', 'type' => 'string', 'require' => true, 'desc' => '背景图ID'),
+			),
+
+			'downloadAgentImg'=>array(
+				'uid' => array('name' => 'uid', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
+                'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
+                'bg_id' => array('name' => 'bg_id', 'type' => 'string', 'require' => true, 'desc' => '背景图ID'),
 			),
 		);
 	}
@@ -125,7 +140,155 @@ class Api_Agent extends PhalApi_Api {
 		$rs['info']=$info;
 
 		return $rs;
-	}	
+	}
+
+
+    /**
+     * 获取邀请好友背景图
+     * @desc 用于 获取邀请好友背景图
+     * @return int code 操作码，0表示成功
+     * @return array info
+     * @return string msg 提示信息
+     */
+    public function getAgentBg() {
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        $paylist=[];
+
+        $paylist[]=[
+            'id'=>'zh_cn_1',
+            'bg'=>get_upload_path("images/agent/agent1@2x.png"),
+            'thumb'=>get_upload_path("images/agent/bg1@2x.png"),
+        ];
+
+        $paylist[]=[
+            'id'=>'zh_cn_2',
+            'bg'=>get_upload_path("images/agent/agent2@2x.png"),
+            'thumb'=>get_upload_path("images/agent/bg2@2x.png"),
+        ];
+
+        $paylist[]=[
+            'id'=>'zh_cn_3',
+            'bg'=>get_upload_path("images/agent/agent3@2x.png"),
+            'thumb'=>get_upload_path("images/agent/bg3@2x.png"),
+        ];
+
+
+        $rs['info'][0]=$paylist;
+        return $rs;
+    }
+
+    /**
+     * 获取邀请码
+     * @desc 获取邀请码
+     * @return int code 操作码，0表示成功
+     * @return array info
+     * @return string msg 提示信息
+     */
+    public function getAgentCode(){
+
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        $uid=checkNull($this->uid);
+        $token=checkNull($this->token);
+        $bg_id=checkNull($this->bg_id);
+        if(strpos($bg_id, 'zh_cn') !== false){
+            $lang = 'zh_cn';
+        }else{
+            $lang = 'en';
+        }
+
+        $checkToken=checkToken($uid,$token);
+        if($checkToken==700){
+            $rs['code'] = $checkToken;
+            $rs['msg'] = T('您的登陆状态失效，请重新登陆！');
+            return $rs;
+        }
+
+        $domain = new Domain_Agent();
+        $info = $domain->getCode($uid);
+        $code = $info['code'];
+        if(!$code){
+            $code=createCode();
+            $ifok=DI()->notorm->agent_code->where('uid=?',$uid)->update(array("code"=>$code));
+            if(!$ifok){
+                DI()->notorm->agent_code->insert(array('uid'=>$uid,"code"=>$code));
+            }
+
+        }
+        $href=get_upload_path("/wap/index.html#/?agentCode=".$code.'&lang='.$lang);
+//        $uid = 4341244;
+        $info['href']=$href;
+        $info['code']=$code;
+        $info['qr']=get_upload_path('upload/qr/'.$uid.$lang.'.png');
+        if(!urlExists($info['qr'])){
+            $curlPost['href'] = $href;
+            $curlPost['uid'] = $uid;
+            $curlPost['sign'] = md5($uid."asfasfw312");
+            curlPost($curlPost,get_upload_path('/appapi/agent/getCode'));
+        }
+
+        $rs['info'][0]=$info;
+        return $rs;
+    }
+
+    /**
+     * 下载邀请图
+     * @desc 下载邀请图
+     * @return int code 操作码，0表示成功
+     * @return array info
+     * @return string msg 提示信息
+     */
+    public function downloadAgentImg(){
+
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        $uid=checkNull($this->uid);
+        $token=checkNull($this->token);
+        $bg_id=checkNull($this->bg_id);
+        if(strpos($bg_id, 'zh_cn') !== false){
+            $lang = 'zh_cn';
+        }else{
+            $lang = 'en';
+        }
+
+        $checkToken=checkToken($uid,$token);
+        if($checkToken==700){
+            $rs['code'] = $checkToken;
+            $rs['msg'] = T('您的登陆状态失效，请重新登陆！');
+            return $rs;
+        }
+
+        $domain = new Domain_Agent();
+        $info = $domain->getCode($uid);
+        $code = $info['code'];
+        if(!$code){
+            $code=createCode();
+            $ifok=DI()->notorm->agent_code->where('uid=?',$uid)->update(array("code"=>$code));
+            if(!$ifok){
+                DI()->notorm->agent_code->insert(array('uid'=>$uid,"code"=>$code));
+            }
+
+        }
+//        $uid = 4341244;
+        $info['code']=$code;
+        $qr=get_upload_path('upload/qr/'.$uid.$lang.'.png');
+        $outputImage = 'upload/agent/'.$bg_id.$uid.$lang.'.png';
+        $info['url']=get_upload_path($outputImage);
+        if(!urlExists($info['url'])){
+            $curlPost['qr'] = $qr;
+            $curlPost['bg_id'] = $bg_id;
+            $curlPost['code'] = $code;
+            $curlPost['outputImage'] = $outputImage;
+            $curlPost['sign'] = md5($code."asfasfw312");
+            $re = curlPost($curlPost,get_upload_path('/appapi/agent/getDownloadImg'));
+            var_dump($re);
+            exit();
+        }
+
+        $rs['info'][0]=$info;
+        return $rs;
+    }
 	
 
 }
