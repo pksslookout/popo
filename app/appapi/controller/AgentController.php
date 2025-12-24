@@ -151,7 +151,7 @@ class AgentController extends Controller {
         if($sign!=md5($data['uid']."asfasfw312")){
             exit();
         }
-        $qr=scerweima($data['href'],1,$data['uid']);
+        $qr=scerweima($data['href'],1,$data['uid'].$data['lang']);
         cloudUploadLocalFiles($qr,$qr);
         unlink($qr);
         exit();

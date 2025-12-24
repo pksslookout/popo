@@ -224,8 +224,11 @@ class Api_Agent extends PhalApi_Api {
         if(!urlExists($info['qr'])){
             $curlPost['href'] = $href;
             $curlPost['uid'] = $uid;
+            $curlPost['lang'] = $lang;
             $curlPost['sign'] = md5($uid."asfasfw312");
-            curlPost($curlPost,get_upload_path('/appapi/agent/getCode'));
+            $re = curlPost($curlPost,get_upload_path('/appapi/agent/getCode'));
+            var_dump($re);
+            exit();
         }
 
         $rs['info'][0]=$info;
@@ -275,6 +278,8 @@ class Api_Agent extends PhalApi_Api {
         $qr=get_upload_path('upload/qr/'.$uid.$lang.'.png');
         $outputImage = 'upload/agent/'.$bg_id.$uid.$lang.'.png';
         $info['url']=get_upload_path($outputImage);
+        var_dump($qr);
+        exit();
         if(!urlExists($info['url'])){
             $curlPost['qr'] = $qr;
             $curlPost['bg_id'] = $bg_id;
