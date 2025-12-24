@@ -174,7 +174,7 @@ class Api_Agent extends PhalApi_Api {
         ];
 
 
-        $rs['info'][0]=$paylist;
+        $rs['info']=$paylist;
         return $rs;
     }
 
