@@ -176,6 +176,15 @@ class AgentController extends Controller {
         }else{
             $poster = $paylist[$bg_id];
         }
+        if($bg_id == 'zh_cn_1'){
+            $black = imagecolorallocate($poster, 81, 255, 85);
+        }
+        if($bg_id == 'zh_cn_2'){
+            $black = imagecolorallocate($poster, 254, 0, 186);
+        }
+        if($bg_id == 'zh_cn_3'){
+            $black = imagecolorallocate($poster, 252, 1, 252);
+        }
         // 加载海报背景图
         $poster = imagecreatefrompng($poster); // 确保路径正确，并且文件存在
         $qrCodeImage = imagecreatefrompng($qr_img); // 确保路径正确，并且文件存在
@@ -192,7 +201,6 @@ class AgentController extends Controller {
         imagecopy($poster, $qrCodeImage, $x, $y, 0, 0, $qrWidth, $qrHeight);
 
         // 将文字绘制到图片上
-        $black = imagecolorallocate($poster, 252, 1, 252);
         $font_path = CMF_ROOT.'public/ttf/wryh.ttf'; // 字体文件的路径
 //            if(!file_exists($font_path)){
 //                var_dump(1);

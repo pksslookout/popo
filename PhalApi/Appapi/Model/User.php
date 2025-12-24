@@ -568,6 +568,11 @@ class Model_User extends PhalApi_Model_NotORM {
         $usdt_start=$config['usdt_start'];
         $usdt_end=$config['usdt_end'];
         $usdt_max_times=$config['usdt_max_times'];
+        /*提现抽成比例*/
+        $usdt_take=$config['usdt_take'];
+        if($number<=$usdt_take){
+            return 1004;
+        }
 
         $day=(int)date("d",$nowtime);
 
@@ -614,8 +619,6 @@ class Model_User extends PhalApi_Model_NotORM {
         //提现比例
         $usdt_rate=$config['usdt_rate'];
 
-        /*提现抽成比例*/
-        $usdt_take=$config['usdt_take'];
 
         /* 最低额度 */
         $usdt_min=$config['usdt_min'];
@@ -656,7 +659,7 @@ class Model_User extends PhalApi_Model_NotORM {
             }
 
             //平台抽成后最终的钱数
-            $money=$usdt*(1-$usdt_take*0.01);
+            $money=$usdt-$usdt_take;
             $money=number_format($money,2,".","");
 
             $data = array(
