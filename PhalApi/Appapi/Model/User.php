@@ -3400,15 +3400,12 @@ class Model_User extends PhalApi_Model_NotORM {
         $start=($p-1)*$pnum;
         $where="action = 1";
         $list=DI()->notorm->user_voterecord
-            ->select('*')
+            ->select('total')
             ->where($where)
             ->order('addtime desc')
             ->limit($start,$pnum)
             ->fetchAll();
         foreach($list as $k=>$v){
-            $v['nums'] = dealPrice($v['nums']);
-            $v['votes'] = dealPrice($v['votes']);
-            $v['addtime'] = date('Y-m-d H:i:s',$v['addtime']);
             $v['total'] = T('新增打赏：').$v['total']*$ratio.'USDT';
             $list[$k]=$v;
         }
