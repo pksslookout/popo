@@ -229,6 +229,12 @@ class Api_Agent extends PhalApi_Api {
             $re = curlPost($curlPost,get_upload_path('/appapi/agent/getCode'));
         }
 
+        $data=[
+            'type'=>'9',
+            'nums'=>'1',
+
+        ];
+        dailyTasks($uid,$data);
         $rs['info'][0]=$info;
         return $rs;
     }
