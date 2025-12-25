@@ -4512,6 +4512,8 @@ class Api_User extends PhalApi_Api {
         $checkdata=array(
             'uid'=>$uid,
             'number'=>$number,
+            'conversion_source'=>$conversion_source,
+            'conversion_location'=>$conversion_location,
             'timestamp'=>$timestamp,
             'nonce'=>$nonce,
         );
