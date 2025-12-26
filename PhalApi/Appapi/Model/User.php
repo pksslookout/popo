@@ -264,9 +264,9 @@ class Model_User extends PhalApi_Model_NotORM {
         $info['yesterday_earnings'] = (float)DI()->notorm->user_voterecord->where("action in (1,14) and uid=$uid and addtime > $yesterdayMidnightTimestamp and addtime < $todayMidnightTimestamp")->sum('votes');
         $info['today_earnings'] = (float)DI()->notorm->user_voterecord->where("action in (1,14) and uid=$uid and addtime > $todayMidnightTimestamp")->sum('votes');
 
-        $info['coin'] = dealPrice($info['coin']);
-        $info['consumption'] = dealPrice($info['consumption']);
-        $info['conversion'] = dealPrice($info['conversion']);
+//        $info['coin'] = dealPrice($info['coin']);
+//        $info['consumption'] = dealPrice($info['consumption']);
+//        $info['conversion'] = dealPrice($info['conversion']);
         $info['votesearnings'] = dealPrice($info['votesearnings']);
         $info['votes'] = dealPrice($info['votes']);
         $info['yesterday_earnings'] = dealPrice($info['yesterday_earnings']);
