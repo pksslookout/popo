@@ -36,7 +36,8 @@ class PayController extends Controller {
 //        $request = str_replace('\n', '
 //        ', $request);
 //        $request = str_replace('\t', '  ', $request);
-//        $this->callbacklog('callback request:'.json_encode($request));
+        $ip=get_client_ip();
+        $this->callbacklog('callback request:'.$ip.'::'.json_encode($request));
 
         $request = json_decode($request, true);
 
