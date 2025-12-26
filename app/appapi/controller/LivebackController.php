@@ -235,29 +235,29 @@ class livebackController extends Controller {
 			$result=Db::name('live_record')->insert($info);
             
             /* 游戏处理 */
-			$game=Db::name('game')
-				->where(["stream"=>$stream, "liveuid"=>$uid, "state"=>0])
-				->find();
-            
-			if($game){
-				$total=Db::name('gamerecord')
-					->field("uid,sum(coin_1 + coin_2 + coin_3 + coin_4 + coin_5 + coin_6) as total")
-					->where(['gameid'=>$game['id']])
-					->group('uid')
-					->select()
-                    ->toArray();
-				foreach($total as $k=>$v){                    
-					Db::name('user')->where(['id','=',$v['uid']])->setInc('coin',$v['total']);
-                    
-					$insert=array("type"=>'1',"action"=>'20',"uid"=>$v['uid'],"touid"=>$v['uid'],"giftid"=>$game['id'],"giftcount"=>1,"totalcoin"=>$v['total'],"addtime"=>$nowtime );
-					Db::name('user_coinrecord')->insert($insert);
-				}
-
-				Db::name('game')->where(['id' => $game['id']])->update(array('state' =>'3','endtime' => time() ) );
-                    
-				$brandToken=$stream."_".$game["action"]."_".$game['starttime']."_Game";
-				delcache($brandToken);
-			}
+//			$game=Db::name('game')
+//				->where(["stream"=>$stream, "liveuid"=>$uid, "state"=>0])
+//				->find();
+//
+//			if($game){
+//				$total=Db::name('gamerecord')
+//					->field("uid,sum(coin_1 + coin_2 + coin_3 + coin_4 + coin_5 + coin_6) as total")
+//					->where(['gameid'=>$game['id']])
+//					->group('uid')
+//					->select()
+//                    ->toArray();
+//				foreach($total as $k=>$v){
+//					Db::name('user')->where(['id','=',$v['uid']])->setInc('coin',$v['total']);
+//
+//					$insert=array("type"=>'1',"action"=>'20',"uid"=>$v['uid'],"touid"=>$v['uid'],"giftid"=>$game['id'],"giftcount"=>1,"totalcoin"=>$v['total'],"addtime"=>$nowtime );
+//					Db::name('user_coinrecord')->insert($insert);
+//				}
+//
+//				Db::name('game')->where(['id' => $game['id']])->update(array('state' =>'3','endtime' => time() ) );
+//
+//				$brandToken=$stream."_".$game["action"]."_".$game['starttime']."_Game";
+//				delcache($brandToken);
+//			}
 		}else{
             $where=[];
             $where['stream']=$stream;
@@ -327,29 +327,29 @@ class livebackController extends Controller {
 			$result=Db::name('live_record')->insert($info);
 
             /* 游戏处理 */
-			$game=Db::name('game')
-				->where(["stream"=>$stream, "liveuid"=>$uid, "state"=>0])
-				->find();
-
-			if($game){
-				$total=Db::name('gamerecord')
-					->field("uid,sum(coin_1 + coin_2 + coin_3 + coin_4 + coin_5 + coin_6) as total")
-					->where(['gameid'=>$game['id']])
-					->group('uid')
-					->select()
-                    ->toArray();
-				foreach($total as $k=>$v){
-					Db::name('user')->where(['id','=',$v['uid']])->setInc('coin',$v['total']);
-
-					$insert=array("type"=>'1',"action"=>'20',"uid"=>$v['uid'],"touid"=>$v['uid'],"giftid"=>$game['id'],"giftcount"=>1,"totalcoin"=>$v['total'],"addtime"=>$nowtime );
-					Db::name('user_coinrecord')->insert($insert);
-				}
-
-				Db::name('game')->where(['id' => $game['id']])->update(array('state' =>'3','endtime' => time() ) );
-
-				$brandToken=$stream."_".$game["action"]."_".$game['starttime']."_Game";
-				delcache($brandToken);
-			}
+//			$game=Db::name('game')
+//				->where(["stream"=>$stream, "liveuid"=>$uid, "state"=>0])
+//				->find();
+//
+//			if($game){
+//				$total=Db::name('gamerecord')
+//					->field("uid,sum(coin_1 + coin_2 + coin_3 + coin_4 + coin_5 + coin_6) as total")
+//					->where(['gameid'=>$game['id']])
+//					->group('uid')
+//					->select()
+//                    ->toArray();
+//				foreach($total as $k=>$v){
+//					Db::name('user')->where(['id','=',$v['uid']])->setInc('coin',$v['total']);
+//
+//					$insert=array("type"=>'1',"action"=>'20',"uid"=>$v['uid'],"touid"=>$v['uid'],"giftid"=>$game['id'],"giftcount"=>1,"totalcoin"=>$v['total'],"addtime"=>$nowtime );
+//					Db::name('user_coinrecord')->insert($insert);
+//				}
+//
+//				Db::name('game')->where(['id' => $game['id']])->update(array('state' =>'3','endtime' => time() ) );
+//
+//				$brandToken=$stream."_".$game["action"]."_".$game['starttime']."_Game";
+//				delcache($brandToken);
+//			}
 		}else{
             $where=[];
             $where['uid']=$uid;
