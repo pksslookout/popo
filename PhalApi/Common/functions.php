@@ -860,7 +860,7 @@ function connectionRedis(){
         $parent = dealPrice($parent,0);
         $data = [
             'levelid'=>(string)$levelid,
-            'parent'=>(string)$parent.'%',
+            'parent'=>(string)$parent,
         ];
 		return $data;
 	}
