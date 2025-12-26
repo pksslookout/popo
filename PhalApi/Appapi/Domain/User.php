@@ -91,6 +91,15 @@ class Domain_User {
 			return $rs;
 	}
 
+	public function getMyUsdtInfo($uid) {
+			$rs = array();
+
+			$model = new Model_User();
+			$rs = $model->getMyUsdtInfo($uid);
+
+			return $rs;
+	}
+
 	public function forwardChainUsdt($uid,$adr,$chainType,$number,$user_pay_pass) {
 			$rs = array();
 

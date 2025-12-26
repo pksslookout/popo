@@ -69,6 +69,11 @@ class Api_User extends PhalApi_Api {
                 'version_ios' => array('name' => 'version_ios', 'type' => 'string', 'desc' => 'IOS版本号'),
 			),
 
+			'getMyUsdtInfo' => array(
+				'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
+				'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
+			),
+
 			'getChain' => array(
 				'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
 				'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
@@ -1599,6 +1604,33 @@ class Api_User extends PhalApi_Api {
         $info['paylist'] =$paylist;
         $info['tip_t'] =T('选择链类型');
         $info['tip_d'] =T('* 请确保充值时所选的链类型与提币时所选的链类型一致');
+
+		$rs['info'][0]=$info;
+		return $rs;
+	}
+
+	/**
+	 * 我的USDT
+	 * @desc 用于获取链的类型
+	 * @return int code 操作码，0表示成功
+	 * @return array info
+	 * @return string msg 提示信息
+	 */
+	public function getMyUsdtInfo() {
+		$rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        $uid=checkNull($this->uid);
+        $token=checkNull($this->token);
+
+		$checkToken=checkToken($uid,$token);
+		if($checkToken==700){
+			$rs['code'] = $checkToken;
+			$rs['msg'] = T('您的登陆状态失效，请重新登陆！');
+			return $rs;
+		}
+
+        $domain = new Domain_User();
+        $info = $domain->getMyUsdtInfo($uid);
 
 		$rs['info'][0]=$info;
 		return $rs;

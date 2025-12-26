@@ -272,6 +272,23 @@ class Model_User extends PhalApi_Model_NotORM {
         return 	$info;
     }
 
+    /* 我的钻石 */
+    public function getMyUsdtInfo($uid){
+        $user = DI()->notorm->user
+            ->select("usdt")
+            ->where('id=?',$uid)
+            ->fetchOne();
+        $user_information = DI()->notorm->user_information
+            ->select("usdt_charge,usdt_forward")
+            ->where('id=?',$uid)
+            ->fetchOne();
+        $info['usdt_forward'] = dealPrice($user['usdt_forward']);
+        $info['usdt_charge'] = dealPrice($user_information['usdt_charge']);
+        $info['usdt'] = dealPrice($user_information['usdt']);
+
+        return 	$info;
+    }
+
     /* 充值规则 */
     public function getChargeRules(){
 
