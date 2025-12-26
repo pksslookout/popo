@@ -674,6 +674,9 @@ class Model_User extends PhalApi_Model_NotORM {
                 DI()->notorm->rollback('db_appapi');
                 return 1001;
             }
+            DI()->notorm->user_information
+                ->where('id = ?', $uid)
+                ->update(array('usdt_forward' => new NotORM_Literal("usdt_forward + {$usdt}")));
 
             //平台抽成后最终的钱数
             $money=$usdt-$usdt_take;

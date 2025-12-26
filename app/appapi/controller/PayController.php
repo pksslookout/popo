@@ -97,6 +97,7 @@ class PayController extends Controller {
                 }
                 $usdt=$orderinfo['usdt']+$orderinfo['usdt_give'];
                 Db::name("user")->where("id='{$orderinfo['touid']}'")->setInc("usdt",$usdt);
+                Db::name("user_information")->where("id='{$orderinfo['touid']}'")->setInc("usdt_charge",$usdt);
 
                 /* 更新 订单状态 */
                 $data['status']=1;
