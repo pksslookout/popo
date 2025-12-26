@@ -76,7 +76,7 @@ class Model_User extends PhalApi_Model_NotORM {
                 unset($info['consumption']);
                 unset($info['votestotal']);
                 unset($info['islive']);
-                unset($info['team_level']);
+//                unset($info['team_level']);
             }
             setcaches($key,$info,60*3);
         }
