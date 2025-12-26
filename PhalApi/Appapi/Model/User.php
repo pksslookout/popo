@@ -10,7 +10,7 @@ class Model_User extends PhalApi_Model_NotORM {
     }
 
     public function getUserLevel($uid) {
-        $key="getUserLevelNew_v3_".$uid;
+        $key="getUserLevelNew_v2_".$uid;
         $info=getcaches($key);
         if(!$info) {
             $info = DI()->notorm->user
@@ -46,7 +46,7 @@ class Model_User extends PhalApi_Model_NotORM {
                 $info['vip'] = getUserVip($uid);
                 $info['vip_thumb'] = get_upload_path('images/new_level_v2/VIP1@2x.png');
 
-                $info['level_team'] = (string)$info['team_level'];
+                $info['level_team'] = $info['team_level'];
                 if ($info['level_team'] > 0) {
                     $info['level_team_thumb'] = get_upload_path('images/new_level_v2/level_team_' . $info['level_team'] . '@3x.png');
                 } else {
