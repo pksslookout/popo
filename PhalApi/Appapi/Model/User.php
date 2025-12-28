@@ -1217,12 +1217,17 @@ class Model_User extends PhalApi_Model_NotORM {
         $pnum=20;
         $start=($p-1)*$pnum;
         if($status){
+            if($keyword){
+                $where = ' and u.user_nicename like "%'.$keyword.'%"';
+            }else{
+                $where = '';
+            }
             $sql = 'SELECT u.id, u.user_login, u.user_nicename, u.avatar, u.avatar_thumb, u.sex '
                 . 'FROM cmf_user_attention AS ua INNER JOIN cmf_user_attention AS ua2 '
                 . 'ON ua.uid = ua2.touid '
                 . 'INNER JOIN cmf_user AS u '
                 . 'ON ua.uid = u.id '
-                . 'WHERE ua.touid = '.$uid.' and ua.status=1 and ua2.status=1 '
+                . 'WHERE ua.touid = '.$uid.' and ua.status=1 and ua2.status=1'.$where.' '
                 . 'ORDER BY ua.addtime DESC '
                 . 'LIMIT '.$pnum.' OFFSET '.$start;
             $fansList = $this->getORM()->queryAll($sql, []);
