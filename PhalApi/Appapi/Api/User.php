@@ -45,6 +45,7 @@ class Api_User extends PhalApi_Api {
 			'updatePass' => array(
 				'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
 				'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
+				'old_pass' => array('name' => 'old_pass', 'type' => 'string', 'require' => true, 'desc' => '旧密码'),
 				'pass' => array('name' => 'pass', 'type' => 'string', 'require' => true, 'desc' => '新密码'),
 				'pass2' => array('name' => 'pass2', 'type' => 'string', 'require' => true, 'desc' => '确认密码'),
 			),
@@ -223,6 +224,8 @@ class Api_User extends PhalApi_Api {
 			'getFansList' => array(
 				'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
 				'touid' => array('name' => 'touid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '对方ID'),
+				'status' => array('name' => 'status', 'type' => 'int', 'desc' => '是否关注'),
+				'keyword' => array('name' => 'keyword', 'type' => 'string', 'desc' => '关键字'),
 				'p' => array('name' => 'p', 'type' => 'int', 'min' => 1, 'default'=>1,'desc' => '页数'),
 			),
 			
@@ -1386,6 +1389,7 @@ class Api_User extends PhalApi_Api {
 		
 		$uid=checkNull($this->uid);
 		$token=checkNull($this->token);
+		$old_pass=checkNull($this->old_pass);
 		$pass=checkNull($this->pass);
 		$pass2=checkNull($this->pass2);
 		
@@ -1401,6 +1405,12 @@ class Api_User extends PhalApi_Api {
 			$rs['msg'] = T('两次新密码不一致');
 			return $rs;
 		}
+
+		if($old_pass == $pass){
+			$rs['code'] = 1002;
+			$rs['msg'] = T('新密码与旧密码不能一致');
+			return $rs;
+		}
 		
 		$check = passcheck($pass);
 		if(!$check ){
@@ -1410,7 +1420,7 @@ class Api_User extends PhalApi_Api {
 		}
 		
 		$domain = new Domain_User();
-		$info = $domain->updatePass($uid,$pass);
+		$info = $domain->updatePass($uid,$old_pass,$pass);
 	 
 		if($info==1003){
 			$rs['code'] = 1003;
@@ -2736,9 +2746,11 @@ class Api_User extends PhalApi_Api {
 		$uid=checkNull($this->uid);
 		$touid=checkNull($this->touid);
 		$p=checkNull($this->p);
+		$status=checkNull($this->status);
+		$keyword=checkNull($this->keyword);
 
 		$domain = new Domain_User();
-		$info = $domain->getFansList($uid,$touid,$p);
+		$info = $domain->getFansList($uid,$touid,$p,$status,$keyword);
 	 
 		$rs['info']=$info;
 		return $rs;

@@ -222,11 +222,15 @@ class Model_User extends PhalApi_Model_NotORM {
     }
 
     /* 修改密码 */
-    public function updatePass($uid,$pass){
-//		$userinfo=DI()->notorm->user
-//					->select("user_pass")
-//					->where('id=?',$uid)
-//					->fetchOne();
+    public function updatePass($uid,$old_pass,$pass){
+        $old_pass=setPass($old_pass);
+		$userinfo=DI()->notorm->user
+					->select("user_pass")
+					->where('id=?',$uid)
+					->fetchOne();
+        if($userinfo['user_pass']!=$old_pass){
+            return 1003;
+        }
         $newpass=setPass($pass);
         return DI()->notorm->user
             ->where('id=?',$uid)
@@ -1206,33 +1210,52 @@ class Model_User extends PhalApi_Model_NotORM {
     }
 
     /* 粉丝列表 */
-    public function getFansList($uid,$touid,$p){
+    public function getFansList($uid,$touid,$p,$status,$keyword){
         if($p<1){
             $p=1;
         }
         $pnum=20;
         $start=($p-1)*$pnum;
-        $touids=DI()->notorm->user_attention
-            ->select("uid,addtime")
-            ->where("touid='{$touid}' and status=1")
-            ->order("addtime desc")
-            ->limit($start,$pnum)
-            ->fetchAll();
-        foreach($touids as $k=>$v){
-            $userinfo=getUserInfo($v['uid'], 1);
-            if($userinfo){
-                $userinfo['isattention']=isAttention($uid,$v['uid']);
-                $userinfo['fans']=getFans($v['uid']);
-                $userinfo['addtime']=datetime($v['addtime']);
-                $touids[$k]=$userinfo;
-            }else{
-                DI()->notorm->user_attention->where('uid=? or touid=?',$v['uid'],$v['uid'])->delete();
-                unset($touids[$k]);
+        if($status){
+            $sql = 'SELECT u.id, u.user_login, u.user_nicename, u.avatar, u.avatar_thumb, u.sex '
+                . 'FROM cmf_user_attention AS ua INNER JOIN cmf_user_attention AS ua2 '
+                . 'ON ua.uid = ua2.touid '
+                . 'INNER JOIN cmf_user AS u '
+                . 'ON ua.uid = u.id '
+                . 'WHERE ua.touid = '.$uid.' and ua.status=1 and ua2.status=1 '
+                . 'ORDER BY ua.addtime DESC '
+                . 'LIMIT '.$pnum.' OFFSET '.$start;
+            $fansList = $this->getORM()->queryAll($sql, []);
+            foreach($fansList as $k=>$v) {
+                $fansList[$k]['avatar']=get_upload_path($v['avatar']);
+                $fansList[$k]['avatar_thumb']=get_upload_path($v['avatar_thumb']);
             }
+            return $fansList;
+
+        }else{
+            $touids=DI()->notorm->user_attention
+                ->select("uid,addtime")
+                ->where("touid='{$touid}' and status=1")
+                ->order("addtime desc")
+                ->limit($start,$pnum)
+                ->fetchAll();
+            foreach($touids as $k=>$v){
+                $userinfo=getUserInfo($v['uid'], 1);
+                if($userinfo){
+                    $userinfo['isattention']=isAttention($uid,$v['uid']);
+                    $userinfo['fans']=getFans($v['uid']);
+                    $userinfo['addtime']=datetime($v['addtime']);
+                    $touids[$k]=$userinfo;
+                }else{
+                    DI()->notorm->user_attention->where('uid=? or touid=?',$v['uid'],$v['uid'])->delete();
+                    unset($touids[$k]);
+                }
+
+            }
+            $touids=array_values($touids);
+            return $touids;
 
         }
-        $touids=array_values($touids);
-        return $touids;
     }
 
     /* 黑名单列表 */

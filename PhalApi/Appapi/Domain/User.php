@@ -55,11 +55,11 @@ class Domain_User {
 			return $rs;
 	}
 	
-	public function updatePass($uid,$pass) {
+	public function updatePass($uid,$old_pass,$pass) {
 			$rs = array();
 
 			$model = new Model_User();
-			$rs = $model->updatePass($uid,$pass);
+			$rs = $model->updatePass($uid,$old_pass,$pass);
 
 			return $rs;
 	}
@@ -253,11 +253,11 @@ class Domain_User {
 			return $rs;
 	}
 	
-	public function getFansList($uid,$touid,$p) {
+	public function getFansList($uid,$touid,$p,$status,$keyword) {
 			$rs = array();
 
 			$model = new Model_User();
-			$rs = $model->getFansList($uid,$touid,$p);
+			$rs = $model->getFansList($uid,$touid,$p,$status,$keyword);
 
 			return $rs;
 	}
