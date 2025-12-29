@@ -421,7 +421,7 @@ class Model_User extends PhalApi_Model_NotORM {
             "cash_rate"=>$cash_rate,
             "cash_take"=>$cash_take,
             "tips"=>$tips,
-            "tips_one"=>T('*合约信息***e'.rand(1000,9999)),
+            "tips_one"=>T('*合约信息***97955'),
             "tips_two"=>T('*请勿直接提现至众筹或ICO地址。否则将无法收到众筹或者ICO发放的代币。'),
             "tips_three"=>T('*请勿与受制裁实体进行交易。'),
         );
