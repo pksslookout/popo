@@ -2021,7 +2021,7 @@ class Model_User extends PhalApi_Model_NotORM {
         if($type == 'day'){
             //type 任务类型 1观看直播, 2观看视频, 3直播奖励, 4打赏奖励, 5分享邀请奖励, 6分享视频奖励, 7分享直播奖励
             $type=[
-                '5'=>T('观看直播'),'6'=>T('观看视频'),'7'=>T('直播奖励'),'8'=>T('打赏奖励'),
+                '5'=>T('观看直播'),'6'=>T('观看视频'),'7'=>T('主播奖励'),'8'=>T('打赏奖励'),
             ];
 
             // 当天时间
@@ -2090,13 +2090,13 @@ class Model_User extends PhalApi_Model_NotORM {
                 $data['target']=$target;
                 //提示标语
                 if($k==5){
-                    $tip_m=T("观看直播时长达到{target}分钟，奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("观看直播时长达到{target}分钟",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else if($k==6){
-                    $tip_m=T("观看视频时长达到{target}分钟，奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("观看视频时长达到{target}分钟",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else if($k==7){
-                    $tip_m=T("每天开播满足{target}小时可获得奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("每天开播满足{target}小时可获得奖励",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else{
-                    $tip_m=T("打赏主播超过{target}钻石，奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("打赏主播和创作者超过{target}钻石",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }
                 $data['id']=$info['id'];
                 $data['tip_m']=$tip_m;
@@ -2174,7 +2174,7 @@ class Model_User extends PhalApi_Model_NotORM {
 
                 //提示标语
                 if($k==1){
-                    $tip_m=T("视频点赞达到{target}条",['target'=>$target]);
+                    $tip_m=T("视频点赞达到{target}个",['target'=>$target]);
                 }else if($k==2){
                     $tip_m=T("视频评论达到{target}条",['target'=>$target]);
                 }else if($k==3){
@@ -2191,7 +2191,7 @@ class Model_User extends PhalApi_Model_NotORM {
 
         if($type == 'share'){
             //type 任务类型 5分享邀请奖励, 6分享视频奖励, 7分享直播奖励
-            $type=['9'=>T('分享邀请奖励'),'10'=>T('分享视频奖励'),'11'=>T('分享直播奖励'),'12'=>T('下载奖励')];
+            $type=['9'=>T('分享邀请奖励'),'10'=>T('分享视频奖励'),'11'=>T('分享直播间奖励'),'12'=>T('下载奖励')];
 
             // 当天时间
             foreach($type as $k=>$v){
@@ -2260,13 +2260,13 @@ class Model_User extends PhalApi_Model_NotORM {
 
                 //提示标语
                 if($k==9){
-                    $tip_m=T("邀请每日分享{target}次可获得奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("每日分享{target}次可获得奖励",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else if($k==10){
-                    $tip_m=T("视频每日分享{target}次可获得奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("每日分享{target}次可获得奖励",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else if($k==11){
-                    $tip_m=T("直播间每日分享{target}次可获得奖励{reward}{name_score}",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("每日分享{target}次可获得奖励",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else{
-                    $tip_m=T("下载注册可获得奖励");
+                    $tip_m=T("下载可获得奖励");
                 }
                 $data['id']=$info['id'];
                 $data['tip_m']=$tip_m;
