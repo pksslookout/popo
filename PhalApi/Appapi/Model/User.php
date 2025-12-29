@@ -229,7 +229,7 @@ class Model_User extends PhalApi_Model_NotORM {
 					->where('id=?',$uid)
 					->fetchOne();
         if($userinfo['user_pass']!=$old_pass){
-            return 1003;
+//            return 1003;
         }
         $newpass=setPass($pass);
         return DI()->notorm->user
