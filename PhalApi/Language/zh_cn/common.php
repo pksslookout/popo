@@ -823,7 +823,7 @@ return array(
     '视频收藏达到{target}个' => '视频收藏达到{target}个',
     '关注用户达到{target}个' => '关注用户达到{target}个',
     '视频评论达到{target}条' => '视频评论达到{target}条',
-    '视频点赞达到{target}个' => '视频点赞达到{target}条',
+    '视频点赞达到{target}个' => '视频点赞达到{target}个',
     '视频每日分享{target}次可获得奖励' => '视频每日分享{target}次可获得奖励',
     '邀请每日分享{target}次可获得奖励' => '邀请每日分享{target}次可获得奖励',
     '每日分享{target}次可获得奖励' => '每日分享{target}次可获得奖励',
