@@ -2266,7 +2266,7 @@ class Model_User extends PhalApi_Model_NotORM {
                 }else if($k==11){
                     $tip_m=T("每日分享{target}次可获得奖励",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else{
-                    $tip_m=T("下载可获得奖励");
+                    $tip_m=T("下载注册可获得奖励");
                 }
                 $data['id']=$info['id'];
                 $data['tip_m']=$tip_m;
