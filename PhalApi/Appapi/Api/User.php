@@ -4566,6 +4566,7 @@ class Api_User extends PhalApi_Api {
         if(!$issign){
             $rs['code']=1001;
             $rs['msg']=T('签名错误');
+            $rs['getsign']=getSignUrl($checkdata);
             return $rs;
         }
 
