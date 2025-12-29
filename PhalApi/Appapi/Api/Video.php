@@ -962,7 +962,7 @@ class Api_Video extends PhalApi_Api {
         if(!$issign){
             $rs['code']=1001;
             $rs['msg']=T('签名错误');
-//            $rs['sign'] = $getsign;
+            $rs['sign'] = getSignUrl($checkdata);
             return $rs;
         }
 
