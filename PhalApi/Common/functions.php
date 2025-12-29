@@ -1988,7 +1988,7 @@ function connectionRedis(){
             $str.=$k.'='.$v.'&';
         }
         $str.=$key;
-        $str=htmlspecialchars($str);
+//        $str=htmlspecialchars($str);
         $newsign=md5($str);
         if($sign==$newsign){
             return 1;
