@@ -1988,11 +1988,24 @@ function connectionRedis(){
             $str.=$k.'='.$v.'&';
         }
         $str.=$key;
+        $str=htmlspecialchars($str);
         $newsign=md5($str);
         if($sign==$newsign){
             return 1;
         }
         return 0;
+    }
+    /* 校验签名 */
+    function getSignUrl($data){
+        $key=DI()->config->get('app.sign_key');
+        $str='';
+        ksort($data);
+        foreach($data as $k=>$v){
+            $str.=$k.'='.$v.'&';
+        }
+        $str.=$key;
+        $str=htmlspecialchars($str);
+        return $str;
     }
     /* 用户退出，注销PUSH */
     function userLogout($uid){
