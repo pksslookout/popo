@@ -58,6 +58,22 @@ class Domain_Video {
 
         return $rs;
     }
+    public function addRecommend($uid,$videoid) {
+        $rs = array();
+
+        $model = new Model_Video();
+        $rs = $model->addRecommend($uid,$videoid);
+
+        return $rs;
+    }
+    public function setUnconcern($uid,$videoid) {
+        $rs = array();
+
+        $model = new Model_Video();
+        $rs = $model->setUnconcern($uid,$videoid);
+
+        return $rs;
+    }
 
     public function addStep($uid,$videoid) {
         $rs = array();

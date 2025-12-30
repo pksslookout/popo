@@ -2070,6 +2070,19 @@ function connectionRedis(){
 		}	
 	}
 
+	/* 视频是否点赞 */
+	function ifRecommend($uid,$videoid){
+		$like=DI()->notorm->video_recommend
+				->select("uid,videoid")
+				->where("uid='{$uid}' and videoid='{$videoid}'")
+				->fetchOne();
+		if($like){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
 	/* 视频是否踩 */
 	function ifStep($uid,$videoid){
 		$like=DI()->notorm->video_step
@@ -2239,17 +2252,20 @@ function connectionRedis(){
 			$v['datetime']=datetime($v['addtime']);	
 			$v['addtime']=date('Y-m-d H:i:s',$v['addtime']);	
 			$v['comments']=NumberFormat($v['comments']);	
-			$v['likes']=NumberFormat($v['likes']);	
-			$v['steps']=NumberFormat($v['steps']);	
+			$v['recommends']=NumberFormat($v['recommends']);
+			$v['likes']=NumberFormat($v['likes']);
+			$v['steps']=NumberFormat($v['steps']);
 			$v['collections']=NumberFormat($v['collections']);
 
             $v['islike']='0';	
-            $v['isstep']='0';	
+            $v['isrecommend']='0';
+            $v['isstep']='0';
             $v['isattent']='0';
             $v['iscollection']='0';
 
 			if($uid>0){
 				$v['islike']=(string)ifLike($uid,$v['id']);	
+				$v['isrecommend']=(string)ifRecommend($uid,$v['id']);
 //				$v['isstep']=(string)ifStep($uid,$v['id']);
                 $v['iscollection']=(string)ifCollection($uid,$v['id']);
 			}
@@ -2311,18 +2327,11 @@ function connectionRedis(){
 			unset($v['watch_ok']);
 
         // 更新虚拟数据
-        if($v['virtual_likes']>$v['likes']){
-            $v['likes']=$v['virtual_likes'];
-        }
-        if($v['virtual_views']>$v['views']){
-            $v['views']=$v['virtual_views'];
-        }
-        if($v['virtual_comments']>$v['comments']){
-            $v['comments']=$v['virtual_comments'];
-        }
-        if($v['virtual_shares']>$v['shares']){
-            $v['shares']=$v['virtual_shares'];
-        }
+        $v['likes']=$v['likes']+$v['virtual_likes'];
+        $v['views']=$v['views']+$v['virtual_views'];
+        $v['comments']=$v['comments']+$v['virtual_comments'];
+        $v['shares']=$v['shares']+$v['virtual_shares'];
+        $v['recommends']=$v['recommends']+$v['virtual_recommends'];
 
         return $v;
     }
@@ -2339,16 +2348,19 @@ function connectionRedis(){
 			$v['datetime']=datetime($v['addtime']);
 			$v['addtime']=date('Y-m-d H:i:s',$v['addtime']);
 			$v['comments']=NumberFormat($v['comments']);
-			$v['likes']=NumberFormat($v['likes']);
+            $v['recommends']=NumberFormat($v['recommends']);
+            $v['likes']=NumberFormat($v['likes']);
 			$v['steps']=NumberFormat($v['steps']);
             $v['collections']=NumberFormat($v['collections']);
 
+            $v['isrecommend']='0';
             $v['islike']='0';
             $v['isstep']='0';
             $v['isattent']='0';
             $v['iscollection']='0';
 
 			if($uid>0){
+				$v['isrecommend']=(string)ifRecommend($uid,$v['id']);
 				$v['islike']=(string)ifLike($uid,$v['id']);
 				$v['isstep']=(string)ifStep($uid,$v['id']);
 				$v['iscollection']=(string)ifCollection($uid,$v['id']);
@@ -2411,18 +2423,11 @@ function connectionRedis(){
 			unset($v['watch_ok']);
 
         // 更新虚拟数据
-        if($v['virtual_likes']>$v['likes']){
-            $v['likes']=$v['virtual_likes'];
-        }
-        if($v['virtual_views']>$v['views']){
-            $v['views']=$v['virtual_views'];
-        }
-        if($v['virtual_comments']>$v['comments']){
-            $v['comments']=$v['virtual_comments'];
-        }
-        if($v['virtual_shares']>$v['shares']){
-            $v['shares']=$v['virtual_shares'];
-        }
+        $v['likes']=$v['likes']+$v['virtual_likes'];
+        $v['views']=$v['views']+$v['virtual_views'];
+        $v['comments']=$v['comments']+$v['virtual_comments'];
+        $v['shares']=$v['shares']+$v['virtual_shares'];
+        $v['recommends']=$v['recommends']+$v['virtual_recommends'];
 
         return $v;
     }

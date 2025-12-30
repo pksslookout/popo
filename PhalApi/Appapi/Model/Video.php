@@ -661,6 +661,88 @@ class Model_Video extends PhalApi_Model_NotORM {
 		
 		return $rs; 		
 	}
+	/* 设置不感兴趣 */
+	public function setUnconcern($uid,$videoid){
+
+        DI()->redis->select(1);
+        $key = 'unconcern_'.$uid;
+        // 向列表添加元素
+        $where = [];
+        $readLists=DI()->redis -> Get($key);
+        if($readLists){
+            $where=json_decode($readLists,true);
+            if(count($where)>100){
+                $list = DI()->notorm->video_unconcern
+                    ->where("uid = '{$uid}'")
+                    ->order("addtime desc")
+                    ->limit(0,50)
+                    ->fetchAll();
+                foreach($list as $k=>$v){
+                    $where[] = $v['videoid'];
+                }
+            }
+        }
+        $where1[] = $videoid;
+
+        $unconcern=DI()->notorm->video_unconcern
+            ->select("uid")
+            ->where("uid='{$uid}' and videoid='{$videoid}'")
+            ->fetchOne();
+        if(!$unconcern){
+            DI()->notorm->video_unconcern
+                ->insert(array("uid"=>$uid,"videoid"=>$videoid,"addtime"=>time()));
+        }
+        //将两数组合并
+        $where2=array_merge($where,$where1);
+        $result = array_unique($where2);
+        DI()->redis -> set($key,json_encode($result));
+        return 1;
+    }
+	/* 推荐 */
+	public function addRecommend($uid,$videoid){
+		$rs=array(
+			'isrecommend'=>'0',
+			'recommend'=>'0',
+		);
+		$video=DI()->notorm->video
+				->select("recommends,uid,thumb")
+				->where("id = '{$videoid}'")
+				->fetchOne();
+
+		if(!$video){
+			return 1001;
+		}
+		if($video['uid']==$uid){
+			return 1002;//不能给自己点赞
+		}
+        $recommend=DI()->notorm->video_recommend
+						->select("uid")
+						->where("uid='{$uid}' and videoid='{$videoid}'")
+						->fetchOne();
+		if($recommend){
+			DI()->notorm->video_recommend
+						->where("uid='{$uid}' and videoid='{$videoid}'")
+						->delete();
+
+			DI()->notorm->video
+				->where("id = '{$videoid}'")
+				->update( array('recommends' => new NotORM_Literal("recommends - 1") ) );
+			$rs['isrecommends']='0';
+		}else{
+			DI()->notorm->video_recommend
+						->insert(array("uid"=>$uid,"touid"=>$video['uid'],"videoid"=>$videoid,"addtime"=>time() ));
+
+		}
+
+		$video=DI()->notorm->video
+				->select("recommends,uid,thumb")
+				->where("id = '{$videoid}'")
+				->fetchOne();
+
+		$rs['recommend']=$video['recommends'];
+
+		return $rs;
+	}
 
 	/* 踩 */
 	public function addStep($uid,$videoid){
@@ -1380,9 +1462,6 @@ class Model_Video extends PhalApi_Model_NotORM {
 		$result= DI()->notorm->video_report->insert($data);
 		return 0;
 	}	
-	
-
-
 
 	public function getRecommendVideos($uid,$p,$isstart){
         if($p<1){
@@ -1587,6 +1666,20 @@ class Model_Video extends PhalApi_Model_NotORM {
             return 1001;
 		}
 
+        // 移除不感兴趣
+        DI()->redis->select(1);
+        $key = 'unconcern_'.$uid;
+        // 向列表添加元素
+        $unconcernLists=DI()->redis -> Get($key);
+        if($unconcernLists){
+            $unconcernLists = json_decode($unconcernLists,true);
+            foreach ($info as $k => $v) {
+                if(in_array($v['id'],$unconcernLists)){
+                    unset($info[$k]);
+                }
+            }
+            $info = array_values($info);
+        }
 
 		return $info;
 	}

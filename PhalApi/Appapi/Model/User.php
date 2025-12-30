@@ -2094,9 +2094,9 @@ class Model_User extends PhalApi_Model_NotORM {
                 }else if($k==6){
                     $tip_m=T("观看视频时长达到{target}分钟",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else if($k==7){
-                    $tip_m=T("每天开播满足{target}小时可获得奖励",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("每天开播满足{target}小时",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }else{
-                    $tip_m=T("打赏主播和创作者超过{target}钻石",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
+                    $tip_m=T("打赏主播和创作者超{target}钻石",['target'=>$target,'reward'=>$reward,'name_score'=>$name_score]);
                 }
                 $data['id']=$info['id'];
                 $data['tip_m']=$tip_m;

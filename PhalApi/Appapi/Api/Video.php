@@ -67,6 +67,16 @@ class Api_Video extends PhalApi_Api {
             	'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户Token'),
                 'videoid' => array('name' => 'videoid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '视频ID'),
             ),
+            'addRecommend' => array(
+            	'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
+            	'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户Token'),
+                'videoid' => array('name' => 'videoid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '视频ID'),
+            ),
+            'setUnconcern' => array(
+            	'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
+            	'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户Token'),
+                'videoid' => array('name' => 'videoid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '视频ID'),
+            ),
 			'addStep' => array(
             	'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
                 'videoid' => array('name' => 'videoid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '视频ID'),
@@ -1074,7 +1084,77 @@ class Api_Video extends PhalApi_Api {
 		}
 		$rs['info'][0]=$result;
         return $rs;
-    }	
+    }
+
+   	/**
+     * 点赞
+     * @desc 用于视频推荐数累计
+     * @return int code 操作码，0表示成功
+     * @return array info
+     * @return string msg 提示信息
+     */
+	public function addRecommend() {
+        $rs = array('code' => 0, 'msg' => T('点赞成功'), 'info' => array());
+        $uid=checkNull($this->uid);
+        $token=checkNull($this->token);
+        $videoid=checkNull($this->videoid);
+		$isBan=isBan($uid);
+		 if($isBan=='0'){
+			$rs['code'] = 700;
+			$rs['msg'] = T('该账号已被禁用');
+			return $rs;
+		}
+
+		$checkToken=checkToken($uid,$token);
+		if($checkToken==700){
+			$rs['code'] = $checkToken;
+			$rs['msg'] = T('您的登陆状态失效，请重新登陆！');
+			return $rs;
+		}
+
+        $domain = new Domain_Video();
+        $result = $domain->addRecommend($uid,$videoid);
+		if($result==1001){
+			$rs['code'] = 1001;
+			$rs['msg'] = T("视频已删除");
+			return $rs;
+		}else if($result==1002){
+			$rs['code'] = 1002;
+			$rs['msg'] = T("不能给自己推荐");
+			return $rs;
+		}
+		$rs['info'][0]=$result;
+        return $rs;
+    }
+
+    /**
+     * 不感兴趣
+     * @desc 用于 操作不感兴趣
+     * @return int code 操作码，0表示成功
+     * @return array info
+     * @return string msg 提示信息
+     */
+    public function setUnconcern() {
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        $uid=checkNull($this->uid);
+        $token=checkNull($this->token);
+        $videoid=checkNull($this->videoid);
+
+        $checkToken=checkToken($uid,$token);
+        if($checkToken==700){
+            $rs['code'] = $checkToken;
+            $rs['msg'] = T('您的登陆状态失效，请重新登陆！');
+            return $rs;
+        }
+
+        $domain = new Domain_Video();
+        $info = $domain->SetUnconcern($uid,$videoid);
+
+        $rs['msg'] = T('不感兴趣成功');
+        $rs['info']=$info;
+        return $rs;
+    }
 
    	/**
      * 踩一下
