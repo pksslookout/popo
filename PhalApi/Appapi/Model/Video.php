@@ -734,7 +734,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 
             DI()->notorm->video
                 ->where("id = '{$videoid}'")
-                ->update( array('recommends' => new NotORM_Literal("likes + 1") ) );
+                ->update( array('recommends' => new NotORM_Literal("recommends + 1") ) );
             $rs['isrecommend']='1';
 
 		}
