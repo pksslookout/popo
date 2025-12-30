@@ -27,6 +27,7 @@ class Api_User extends PhalApi_Api {
             'getUserLevel'=> array(
 				'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
 				'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
+                'touid' => array('name' => 'touid', 'type' => 'int', 'require' => false, 'desc' => '其他用户ID（优选读取）'),
 			),
 			
 			'updateAvatar' => array(
@@ -871,6 +872,7 @@ class Api_User extends PhalApi_Api {
 
         $uid=checkNull($this->uid);
         $token=checkNull($this->token);
+        $touid=checkNull($this->touid);
 
 		$checkToken=checkToken($uid,$token);
 		if($checkToken==700){
@@ -879,6 +881,9 @@ class Api_User extends PhalApi_Api {
 			return $rs;
 		}
         $domain = new Domain_User();
+        if($touid){
+            $uid = $touid;
+        }
         $info = $domain->getUserLevel($uid);
         if(!$info){
             $rs['code'] = 700;
