@@ -50,7 +50,7 @@ class VideoController extends Controller
 
     function watermark()
     {
-        $data = $this->request->post();
+        $data = $this->request->get();
         $video_url = $data['href'];
         $video = explode('/', $video_url);
         $video_h = explode('.', $video[2]);
