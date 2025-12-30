@@ -1350,18 +1350,18 @@ class Model_User extends PhalApi_Model_NotORM {
 
         /* 贡献榜前三 */
         $rs=array();
-        $rs=DI()->notorm->user_coinrecord
-            ->select("uid,sum(totalcoin) as total")
-            ->where('action=1 and touid=?',$touid)
-            ->group("uid")
-            ->order("total desc")
-            ->limit(0,3)
-            ->fetchAll();
-        foreach($rs as $k=>$v){
-            $userinfo=getUserInfo($v['uid'],1);
-            $rs[$k]['avatar']=$userinfo['avatar'];
-        }
-        $info['contribute']=$rs;
+//        $rs=DI()->notorm->user_coinrecord
+//            ->select("uid,sum(totalcoin) as total")
+//            ->where('action=1 and touid=?',$touid)
+//            ->group("uid")
+//            ->order("total desc")
+//            ->limit(0,3)
+//            ->fetchAll();
+//        foreach($rs as $k=>$v){
+//            $userinfo=getUserInfo($v['uid'],1);
+//            $rs[$k]['avatar']=$userinfo['avatar'];
+//        }
+//        $info['contribute']=$rs;
 
         /* 视频数 */
         if($uid==$touid){  //自己的视频（需要返回视频的状态前台显示）
@@ -1385,41 +1385,41 @@ class Model_User extends PhalApi_Model_NotORM {
         $info['likevideonums']=(string)$like_video_count;
 
         /* 动态数 */
-        if($uid==$touid){  //自己的动态（需要返回动态的状态前台显示）
-            $whered=" uid={$uid} and isdel='0' and status=1";
-        }else{  //访问其他人的主页动态
-            $whered=" uid={$touid} and isdel='0' and status=1  ";
-        }
+//        if($uid==$touid){  //自己的动态（需要返回动态的状态前台显示）
+//            $whered=" uid={$uid} and isdel='0' and status=1";
+//        }else{  //访问其他人的主页动态
+//            $whered=" uid={$touid} and isdel='0' and status=1  ";
+//        }
 
-        $dynamicnums=DI()->notorm->dynamic
-            ->where($whered)
-            ->count();
-        if(!$dynamicnums){
-            $dynamicnums=0;
-        }
-
-        $info['dynamicnums']=(string)$dynamicnums;
+//        $dynamicnums=DI()->notorm->dynamic
+//            ->where($whered)
+//            ->count();
+//        if(!$dynamicnums){
+//            $dynamicnums=0;
+//        }
+//
+//        $info['dynamicnums']=(string)$dynamicnums;
         /* 直播数 */
-        $livenums=DI()->notorm->live_record
-            ->where('uid=?',$touid)
-            ->count();
-
-        $info['livenums']=$livenums;
+//        $livenums=DI()->notorm->live_record
+//            ->where('uid=?',$touid)
+//            ->count();
+//
+//        $info['livenums']=$livenums;
         /* 直播记录 */
-        $record=array();
-        $record=DI()->notorm->live_record
-            ->select("id,uid,nums,starttime,endtime,title,city")
-            ->where('uid=?',$touid)
-            ->order("id desc")
-            ->limit(0,50)
-            ->fetchAll();
-        foreach($record as $k=>$v){
-            $record[$k]['datestarttime']=date("Y.m.d",$v['starttime']);
-            $record[$k]['dateendtime']=date("Y.m.d",$v['endtime']);
-            $cha=$v['endtime']-$v['starttime'];
-            $record[$k]['length']=getSeconds($cha);
-        }
-        $info['liverecord']=$record;
+//        $record=array();
+//        $record=DI()->notorm->live_record
+//            ->select("id,uid,nums,starttime,endtime,title,city")
+//            ->where('uid=?',$touid)
+//            ->order("id desc")
+//            ->limit(0,50)
+//            ->fetchAll();
+//        foreach($record as $k=>$v){
+//            $record[$k]['datestarttime']=date("Y.m.d",$v['starttime']);
+//            $record[$k]['dateendtime']=date("Y.m.d",$v['endtime']);
+//            $cha=$v['endtime']-$v['starttime'];
+//            $record[$k]['length']=getSeconds($cha);
+//        }
+//        $info['liverecord']=$record;
         return $info;
     }
 

@@ -1476,11 +1476,14 @@ class Model_Video extends PhalApi_Model_NotORM {
 
         // 移除不感兴趣
         DI()->redis->select(1);
-        $key = 'unconcern_'.$uid;
-        // 向列表添加元素
-        $unconcernLists=DI()->redis -> Get($key);
-        if($unconcernLists){
-            $unconcernLists = json_decode($unconcernLists,true);
+        $unconcernLists = [];
+        if($uid){
+            $key = 'unconcern_'.$uid;
+            // 向列表添加元素
+            $unconcernLists=DI()->redis -> Get($key);
+            if($unconcernLists){
+                $unconcernLists = json_decode($unconcernLists,true);
+            }
         }
 
 		if($video_showtype==0){ //随机
@@ -1491,16 +1494,18 @@ class Model_Video extends PhalApi_Model_NotORM {
 
 			//去除看过的视频
 			$where=array();
-			$readLists=DI()->redis -> Get('readvideo_'.$uid);
-			if($readLists){
-				$where=json_decode($readLists,true);
-                if(count($where)>300){
-                    DI()->redis -> del('readvideo_'.$uid);
+            if($uid) {
+                $readLists = DI()->redis->Get('readvideo_' . $uid);
+                if ($readLists) {
+                    $where = json_decode($readLists, true);
+                    if (count($where) > 300) {
+                        DI()->redis->del('readvideo_' . $uid);
+                    }
                 }
-			}
-            if($unconcernLists){
-                $where=array_merge($where,$unconcernLists);
-                $where=array_unique($where);
+                if ($unconcernLists) {
+                    $where = array_merge($where, $unconcernLists);
+                    $where = array_unique($where);
+                }
             }
 
 			$info=DI()->notorm->video
@@ -1518,7 +1523,9 @@ class Model_Video extends PhalApi_Model_NotORM {
 
 			//将两数组合并
 			$where2=array_merge($where,$where1);
-			DI()->redis -> set('readvideo_'.$uid,json_encode($where2));
+            if($uid){
+                DI()->redis -> set('readvideo_'.$uid,json_encode($where2));
+            }
 
 		}else{
 
