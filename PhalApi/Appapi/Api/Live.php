@@ -631,7 +631,7 @@ class Api_Live extends PhalApi_Api {
             /* 腾讯IM 推送服务 Push */
             $method_name = 'timpush/batch';
             $identifier = 'administrator';
-            $random = random_int(0,4294967295);
+            $random = random_int(0,9999999);
             $touid_array = $uids;
             $post = [
                 'From_Account' => $identifier,
@@ -650,59 +650,6 @@ class Api_Live extends PhalApi_Api {
             if($curlPostReturn['ActionStatus']=='OK'){
             }else{
             }
-        }else{
-            /* 极光推送 */
-            $app_key = $configpri['jpush_key'];
-            $master_secret = $configpri['jpush_secret'];
-
-            if ($app_key && $master_secret && $status == 1 && $info) {
-                require API_ROOT . '/../sdk/JPush/autoload.php';
-                // 初始化
-                $client = new \JPush\Client($app_key, $master_secret, null);
-
-                $apns_production = false;
-                if ($configpri['jpush_sandbox']) {
-                    $apns_production = true;
-                }
-
-                $pushids = $domain->getFansIds($uid);
-                $nums = count($pushids);
-                for ($i = 0; $i < $nums;) {
-                    $alias = array_slice($pushids, $i, 900);
-                    $i += 900;
-                    try {
-                        $result = $client->push()
-                            ->setPlatform('all')
-                            ->addRegistrationId($alias)
-                            ->setNotificationAlert($title)
-                            ->iosNotification($title, array(
-                                'sound' => 'sound.caf',
-                                'category' => 'jiguang',
-                                'extras' => array(
-                                    'type' => '1',
-                                    'userinfo' => $anthorinfo
-                                ),
-                            ))
-                            ->androidNotification('', array(
-                                'extras' => array(
-                                    'title' => $title,
-                                    'type' => '1',
-                                    'userinfo' => $anthorinfo
-                                ),
-                            ))
-                            ->options(array(
-                                'sendno' => 100,
-                                'time_to_live' => 0,
-                                'apns_production' => $apns_production,
-                            ))
-                            ->send();
-                    } catch (Exception $e) {
-                        file_put_contents('./jpush.txt', date('y-m-d h:i:s') . '提交参数信息 设备名:' . json_encode($alias) . "\r\n", FILE_APPEND);
-                        file_put_contents('./jpush.txt', date('y-m-d h:i:s') . '提交参数信息:' . $e . "\r\n", FILE_APPEND);
-                    }
-                }
-            }
-            /* 极光推送 */
         }
 
 		$rs['info'][0]['msg']=T('成功');

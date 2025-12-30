@@ -16,13 +16,13 @@
         <li><a href="#E" data-toggle="tab">腾讯云推送及IM配置</a></li>
         <li><a href="#O" data-toggle="tab">视频推荐列表设置</a></li>
 <!--        <li><a href="#H" data-toggle="tab">统计配置</a></li>-->
-<!--        <li><a href="#G" data-toggle="tab">邀请奖励</a></li>-->
-<!--        <li><a href="#F" data-toggle="tab">支付配置</a></li>-->
+        <li><a href="#G" data-toggle="tab">邀请奖励</a></li>
+        <li><a href="#F" data-toggle="tab">支付配置</a></li>
 <!--        <li><a href="#D" data-toggle="tab">{$name_votes}提现配置</a></li>-->
         <li><a href="#D" data-toggle="tab">USDT提现配置</a></li>
         <li><a href="#P" data-toggle="tab">上热门</a></li>
         <li><a href="#Q" data-toggle="tab">VIP设置</a></li>
-<!--        <li><a href="#R" data-toggle="tab">短视频观看模式</a></li>-->
+        <li><a href="#R" data-toggle="tab">短视频观看模式</a></li>
         <li><a href="#I" data-toggle="tab">视频配置</a></li>
         <li><a href="#C" data-toggle="tab">直播配置</a></li>
         <li><a href="#J" data-toggle="tab">店铺/商品配置</a></li>
@@ -1253,6 +1253,33 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="input-video_rewards_switch" class="col-sm-2 control-label">用户每观看60秒视频奖励{$name_coin}开关</label>
+                            <div class="col-md-6 col-sm-10" id="input-video_rewards_switch">
+                                <label class="radio-inline"><input type="radio" value="0" name="options[video_rewards_switch]" <in value="0" name="config['video_rewards_switch']">checked="checked"</in>>关</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="options[video_rewards_switch]" <in value="1" name="config['video_rewards_switch']">checked="checked"</in>>开</label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="input-video_rewards_number" class="col-sm-2 control-label">用户每观看60秒视频奖励{$name_coin}</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-video_rewards_number"
+                                       name="options[video_rewards_number]" value="{$config.video_rewards_number|default='10'}">
+                                <p class="help-block">正整数</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-video_rewards_max_number" class="col-sm-2 control-label">一个用户一天观看视频最多奖励{$name_coin}</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-video_rewards_max_number"
+                                       name="options[video_rewards_max_number]" value="{$config.video_rewards_max_number|default='20'}">
+                                <p class="help-block">正整数，大于等于观看60秒视频奖励</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="input-comment_weight_value" class="col-sm-2 control-label">评论权重值</label>
                             <div class="col-md-6 col-sm-10">
                                 <input type="text" class="form-control" id="input-comment_weight_value"
@@ -1338,7 +1365,7 @@
                             <div class="col-md-6 col-sm-10" id="input-vip_switch">
                                 <label class="radio-inline"><input type="radio" value="0" name="options[vip_switch]" <in value="0" name="config['vip_switch']">checked="checked"</in>>关闭</label>
                                 <label class="radio-inline"><input type="radio" value="1" name="options[vip_switch]" <in value="1" name="config['vip_switch']">checked="checked"</in>>开启</label>
-                                <p class="help-block">vip 关闭后，站点所有与vip相关的校验无效</p>
+                                <p class="help-block">vip 关闭后，站点所有与vip相关信息都不展示</p>
                             </div>
                         </div>
 
@@ -1366,6 +1393,15 @@
                                 <label class="radio-inline"><input type="radio" value="0" name="options[video_views_mode]" <in value="0" name="config['video_views_mode']">checked="checked"</in>>次数限制模式</label>
                                 <label class="radio-inline"><input type="radio" value="1" name="options[video_views_mode]" <in value="1" name="config['video_views_mode']">checked="checked"</in>>内容限制模式</label>
                                 <p class="help-block">(次数限制模式开启时，免费观看视频数发挥作用。内容限制模式开启时 视频发布者可设置视频的收费价格，非vp用户观看收费视频需要付费，一次付费永久观看。在vip开关打开的情况下，vip用户无论何种模式可免费观看)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-free_video_views_number" class="col-sm-2 control-label">免费观看视频数</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-free_video_views_number"
+                                       name="options[free_video_views_number]" value="{$config.free_video_views_number|default='10'}">
+                                <p class="help-block">非vip用户或游客每天可免费观看视频数,0表示不限制(整数)</p>
                             </div>
                         </div>
 
@@ -1429,7 +1465,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">选择存储方式</label>
                             <div class="col-md-6 col-sm-10" id="cloudtype">
+<!--                                <label class="radio-inline"><input type="radio" value="1" name="options[cloudtype]" <in value="1" name="config['cloudtype']">checked="checked"</in>>七牛云存储</label>-->
                                 <label class="radio-inline"><input type="radio" value="2" name="options[cloudtype]" <in value="2" name="config['cloudtype']">checked="checked"</in>>腾讯云存储</label>
+
                                 <p class="help-block">如有旧资源：先迁移资源再切换否则无法加载</p>
                             </div>
                         </div>

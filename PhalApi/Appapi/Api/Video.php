@@ -309,7 +309,9 @@ class Api_Video extends PhalApi_Api {
 		$rs = array('code' => 0, 'msg' => '', 'info' => array());
         $href=checkNull($this->href);
         $curlPost['href'] = $href;
-        $re = curlPost($curlPost,get_upload_path('/appapi/video/watermark'));
+        $re = curlPost($curlPost,get_upload_path('http://wanmei.qingyu97.work/appapi/video/watermark'));
+        var_dump($re);
+        exit();
         $re = json_decode($re,true);
         if($re['ret']==200){
             $rs['info'][0]['href_w']=$re['data']['url'];

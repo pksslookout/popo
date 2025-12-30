@@ -1018,24 +1018,27 @@ class Model_Video extends PhalApi_Model_NotORM {
         $msg = '';
         $todayMidnight = strtotime("today midnight", $now);
         if($infoConfigPir['vip_switch'] == 1){
-            if($infoConfigPir['video_views_mode']==1){
-                if($userVip['type']!=1){
-                    $status = 1;
-                    $msg = T('非VIP用户，');
-                }
-            }else{
-                if($userVip['type']!=1) {
-                    $count_status = 1;
-                }
-            }
-        }else{
-            if($infoConfigPir['video_views_mode']==1){
+            if($userVip['type']!=1){
                 $status = 1;
-            }else{
-                if($infoConfigPir['free_video_views_number']!=0){
-                    $count_status = 1;
-                }
             }
+//            if($infoConfigPir['video_views_mode']==1){
+//                if($userVip['type']!=1){
+//                    $status = 1;
+//                    $msg = T('非VIP用户，');
+//                }
+//            }else{
+//                if($userVip['type']!=1) {
+//                    $count_status = 1;
+//                }
+//            }
+        }else{
+//            if($infoConfigPir['video_views_mode']==1){
+//                $status = 1;
+//            }else{
+//                if($infoConfigPir['free_video_views_number']!=0){
+//                    $count_status = 1;
+//                }
+//            }
         }
         if($status == 1 && !empty($video['coin']) && $uid!=$video['uid']){
             if($uid == 0){
@@ -1931,6 +1934,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 
 	/*处理用户每观看60秒视频奖励红包映票逻辑*/
 	public function dealUserVideoRewards($uid,$time) {
+        return 0;
         $configPri= getConfigPri();
         if($configPri['video_rewards_switch']==1){
             $now = time();
@@ -1946,26 +1950,26 @@ class Model_Video extends PhalApi_Model_NotORM {
                 if(empty($total)){
                     $total = 0;
                 }
-                if($total<$configPri['video_rewards_max_number']){
-                    $red_votes=$configPri['video_rewards_number'];
-                    /* 增加用户映票 */
-                    $isprofit =DI()->notorm->user
-                        ->where('id = ?', $uid)
-                        ->update( array('red_votes' => new NotORM_Literal("red_votes + {$red_votes}") ));
-                    if($isprofit){  //生成记录
-                        $insert=array(
-                            "type"=>'1',
-                            "action"=>'11',
-                            "uid"=>$uid,
-                            "fromid"=>$uid,
-                            "nums"=>'1',
-                            "total"=>$red_votes,
-                            "votes"=>$red_votes,
-                            "addtime"=>time()
-                        );
-                        DI()->notorm->user_voterecord->insert($insert);
-                    }
-                }
+//                if($total<$configPri['video_rewards_max_number']){
+//                    $red_votes=$configPri['video_rewards_number'];
+//                    /* 增加用户映票 */
+//                    $isprofit =DI()->notorm->user
+//                        ->where('id = ?', $uid)
+//                        ->update( array('red_votes' => new NotORM_Literal("red_votes + {$red_votes}") ));
+//                    if($isprofit){  //生成记录
+//                        $insert=array(
+//                            "type"=>'1',
+//                            "action"=>'11',
+//                            "uid"=>$uid,
+//                            "fromid"=>$uid,
+//                            "nums"=>'1',
+//                            "total"=>$red_votes,
+//                            "votes"=>$red_votes,
+//                            "addtime"=>time()
+//                        );
+//                        DI()->notorm->user_voterecord->insert($insert);
+//                    }
+//                }
             }
         }
         return 0;
