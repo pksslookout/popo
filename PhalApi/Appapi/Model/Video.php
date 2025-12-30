@@ -659,12 +659,12 @@ class Model_Video extends PhalApi_Model_NotORM {
 				
 		$rs['likes']=$video['likes'];
 		
-		return $rs; 		
+		return $rs;
 	}
 	/* 设置不感兴趣 */
 	public function setUnconcern($uid,$videoid){
 
-        DI()->redis->select(1);
+//        DI()->redis->select(1);
         $key = 'unconcern_'.$uid;
         // 向列表添加元素
         $where = [];
@@ -1473,6 +1473,16 @@ class Model_Video extends PhalApi_Model_NotORM {
 		$configPri=getConfigPri();
 		$video_showtype=$configPri['recommended_video_display_methods'];
 
+
+        // 移除不感兴趣
+//        DI()->redis->select(1);
+        $key = 'unconcern_'.$uid;
+        // 向列表添加元素
+        $unconcernLists=DI()->redis -> Get($key);
+        if($unconcernLists){
+            $unconcernLists = json_decode($unconcernLists,true);
+        }
+
 		if($video_showtype==0){ //随机
 
 			if($p==1){
@@ -1488,6 +1498,10 @@ class Model_Video extends PhalApi_Model_NotORM {
                     DI()->redis -> del('readvideo_'.$uid);
                 }
 			}
+            if($unconcernLists){
+                $where=array_merge($where,$unconcernLists);
+                $where=array_unique($where);
+            }
 
 			$info=DI()->notorm->video
 			->where("isdel=0 and status=1 and is_ad=0")
@@ -1557,6 +1571,13 @@ class Model_Video extends PhalApi_Model_NotORM {
                 }
                 $infoAdvertList[$a]=$advertList[$k];
             }
+            if($unconcernLists){
+                foreach ($infoAdvertList as $k => $v) {
+                    if(in_array($v['id'],$unconcernLists)){
+                        unset($infoAdvertList[$k]);
+                    }
+                }
+            }
             foreach ($info as $k => $v) {
                 if(!$infoAdvertList[$k]){
                     $infoAll[] = $v;
@@ -1583,7 +1604,13 @@ class Model_Video extends PhalApi_Model_NotORM {
         foreach ($popularList as $k => $v) {
             $durationTime = (int)$v['addtime']+$v['duration']*60*60;
             if($durationTime > $time && $v['actual_view_counts'] < $v['view_counts']){
-                $videoidArray[] = $v['videoid'];
+                if($unconcernLists){
+                    if(!in_array($v['videoid'],$unconcernLists)){
+                        $videoidArray[] = $v['videoid'];
+                    }
+                }else{
+                    $videoidArray[] = $v['videoid'];
+                }
             }else{
                 // 更新上热门信息
                 if($v['actual_view_counts'] < $v['view_counts']){
@@ -1666,20 +1693,6 @@ class Model_Video extends PhalApi_Model_NotORM {
             return 1001;
 		}
 
-        // 移除不感兴趣
-        DI()->redis->select(1);
-        $key = 'unconcern_'.$uid;
-        // 向列表添加元素
-        $unconcernLists=DI()->redis -> Get($key);
-        if($unconcernLists){
-            $unconcernLists = json_decode($unconcernLists,true);
-            foreach ($info as $k => $v) {
-                if(in_array($v['id'],$unconcernLists)){
-                    unset($info[$k]);
-                }
-            }
-            $info = array_values($info);
-        }
 
 		return $info;
 	}
