@@ -1692,6 +1692,7 @@ class Model_Video extends PhalApi_Model_NotORM {
             }
         }
         $info = $infoAll;
+        DI()->redis->select(0);
         foreach ($info as $k => $v) {
             $v=handleVideo($uid,$v);
             $info[$k]=$v;

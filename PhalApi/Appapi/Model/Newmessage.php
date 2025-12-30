@@ -25,7 +25,7 @@ class Model_Newmessage extends PhalApi_Model_NotORM {
             $info['system_count'] = $system_count;
             $info['all_count'] = $info['fans_count'] + $info['like_count'] + $info['at_count'] + $info['comment_count'] + $info['system_count'];
 
-            DI()->redis->set($key, json_encode($info), 30);
+            DI()->redis->set($key, json_encode($info), 60);
 
         }else{
             $info = json_decode($info, true);
