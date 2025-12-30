@@ -1011,7 +1011,6 @@ class Api_User extends PhalApi_Api {
         //判断用户是否开通了付费内容
         $info['paidprogram_switch']=checkPaidProgramIsPass($uid);
 
-
 		/* 个人中心菜单 */
 		$version_ios=$this->version_ios;
 		$list=array();

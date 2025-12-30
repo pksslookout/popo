@@ -5555,3 +5555,58 @@ function connectionRedis(){
         $headers = @get_headers($url);
         return stripos($headers[0], '200') !== false;
     }
+
+    function getClientIp() {
+        $ip = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']) && $_SERVER['HTTP_CLIENT_IP'] != 'unknown') {
+            // 判断是否有HTTP_CLIENT_IP这个请求头，存在优先使用
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != 'unknown') {
+            // 判断是否有HTTP_X_FORWARDED_FOR这个请求头，存在优先使用
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != 'unknown') {
+            // 获取REMOTE_ADDR这个服务器变量
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
+
+    function getClientIpLocation($ip) {
+        $re = curl_get("https://ip9.com.cn/get?ip=$ip");
+        $re = json_decode($re,true);
+        $arr = [];
+        if($re['ret']==200){
+            if($re['data']['country']!='保留'){
+                if($re['data']['country']!='中国'){
+                    $re = curl_get("http://ip-api.com/json/$ip?lang=zh-CN");
+                    $re = json_decode($re,true);
+                    if($re['status']=='success'){
+                        $arr = [
+                            'country' => $re['country'],
+                            'province' => $re['regionName'],
+                            'city' => $re['city'],
+                        ];
+                    }
+                }else{
+                    $arr = [
+                        'country' => $re['data']['country'],
+                        'province' => $re['data']['prov'],
+                        'city' => $re['data']['city'],
+                        'area' => $re['data']['area'],
+                    ];
+                }
+
+            }else{
+                $re = curl_get("http://ip-api.com/json/$ip?lang=zh-CN");
+                $re = json_decode($re,true);
+                if($re['status']=='success'){
+                    $arr = [
+                        'country' => $re['country'],
+                        'province' => $re['regionName'],
+                        'city' => $re['city'],
+                    ];
+                }
+            }
+        }
+        return $arr;
+    }

@@ -664,7 +664,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 	/* 设置不感兴趣 */
 	public function setUnconcern($uid,$videoid){
 
-//        DI()->redis->select(1);
+        DI()->redis->select(1);
         $key = 'unconcern_'.$uid;
         // 向列表添加元素
         $where = [];
@@ -1475,7 +1475,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 
 
         // 移除不感兴趣
-//        DI()->redis->select(1);
+        DI()->redis->select(1);
         $key = 'unconcern_'.$uid;
         // 向列表添加元素
         $unconcernLists=DI()->redis -> Get($key);

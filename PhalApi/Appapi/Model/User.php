@@ -94,9 +94,25 @@ class Model_User extends PhalApi_Model_NotORM {
 //                $info['user_nicename'] = str_replace('POPO用户', 'POPO-User-', $info['user_nicename']);
 //            }
             $user_information=DI()->notorm->user_information
-                ->select("bnb_adr,user_pay_pass")
+                ->select("bnb_adr,user_pay_pass,location_based_ip,location_based_addtime,country,province,city,area")
                 ->where('id=?',$uid)
                 ->fetchOne();
+            // 处理归属地的问题
+            if(empty($user_information['country'])) {
+                if(($user_information['location_based_addtime']+3600)<time()){
+                    $ip = getClientIp();
+                    if($ip){
+                        $information_arr = getClientIpLocation($ip);
+                        $information_arr['location_based_ip'] = $ip;
+                        $information_arr['location_based_addtime'] = time();
+                        DI()->notorm->user_information->where('id=?',$uid)->update($information_arr);
+                    }
+                }else{
+                    $information_arr['location_based_addtime'] = time();
+                    DI()->notorm->user_information->where('id=?',$uid)->update($information_arr);
+                }
+            }
+
             if($user_information['user_pay_pass']){
                 $info['user_pay_pass'] = 1;
             }else{

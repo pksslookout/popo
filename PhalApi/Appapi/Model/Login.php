@@ -58,7 +58,14 @@ class Model_Login extends PhalApi_Model_NotORM {
                 return 1007;
             }
             $uid=$rs['id'];
-            DI()->notorm->user_information->insert(['id'=>$uid]);
+            $ip =getClientIp();
+            if($ip){
+                $information_arr = getClientIpLocation($ip);
+                $information_arr['location_based_ip'] = $ip;
+            }
+            $information_arr['id'] = $uid;
+            $information_arr['location_based_addtime'] = time();
+            DI()->notorm->user_information->insert($information_arr);
 
             $info=DI()->notorm->user
                 ->select($this->fields.',user_pass')
@@ -322,7 +329,6 @@ class Model_Login extends PhalApi_Model_NotORM {
 			$info['isreg']='1';
 		}
 
-
         if($info['birthday']){
             $info['birthday']=date('Y-m-d',$info['birthday']);
         }else{
@@ -449,7 +455,14 @@ class Model_Login extends PhalApi_Model_NotORM {
 			return 1007;
 		}
         $uid=$rs['id'];
-        DI()->notorm->user_information->insert(['id'=>$uid]);
+        $ip =getClientIp();
+        if($ip){
+            $information_arr = getClientIpLocation($ip);
+            $information_arr['location_based_ip'] = $ip;
+        }
+        $information_arr['id'] = $uid;
+        $information_arr['location_based_addtime'] = time();
+        DI()->notorm->user_information->insert($information_arr);
 
         if($reg_reward>0){
             $insert=array("type"=>'1',"action"=>'22',"uid"=>$uid,"touid"=>$uid,"giftid"=>0,"giftcount"=>1,"total"=>$reg_reward,"showid"=>0,"addtime"=>time() );
