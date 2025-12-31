@@ -2363,7 +2363,7 @@ class Model_User extends PhalApi_Model_NotORM {
     /* 用户会员信息 */
     public function getUserVip($uid) {
         $info=DI()->notorm->vip_user
-            ->select("id,uid,addtime,endtime")
+            ->select("uid,addtime,endtime")
             ->where('uid=?',$uid)
             ->fetchOne();
         if($info&&$info['endtime']>time()){
@@ -3842,6 +3842,19 @@ class Model_User extends PhalApi_Model_NotORM {
 //                ->where('id = ?', $promotion_uid)
 //                ->update(array('popo_pool' => new NotORM_Literal("popo_pool + {$promotion_total}"), 'votesearnings' => new NotORM_Literal("votesearnings + {$promotion_total}")));
 //        }
+
+        return $rs;
+    }
+
+    //**划转
+    public function getMyCooperation($uid){
+
+        $user_info = getUserVip($uid);
+        $rs['vip_user'] = $user_info;
+
+        $rs['vip_level_list'] = DI()->notorm->vip
+            ->order('list_order desc')
+            ->fetchAll();
 
         return $rs;
     }

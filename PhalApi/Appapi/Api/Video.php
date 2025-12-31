@@ -26,13 +26,19 @@ class Api_Video extends PhalApi_Api {
                 'type' => array('name' => 'type', 'type' => 'int','default'=>0, 'desc' => '绑定的内容类型 0 没绑定 1 自己商品 2 付费内容 3代售商品'),
                 'goodsid' => array('name' => 'goodsid', 'type' => 'int','default'=>0, 'desc' => '商品ID'),
                 'author_center_id' => array('name' => 'author_center_id', 'type' => 'int','default'=>0, 'desc' => '关联创作者活动ID（活动投稿带上）'),
-                'classid' => array('name' => 'classid', 'type' => 'int','default'=>0, 'require' => true, 'desc' => '视频分类ID'),
+                'classid' => array('name' => 'classid', 'type' => 'int','default'=>0, 'require' => false, 'desc' => '视频分类ID'),
                 'coin' => array('name' => 'coin', 'type' => 'int','default'=>0, 'require' => false, 'desc' => '收取金额'),
                 'is_ad' => array('name' => 'is_ad', 'type' => 'int','default'=>0, 'require' => false, 'desc' => '是否为广告视频 0 否 1 是'),
                 'dynamic_label_id' => array('name' => 'dynamic_label_id', 'type' => 'int','default'=>0, 'require' => false, 'desc' => '关联话题ID'),
 //				'ad_endtime' => array('name' => 'ad_endtime', 'type' => 'string', 'default'=>'','desc' => '广告显示到期时间 2025-06-25'),
 				'ad_url' => array('name' => 'ad_url', 'type' => 'string', 'default'=>'','desc' => '广告外链'),
 				'anyway' => array('name' => 'anyway', 'type' => 'string', 'default'=>'1.1','desc' => '横竖屏(封面-高/宽)，大于1表示竖屏,小于1表示横屏'),
+                'is_popular' => array('name' => 'is_popular', 'type' => 'int', 'default'=>'0','desc' => '是否上热门'),
+                'price'=>array('name' => 'price', 'type' => 'int', 'min' => 100, 'desc' => '投放金额'),
+                'duration'=>array('name' => 'duration', 'type' => 'int', 'min' => 6, 'desc' => '投放时长'),
+                'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'desc' => '秒级时间戳'),
+                'nonce' => array('name' => 'nonce', 'type' => 'string', 'desc' => '8位随机数（包含字母数字）'),
+                'sign' => array('name' => 'sign', 'type' => 'string', 'default'=>'', 'desc' => '签名(uid+price+timestamp+nonce)'),
 			),
             'setComment' => array(
                 'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
@@ -441,6 +447,12 @@ class Api_Video extends PhalApi_Api {
 		$dynamic_label_id=checkNull($this->dynamic_label_id);
 //		$ad_endtime=checkNull($this->ad_endtime);
 		$ad_url=checkNull($this->ad_url);
+        $is_popular=checkNull($this->is_popular);
+        $price=checkNull($this->price);
+        $duration=checkNull($this->duration);
+        $timestamp=checkNull($this->timestamp);
+        $nonce=checkNull($this->nonce);
+        $sign=checkNull($this->sign);
 
 //        if($classid<1){
 //            $rs['code'] = 10012;
@@ -611,9 +623,43 @@ class Api_Video extends PhalApi_Api {
 
 			}
 		}
+        if($is_popular){
+            $checkdata=array(
+                'uid'=>$uid,
+                'price'=>$price,
+                'timestamp'=>$timestamp,
+                'nonce'=>$nonce,
+            );
+
+//            $issign=checkSign($checkdata,$sign);
+//            if(!$issign){
+//                $rs['code']=1001;
+//                $rs['msg']=T('签名错误');
+//                $rs['sign'] = getSignUrl($checkdata);
+//                return $rs;
+//            }
+//
+//            $key = 'getNonce_'.$uid.'_'.$nonce;
+//            $get_nonce = getcaches($key);
+//            if ($get_nonce) {
+//                $rs['code']=1001;
+//                $rs['msg']=T('非法操作');
+//                return $rs;
+//            }else{
+//                setcaches($key,1,300);
+//            }
+//
+//            $now = time();
+//            $timestamp = (int)$timestamp+300;
+//            if($now>$timestamp){
+//                $rs['code']=1001;
+//                $rs['msg']=T('非法操作');
+//                return $rs;
+//            }
+        }
 
 		$domain = new Domain_Video();
-		$info = $domain->setVideo($data,$music_id);
+		$info = $domain->setVideo($data,$music_id,$is_popular,$price,$duration);
 		if($info==1007){
 			$rs['code']=1007;
 			$rs['msg']=T('视频分类不存在');
@@ -621,6 +667,10 @@ class Api_Video extends PhalApi_Api {
 		}else if($info==1020){
 			$rs['code']=1020;
 			$rs['msg']=T('非VIP用户每天可上传视频数有限');
+			return $rs;
+		}else if($info==1003){
+			$rs['code']=1003;
+			$rs['msg']=T('钻石不足，无法上热门');
 			return $rs;
 		}else if($info==1008){
 			$rs['code']=1008;
@@ -1010,6 +1060,11 @@ class Api_Video extends PhalApi_Api {
         }elseif($res == 1002){
             $rs['code'] = 1002;
             $rs['msg'] = T("视频不存在");
+//            $rs['sign'] = $getsign;
+            return $rs;
+        }elseif($res == 1003){
+            $rs['code'] = 1003;
+            $rs['msg'] = T("钻石不足，无法上热门");
 //            $rs['sign'] = $getsign;
             return $rs;
         }

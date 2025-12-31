@@ -736,4 +736,11 @@ class Domain_User {
         return $rs;
     }
 
+    public function getMyCooperation($uid){
+        $rs = array();
+        $model = new Model_User();
+        $rs = $model->getMyCooperation($uid);
+        return $rs;
+    }
+
 }

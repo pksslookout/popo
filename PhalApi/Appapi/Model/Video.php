@@ -2,10 +2,19 @@
 
 class Model_Video extends PhalApi_Model_NotORM {
 	/* 发布视频 */
-	public function setVideo($data,$music_id) {
+	public function setVideo($data,$music_id,$is_popular,$price,$duration) {
 		$uid = $data['uid'];
         $now = time();
 
+        if($is_popular) {
+            $user = DI()->notorm->user
+                ->select("coin,user_nicename")
+                ->where('id = ?', $uid)
+                ->fetchOne();
+            if ($user['coin'] < $price) {
+                return 1003;
+            }
+        }
 		$configPri=getConfigPri();
 
 		if($configPri['video_audit_switch']==0){
@@ -24,7 +33,7 @@ class Model_Video extends PhalApi_Model_NotORM {
             }
 		}
 
-		if($configPri['is_auth']==1){
+		if($configPri['is_auth']==0){
             $isauth=isAuth($data['uid']);
             if(!$isauth){
                 return 1008;
@@ -46,6 +55,46 @@ class Model_Video extends PhalApi_Model_NotORM {
 		}
 
 		$result= DI()->notorm->video->insert($data);
+
+        if($is_popular){
+
+            $videoid = $result['id'];
+
+            $user_nicename = $user['user_nicename'];
+            $release_user_nicename = $user['user_nicename'];
+            $configPri=getConfigPri();
+            $addtime=time();
+            // 生成上热门记录
+            $insert=array(
+                "uid"=>$uid,
+                "user_nicename"=>$user_nicename,
+                "release_uid"=>$uid,
+                "release_user_nicename"=>$release_user_nicename,
+                "videoid"=>$videoid,
+                "price"=>$price,
+                "duration"=>$duration,
+                "view_counts"=>$price*$duration*$configPri['popular_base_number'],
+                "is_status"=>1,
+                "addtime"=>$addtime
+            );
+            $result = DI()->notorm->popular->insert($insert);
+
+            DI()->notorm->user
+                ->where('id = ?', $uid)
+                ->update(array('coin' => new NotORM_Literal("coin - {$price}")));
+
+            //用户消费记录
+            $type='0';
+            $action='25';
+            $giftid=$result['id'];
+            $giftcount=1;
+            $total=$price;
+            $showid=0;
+            $addtime=$addtime;
+            $insert=array("type"=>$type,"action"=>$action,"uid"=>$uid,"touid"=>$uid,"giftid"=>$giftid,"giftcount"=>$giftcount,"totalcoin"=>$total,"showid"=>$showid,"addtime"=>$addtime );
+            DI()->notorm->user_coinrecord->insert($insert);
+        }
+
 
 		if($music_id>0){ //更新背景音乐被使用次数
 			DI()->notorm->music
@@ -559,6 +608,15 @@ class Model_Video extends PhalApi_Model_NotORM {
 		if($popular){
             return 1001;
 		}
+
+        $user = DI()->notorm->user
+            ->select("coin,user_nicename")
+            ->where('id = ?', $uid)
+            ->fetchOne();
+        if($user['coin']<$price){
+            return 1003;
+        }
+
 		$video=DI()->notorm->video
 				->select("uid")
 				->where("id='{$videoid}'")
@@ -566,7 +624,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 		if(!$video){
             return 1002;
 		}
-        $user_nicename = getUserInfo($uid,1)['user_nicename'];
+        $user_nicename = $user['user_nicename'];
         $release_user_nicename = getUserInfo($video['uid'],1)['user_nicename'];
         $configPri=getConfigPri();
         $addtime=time();
@@ -584,6 +642,7 @@ class Model_Video extends PhalApi_Model_NotORM {
             "addtime"=>$addtime
         );
         $result = DI()->notorm->popular->insert($insert);
+
 
         DI()->notorm->user
             ->where('id = ?', $uid)

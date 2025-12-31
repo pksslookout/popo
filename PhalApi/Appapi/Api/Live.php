@@ -2519,6 +2519,10 @@ class Api_Live extends PhalApi_Api {
             $rs['code'] = 1001;
             $rs['msg'] = T("有未使用的订单");
             return $rs;
+        }else if($res==1003){
+            $rs['code']=1003;
+            $rs['msg']=T('钻石不足，无法上热门');
+            return $rs;
         }
 
         return $rs;

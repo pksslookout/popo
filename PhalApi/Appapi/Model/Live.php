@@ -1409,7 +1409,16 @@ class Model_Live extends PhalApi_Model_NotORM {
         if($popular){
             return 1001;
         }
-        $user_nicename = getUserInfo($uid,1)['user_nicename'];
+
+        $user = DI()->notorm->user
+            ->select("coin,user_nicename")
+            ->where('id = ?', $uid)
+            ->fetchOne();
+        if ($user['coin'] < $price) {
+            return 1003;
+        }
+
+        $user_nicename = $user['user_nicename'];
         $addtime=time();
         // 生成上热门记录
         $insert=array(

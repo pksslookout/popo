@@ -1544,6 +1544,8 @@ function connectionRedis(){
 	function getUserVip($uid){
 		$rs=array(
 			'type'=>'0',
+			'vip_level'=>'0',
+			'channel'=>'0',
 		);
 		$nowtime=time();
 		$key='vip_'.$uid;
@@ -1560,6 +1562,8 @@ function connectionRedis(){
 
 		if($isexist){
             $rs['type']='1';
+            $rs['vip_level']=(string)$isexist['vip_level'];
+            $rs['channel']=(string)$isexist['channel'];
 			if($isexist['endtime'] <= $nowtime){
 				return $rs;
             }

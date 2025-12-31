@@ -567,6 +567,11 @@ class Api_User extends PhalApi_Api {
                 'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
             ),
 
+            'GetMyCooperation' => array(
+                'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
+                'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
+            ),
+
             'getScoreList' => array(
                 'uid' => array('name' => 'uid', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
                 'token' => array('name' => 'token', 'type' => 'string', 'require' => true, 'desc' => '用户token'),
@@ -5032,6 +5037,28 @@ class Api_User extends PhalApi_Api {
         }
         $domain = new Domain_User();
         $rs['info'][0] = $domain->getScoreEarningsInfo($uid);
+        return $rs;
+    }
+
+    /**
+     * 获取我要合作页面信息
+     * @desc 获取打赏轮播列表
+     * @return array
+     */
+    public function getMyCooperation(){
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        $uid=checkNull($this->uid);
+        $token=checkNull($this->token);
+
+        $checkToken=checkToken($uid,$token);
+        if($checkToken==700){
+            $rs['code'] = $checkToken;
+            $rs['msg'] = T('您的登陆状态失效，请重新登陆！');
+            return $rs;
+        }
+        $domain = new Domain_User();
+        $rs['info'][0] = $domain->getMyCooperation($uid);
         return $rs;
     }
 }

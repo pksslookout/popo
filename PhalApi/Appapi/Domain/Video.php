@@ -1,11 +1,11 @@
 <?php
 
 class Domain_Video {
-	public function setVideo($data,$music_id) {
+	public function setVideo($data,$music_id,$is_popular,$price,$duration) {
 		$rs = array();
 
 		$model = new Model_Video();
-		$rs = $model->setVideo($data,$music_id);
+		$rs = $model->setVideo($data,$music_id,$is_popular,$price,$duration);
 
 		return $rs;
 	}
