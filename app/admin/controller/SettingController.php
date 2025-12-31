@@ -913,6 +913,11 @@ class SettingController extends AdminBaseController
                 $action.='每月提现次数'.$options['cash_max_times'].' ';
             }
 
+            if($options['letter_switch'] !=$oldconfigpri['letter_switch']){
+                $letter_switch=$options['letter_switch']?'开':'关';
+                $action.='私信开关 '.$letter_switch.' ';
+            }
+
 
 
 //			if($options['aliapp_switch'] !=$oldconfigpri['aliapp_switch']){

@@ -393,6 +393,18 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="E">
+
+                        <div class="form-group">
+                            <label for="input-letter_switch" class="col-sm-2 control-label">私信开关</label>
+                            <div class="col-md-6 col-sm-10">
+                                <select class="form-control" name="options[letter_switch]">
+                                    <option value="0">关闭</option>
+                                    <option value="1" <eq name="config['letter_switch']" value="1">selected</eq>>开启</option>
+                                </select>
+                                <p class="help-block">关闭后用户间不可私信</p>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">推送服务</label>
                             <div class="col-md-6 col-sm-10" id="tuisong">
