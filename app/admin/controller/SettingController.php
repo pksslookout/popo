@@ -107,34 +107,34 @@ class SettingController extends AdminBaseController
             if ($result !== true) {
                 $this->error($result);
             }
-            
+
             $oldconfig=cmf_get_option('site_info');
 
             $configpub = getConfigPub();
-            
+
             $options = $this->request->param('options/a');
-            
+
             $login_type=isset($_POST['login_type'])?$_POST['login_type']:'';
             $share_type=isset($_POST['share_type'])?$_POST['share_type']:'';
             $live_type=isset($_POST['live_type'])?$_POST['live_type']:'';
-            
+
             $options['login_type']='';
             $options['share_type']='';
             $options['live_type']='';
-            
+
             if($login_type){
                 $options['login_type']=implode(',',$login_type);
             }
-            
+
             if($share_type){
                 $options['share_type']=implode(',',$share_type);
             }
             if($live_type){
                 $options['live_type']=implode(',',$live_type);
             }
-            
+
             cmf_set_option('site_info', $options,true);
-            
+
             $this->resetcache('getConfigPub',$options);
 
             $cmfSettings = $this->request->param('cmf_settings/a');
@@ -170,35 +170,35 @@ class SettingController extends AdminBaseController
             }
 
             cmf_set_option('admin_settings', $adminSettings,true);
-            
+
             $action="修改公共配置 ";
-			
-			if($options['maintain_switch'] !=$oldconfig['maintain_switch']){
+
+            if($options['maintain_switch'] !=$oldconfig['maintain_switch']){
                 $maintain_switch=$options['maintain_switch']?'开':'关';
                 $action.='网站维护 '.$maintain_switch.' ';
             }
-			
-			if($options['site_name'] !=$oldconfig['site_name']){
+
+            if($options['site_name'] !=$oldconfig['site_name']){
                 $action.='网站名称 '.$options['site_name'].' ';
             }
-			
-			if($options['site'] !=$oldconfig['site']){
+
+            if($options['site'] !=$oldconfig['site']){
                 $action.='网站域名 '.$options['site'].' ';
             }
-			
-			if($options['name_coin'] !=$oldconfig['name_coin']){
+
+            if($options['name_coin'] !=$oldconfig['name_coin']){
                 $action.=''.$configpub['name_coin'].'名称 '.$options['name_coin'].' ';
             }
-			
-			if($options['name_score'] !=$oldconfig['name_score']){
+
+            if($options['name_score'] !=$oldconfig['name_score']){
                 $action.='积分名称 '.$options['name_score'].' ';
             }
-			
-			if($options['name_votes'] !=$oldconfig['name_votes']){
+
+            if($options['name_votes'] !=$oldconfig['name_votes']){
                 $action.='映票名称 '.$options['name_votes'].' ';
             }
-			
-			
+
+
             if($options['isup'] !=$oldconfig['isup']){
                 $isup=$options['isup']?'开':'关';
                 $action.='修改强制更新 '.$isup.' ';
@@ -215,11 +215,11 @@ class SettingController extends AdminBaseController
             if($options['ios_shelves'] !=$oldconfig['ios_shelves']){
                 $action.='修改IPA上架版本号 '.$options['ios_shelves'].' ';
             }
-			
-			if($options['ipa_url'] !=$oldconfig['ipa_url']){
+
+            if($options['ipa_url'] !=$oldconfig['ipa_url']){
                 $action.='修改IPA下载链接 '.$options['ipa_url'].' ';
             }
-			
+
             if($options['login_type'] !=$oldconfig['login_type']){
                 $action.='修改登录方式 ';
                 $old_l=explode(',',$oldconfig['login_type']);
@@ -229,7 +229,7 @@ class SettingController extends AdminBaseController
                         $action.='关闭'.$v.' ';
                     }
                 }
-                
+
                 foreach($new_l as $k=>$v){
                     if(!in_array($v,$old_l)){
                         $action.='开启'.$v.' ';
@@ -238,7 +238,7 @@ class SettingController extends AdminBaseController
             }
             if($options['share_type'] !=$oldconfig['share_type']){
                 $action.='修改分享方式 ';
-                
+
                 $old_l=explode(',',$oldconfig['share_type']);
                 $new_l=explode(',',$options['share_type']);
                 foreach($old_l as $k=>$v){
@@ -246,15 +246,15 @@ class SettingController extends AdminBaseController
                         $action.='关闭'.$v.' ';
                     }
                 }
-                
+
                 foreach($new_l as $k=>$v){
                     if(!in_array($v,$old_l)){
                         $action.='开启'.$v.' ';
                     }
                 }
             }
-			
-			
+
+
 //			if($options['wx_siteurl'] !=$oldconfig['wx_siteurl']){
 //                $action.='修改微信推广域名 '.$options['wx_siteurl'].' ';
 //            }
@@ -282,12 +282,12 @@ class SettingController extends AdminBaseController
 //			if($options['video_share_des'] !=$oldconfig['video_share_des']){
 //                $action.='修改短视频分享话术 '.$options['video_share_des'].' ';
 //            }
-			
-			
-            
+
+
+
             if($options['live_type'] !=$oldconfig['live_type']){
                 $action.='修改房间类型 ';
-                
+
                 $old_l=explode(',',$oldconfig['live_type']);
                 $new_l=explode(',',$options['live_type']);
                 foreach($old_l as $k=>$v){
@@ -295,7 +295,7 @@ class SettingController extends AdminBaseController
                         $action.='关闭'.$v.' ';
                     }
                 }
-                
+
                 foreach($new_l as $k=>$v){
                     if(!in_array($v,$old_l)){
                         $action.='开启'.$v.' ';
@@ -305,120 +305,120 @@ class SettingController extends AdminBaseController
             if($options['live_time_coin'] !=$oldconfig['live_time_coin']){
                 $action.='修改计时直播收费 ';
             }
-			
-			/*if($options['sprout_isp'] !=$oldconfig['sprout_isp']){
-				
-				if($options['sprout_isp']==2){
-					$sprout_isp="相芯";
-				}else if($options['sprout_isp']==1){
-					$sprout_isp="美狐";
-				}else{
-					$sprout_isp="无";
-				}
-				
-				
+
+            /*if($options['sprout_isp'] !=$oldconfig['sprout_isp']){
+
+                if($options['sprout_isp']==2){
+                    $sprout_isp="相芯";
+                }else if($options['sprout_isp']==1){
+                    $sprout_isp="美狐";
+                }else{
+                    $sprout_isp="无";
+                }
+
+
                 $action.='修改萌颜服务商 '.$sprout_isp.' ';
             }*/
-			
-			if($options['sprout_key'] !=$oldconfig['sprout_key']){
+
+            if($options['sprout_key'] !=$oldconfig['sprout_key']){
                 $action.='修改萌颜授权码-Andriod '.$options['sprout_key'].' ';
             }
-			
-			if($options['sprout_key_ios'] !=$oldconfig['sprout_key_ios']){
+
+            if($options['sprout_key_ios'] !=$oldconfig['sprout_key_ios']){
                 $action.='修改萌颜授权码-IOS '.$options['sprout_key_ios'].' ';
             }
-			
-			if($options['skin_whiting'] !=$oldconfig['skin_whiting']){
+
+            if($options['skin_whiting'] !=$oldconfig['skin_whiting']){
                 $action.='修改美颜-美白 '.$options['skin_whiting'].' ';
             }
-			
-			if($options['skin_smooth'] !=$oldconfig['skin_smooth']){
+
+            if($options['skin_smooth'] !=$oldconfig['skin_smooth']){
                 $action.='修改美颜-磨皮 '.$options['skin_smooth'].' ';
             }
-			
-			if($options['skin_tenderness'] !=$oldconfig['skin_tenderness']){
+
+            if($options['skin_tenderness'] !=$oldconfig['skin_tenderness']){
                 $action.='修改美颜-红润 '.$options['skin_tenderness'].' ';
             }
-			
-			if($options['eye_brow'] !=$oldconfig['eye_brow']){
+
+            if($options['eye_brow'] !=$oldconfig['eye_brow']){
                 $action.='修改磨皮默认值-眉毛 '.$options['eye_brow'].' ';
             }
-			if($options['big_eye'] !=$oldconfig['big_eye']){
+            if($options['big_eye'] !=$oldconfig['big_eye']){
                 $action.='修改磨皮默认值-大眼 '.$options['big_eye'].' ';
             }
-			if($options['eye_length'] !=$oldconfig['eye_length']){
+            if($options['eye_length'] !=$oldconfig['eye_length']){
                 $action.='修改磨皮默认值-眼距 '.$options['eye_length'].' ';
             }
-			
-			if($options['eye_corner'] !=$oldconfig['eye_corner']){
+
+            if($options['eye_corner'] !=$oldconfig['eye_corner']){
                 $action.='修改磨皮默认值-眼角 '.$options['eye_corner'].' ';
             }
-			
-			if($options['eye_alat'] !=$oldconfig['eye_alat']){
+
+            if($options['eye_alat'] !=$oldconfig['eye_alat']){
                 $action.='修改磨皮默认值-开眼角 '.$options['eye_alat'].' ';
             }
-			
-			if($options['face_lift'] !=$oldconfig['face_lift']){
+
+            if($options['face_lift'] !=$oldconfig['face_lift']){
                 $action.='修改磨皮默认值-瘦脸 '.$options['face_lift'].' ';
             }
-			
-			if($options['face_shave'] !=$oldconfig['face_shave']){
+
+            if($options['face_shave'] !=$oldconfig['face_shave']){
                 $action.='修改磨皮默认值-削脸 '.$options['face_shave'].' ';
             }
-			
-			if($options['mouse_lift'] !=$oldconfig['mouse_lift']){
+
+            if($options['mouse_lift'] !=$oldconfig['mouse_lift']){
                 $action.='修改磨皮默认值-嘴形 '.$options['mouse_lift'].' ';
             }
-			if($options['nose_lift'] !=$oldconfig['nose_lift']){
+            if($options['nose_lift'] !=$oldconfig['nose_lift']){
                 $action.='修改磨皮默认值-瘦鼻 '.$options['nose_lift'].' ';
             }
-			if($options['chin_lift'] !=$oldconfig['chin_lift']){
+            if($options['chin_lift'] !=$oldconfig['chin_lift']){
                 $action.='修改磨皮默认值-下巴 '.$options['chin_lift'].' ';
             }
-			if($options['forehead_lift'] !=$oldconfig['forehead_lift']){
+            if($options['forehead_lift'] !=$oldconfig['forehead_lift']){
                 $action.='修改磨皮默认值-额头 '.$options['forehead_lift'].' ';
             }
-			if($options['lengthen_noseLift'] !=$oldconfig['lengthen_noseLift']){
+            if($options['lengthen_noseLift'] !=$oldconfig['lengthen_noseLift']){
                 $action.='修改磨皮默认值-长鼻 '.$options['lengthen_noseLift'].' ';
             }
-			if($options['payment_des'] !=$oldconfig['payment_des']){
+            if($options['payment_des'] !=$oldconfig['payment_des']){
                 $action.='修改付费内容申请说明 '.$options['payment_des'].' ';
             }
-			if($options['payment_time'] !=$oldconfig['payment_time']){
+            if($options['payment_time'] !=$oldconfig['payment_time']){
                 $action.='修改申请付费内容间隔天数(天) '.$options['payment_time'].' ';
             }
-			if($options['payment_percent'] !=$oldconfig['payment_percent']){
+            if($options['payment_percent'] !=$oldconfig['payment_percent']){
                 $action.='修改付费内容默认抽水比例 '.$options['payment_percent'].' ';
             }
-			if($options['login_alert_title'] !=$oldconfig['login_alert_title']){
+            if($options['login_alert_title'] !=$oldconfig['login_alert_title']){
                 $action.='修改弹框标题 '.$options['login_alert_title'].' ';
             }
-			if($options['login_alert_content'] !=$oldconfig['login_alert_content']){
+            if($options['login_alert_content'] !=$oldconfig['login_alert_content']){
                 $action.='修改弹框内容 '.$options['login_alert_content'].' ';
             }
-			if($options['login_clause_title'] !=$oldconfig['login_clause_title']){
+            if($options['login_clause_title'] !=$oldconfig['login_clause_title']){
                 $action.='修改APP登录界面底部协议标题 '.$options['login_clause_title'].' ';
             }
-			if($options['login_private_title'] !=$oldconfig['login_private_title']){
+            if($options['login_private_title'] !=$oldconfig['login_private_title']){
                 $action.='修改隐私政策名称 '.$options['login_private_title'].' ';
             }
-			if($options['login_private_url'] !=$oldconfig['login_private_url']){
+            if($options['login_private_url'] !=$oldconfig['login_private_url']){
                 $action.='修改隐私政策跳转链接 '.$options['login_private_url'].' ';
             }
-			if($options['login_service_title'] !=$oldconfig['login_service_title']){
+            if($options['login_service_title'] !=$oldconfig['login_service_title']){
                 $action.='修改服务协议名称 '.$options['login_service_title'].' ';
             }
-			if($options['login_service_url'] !=$oldconfig['login_service_url']){
+            if($options['login_service_url'] !=$oldconfig['login_service_url']){
                 $action.='修改服务协议跳转链接 '.$options['login_service_url'].' ';
             }
-			
-		
-		   
-			if($action!='修改公共配置 '){
-				setAdminLog($action);
-			}
-			
-			
+
+
+
+            if($action!='修改公共配置 '){
+                setAdminLog($action);
+            }
+
+
             $this->success("保存成功！", '');
 
         }
@@ -533,47 +533,47 @@ class SettingController extends AdminBaseController
             //TODO 非空验证
             $uploadSetting = $this->request->post();
 
-			$olduploadSetting = cmf_get_upload_setting();
-			
-			cmf_set_option('upload_setting', $uploadSetting,true);
-			
-			$action="修改上传设置 ";
-					
-			
-			if($uploadSetting['max_files'] !=$olduploadSetting['max_files']){
-				$action.='最大同时上传文件数 '.$uploadSetting['max_files'].' ';
-			}
-			
-			if($uploadSetting['chunk_size'] !=$olduploadSetting['chunk_size']){
-				$action.='文件分块上传分块大小 '.$uploadSetting['chunk_size'].' ';
-			}
-			
-			if($uploadSetting['file_types']['image']['upload_max_filesize'] !=$olduploadSetting['file_types']['image']['upload_max_filesize'] || $uploadSetting['file_types']['image']['extensions'] !=$olduploadSetting['file_types']['image']['extensions']){
-				$action.='图片文件 大小: '.$uploadSetting['file_types']['image']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['image']['extensions'].'  ';
-			}
-			
-			if($uploadSetting['file_types']['video']['upload_max_filesize'] !=$olduploadSetting['file_types']['video']['upload_max_filesize'] || $uploadSetting['file_types']['video']['extensions'] !=$olduploadSetting['file_types']['video']['extensions']){
-				$action.='视频文件 大小: '.$uploadSetting['file_types']['video']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['video']['extensions'].'  ';
-			}
-			
-			
-			if($uploadSetting['file_types']['audio']['upload_max_filesize'] !=$olduploadSetting['file_types']['audio']['upload_max_filesize'] || $uploadSetting['file_types']['audio']['extensions'] !=$olduploadSetting['file_types']['audio']['extensions']){
-				$action.='音频文件 大小: '.$uploadSetting['file_types']['audio']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['audio']['extensions'].'  ';
-			}
-			
-			if($uploadSetting['file_types']['file']['upload_max_filesize'] !=$olduploadSetting['file_types']['file']['upload_max_filesize'] || $uploadSetting['file_types']['file']['extensions'] !=$olduploadSetting['file_types']['file']['extensions']){
-				$action.='附件 大小: '.$uploadSetting['file_types']['file']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['file']['extensions'].'  ';
-			}
-			
-			
-			if($action!="修改上传设置 "){
-				setAdminLog($action);
-			}
-			
-			
-			
+            $olduploadSetting = cmf_get_upload_setting();
 
-           
+            cmf_set_option('upload_setting', $uploadSetting,true);
+
+            $action="修改上传设置 ";
+
+
+            if($uploadSetting['max_files'] !=$olduploadSetting['max_files']){
+                $action.='最大同时上传文件数 '.$uploadSetting['max_files'].' ';
+            }
+
+            if($uploadSetting['chunk_size'] !=$olduploadSetting['chunk_size']){
+                $action.='文件分块上传分块大小 '.$uploadSetting['chunk_size'].' ';
+            }
+
+            if($uploadSetting['file_types']['image']['upload_max_filesize'] !=$olduploadSetting['file_types']['image']['upload_max_filesize'] || $uploadSetting['file_types']['image']['extensions'] !=$olduploadSetting['file_types']['image']['extensions']){
+                $action.='图片文件 大小: '.$uploadSetting['file_types']['image']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['image']['extensions'].'  ';
+            }
+
+            if($uploadSetting['file_types']['video']['upload_max_filesize'] !=$olduploadSetting['file_types']['video']['upload_max_filesize'] || $uploadSetting['file_types']['video']['extensions'] !=$olduploadSetting['file_types']['video']['extensions']){
+                $action.='视频文件 大小: '.$uploadSetting['file_types']['video']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['video']['extensions'].'  ';
+            }
+
+
+            if($uploadSetting['file_types']['audio']['upload_max_filesize'] !=$olduploadSetting['file_types']['audio']['upload_max_filesize'] || $uploadSetting['file_types']['audio']['extensions'] !=$olduploadSetting['file_types']['audio']['extensions']){
+                $action.='音频文件 大小: '.$uploadSetting['file_types']['audio']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['audio']['extensions'].'  ';
+            }
+
+            if($uploadSetting['file_types']['file']['upload_max_filesize'] !=$olduploadSetting['file_types']['file']['upload_max_filesize'] || $uploadSetting['file_types']['file']['extensions'] !=$olduploadSetting['file_types']['file']['extensions']){
+                $action.='附件 大小: '.$uploadSetting['file_types']['file']['upload_max_filesize'].' 扩展名: '.$uploadSetting['file_types']['file']['extensions'].'  ';
+            }
+
+
+            if($action!="修改上传设置 "){
+                setAdminLog($action);
+            }
+
+
+
+
+
             $this->success('保存成功！');
         }
 
@@ -603,7 +603,7 @@ class SettingController extends AdminBaseController
         cmf_clear_cache();
         return $this->fetch();
     }
-    
+
     /**
      * 私密设置
      */
@@ -625,10 +625,10 @@ class SettingController extends AdminBaseController
     public function configpriPost(){
 
         if ($this->request->isPost()) {
-			
-			
-			$oldconfigpri=cmf_get_option('configpri');
-            
+
+
+            $oldconfigpri=cmf_get_option('configpri');
+
             $options = $this->request->param('options/a');
 
             $configpub = getConfigPub();
@@ -642,19 +642,7 @@ class SettingController extends AdminBaseController
             }
 
             if(floor($options['reg_reward']) !=$options['reg_reward']){
-                $this->error("注册奖励必须为整数");  
-            }
-
-            if($options['iplimit_times']==''){
-                $this->error("登录配置请填写短信验证码IP限制次数");
-            }
-
-            if(!is_numeric($options['iplimit_times'])){
-                $this->error("短信验证码IP限制次数必须为数字");
-            }
-
-            if(floor($options['iplimit_times']) !=$options['iplimit_times']){
-                $this->error("短信验证码IP限制次数必须为整数");  
+                $this->error("注册奖励必须为整数");
             }
 
             if($options['level_limit']==''){
@@ -666,7 +654,7 @@ class SettingController extends AdminBaseController
             }
 
             if(floor($options['level_limit']) !=$options['level_limit']){
-                $this->error("直播限制等级必须为整数");  
+                $this->error("直播限制等级必须为整数");
             }
 
             if($options['speak_limit']==''){
@@ -678,7 +666,7 @@ class SettingController extends AdminBaseController
             }
 
             if(floor($options['speak_limit']) !=$options['speak_limit']){
-                $this->error("发言等级限制必须为整数");  
+                $this->error("发言等级限制必须为整数");
             }
 
             if($options['barrage_limit']==''){
@@ -690,7 +678,7 @@ class SettingController extends AdminBaseController
             }
 
             if(floor($options['barrage_limit']) !=$options['barrage_limit']){
-                $this->error("弹幕等级限制必须为整数");  
+                $this->error("弹幕等级限制必须为整数");
             }
 
             if($options['barrage_fee']==''){
@@ -702,7 +690,7 @@ class SettingController extends AdminBaseController
             }
 
             if(floor($options['barrage_fee']) !=$options['barrage_fee']){
-                $this->error("弹幕费用必须为整数");  
+                $this->error("弹幕费用必须为整数");
             }
 
 
@@ -719,9 +707,9 @@ class SettingController extends AdminBaseController
             }
 
             if(floor($options['userlist_time']) !=$options['userlist_time']){
-                $this->error("用户列表请求间隔必须为整数");  
+                $this->error("用户列表请求间隔必须为整数");
             }
-            
+
             if($options['userlist_time']<5){
                 $this->error("用户列表请求间隔不能小于5秒");
             }
@@ -735,15 +723,15 @@ class SettingController extends AdminBaseController
             }
 
             if(floor($options['mic_limit']) !=$options['mic_limit']){
-                $this->error("连麦等级限制必须为整数");  
+                $this->error("连麦等级限制必须为整数");
             }
 
-            
-            
+
+
             $game_switch=isset($_POST['game_switch'])?$_POST['game_switch']:'';
-            
+
             $options['game_switch']='';
-            
+
             if($game_switch){
                 $options['game_switch']=implode(',',$game_switch);
             }
@@ -767,7 +755,7 @@ class SettingController extends AdminBaseController
             if(floor($shop_shipment_time)!=$shop_shipment_time){
                 $this->error("店铺发货失效时间必须为正整数");
             }
-            
+
             $shop_receive_time=$options['shop_receive_time'];
 
             if($shop_receive_time<1){
@@ -789,7 +777,7 @@ class SettingController extends AdminBaseController
                 $this->error("买家发起退款,卖家不做处理自动退款时间必须为正整数");
             }
 
-            
+
             $shop_refund_finish_time=$options['shop_refund_finish_time'];
 
             if($shop_refund_finish_time<1){
@@ -799,178 +787,134 @@ class SettingController extends AdminBaseController
             if(floor($shop_refund_finish_time)!=$shop_refund_finish_time){
                 $this->error("卖家拒绝买家退款后,买家不做任何操作,退款自动完成时间必须为正整数");
             }
-			
-			$options['sensitive_words']=str_replace("+","",$options['sensitive_words']);
 
-            
-			
-			
-			$action="修私密配置 ";
-            if($options['family_switch'] !=$oldconfigpri['family_switch']){
-                $family_switch=$options['family_switch']?'开':'关';
-                $action.='家族控制开关 '.$family_switch.' ';
-            }
-			
-			if($options['family_member_divide_switch'] !=$oldconfigpri['family_member_divide_switch']){
-                $family_member_divide_switch=$options['family_member_divide_switch']?'开':'关';
-                $action.='家族长修改成员分成比例是否管理员审核 '.$family_member_divide_switch.' ';
-            }
-			
-			if($options['service_switch'] !=$oldconfigpri['service_switch']){
-                $service_switch=$options['service_switch']?'开':'关';
-                $action.='客服 '.$service_switch.' ';
-            }
-			
-			if($options['service_url'] !=$oldconfigpri['service_url']){
+            $options['sensitive_words']=str_replace("+","",$options['sensitive_words']);
+
+
+
+
+            $action="修私密配置 ";
+
+            if($options['service_url'] !=$oldconfigpri['service_url']){
                 $action.='客服链接 ';
             }
-			
-			if($options['sensitive_words'] !=$oldconfigpri['sensitive_words']){
+
+            if($options['sensitive_words'] !=$oldconfigpri['sensitive_words']){
                 $action.='敏感词 ';
             }
-			
-			
-			if($options['reg_reward'] !=$oldconfigpri['reg_reward']){
+
+
+            if($options['reg_reward'] !=$oldconfigpri['reg_reward']){
                 $action.='注册奖励 '.$options['reg_reward'].' ';
             }
-			
-			if($options['bonus_switch'] !=$oldconfigpri['bonus_switch']){
+
+            if($options['bonus_switch'] !=$oldconfigpri['bonus_switch']){
                 $bonus_switch=$options['bonus_switch']?'开':'关';
                 $action.='登录奖励开关 '.$bonus_switch.' ';
             }
-			
-			if($options['sendcode_switch'] !=$oldconfigpri['sendcode_switch']){
-                $sendcode_switch=$options['sendcode_switch']?'开':'关';
-                $action.='短信验证码开关 '.$sendcode_switch.' ';
-            }
-			
-			if($options['typecode_switch'] !=$oldconfigpri['typecode_switch']){
-                $typecode_switch=$options['typecode_switch']==1?'阿里云':'容联云';
-                $action.='短信接口平台 '.$typecode_switch.' ';
-            }
-			
-			if($options['iplimit_switch'] !=$oldconfigpri['iplimit_switch']){
-                $iplimit_switch=$options['iplimit_switch']?'开':'关';
-                $action.='短信验证码IP限制开关 '.$iplimit_switch.' ';
-            }
-			
-			if($options['iplimit_times'] !=$oldconfigpri['iplimit_times']){
-                $action.='短信验证码IP限制次数 '.$options['iplimit_times'].' ';
-            }
-			
+
 //			if($options['auth_islimit'] !=$oldconfigpri['auth_islimit']){
 //                $auth_islimit=$options['auth_islimit']?'开':'关';
 //                $action.='认证限制 '.$auth_islimit.' ';
 //            }
-			
-			if($options['level_islimit'] !=$oldconfigpri['level_islimit']){
+
+            if($options['level_islimit'] !=$oldconfigpri['level_islimit']){
                 $level_islimit=$options['level_islimit']?'开':'关';
                 $action.='直播等级控制 '.$level_islimit.' ';
             }
-			
-			if($options['level_limit'] !=$oldconfigpri['level_limit']){
+
+            if($options['level_limit'] !=$oldconfigpri['level_limit']){
                 $action.='直播限制等级 '.$options['level_limit'].' ';
             }
-			
-			if($options['speak_limit'] !=$oldconfigpri['speak_limit']){
+
+            if($options['speak_limit'] !=$oldconfigpri['speak_limit']){
                 $action.='发言等级限制 '.$options['speak_limit'].' ';
             }
-			
-			
-			if($options['barrage_limit'] !=$oldconfigpri['barrage_limit']){
+
+
+            if($options['barrage_limit'] !=$oldconfigpri['barrage_limit']){
                 $action.='弹幕等级限制 '.$options['barrage_limit'].' ';
             }
-			
-			if($options['barrage_fee'] !=$oldconfigpri['barrage_fee']){
+
+            if($options['barrage_fee'] !=$oldconfigpri['barrage_fee']){
                 $action.='弹幕费用 '.$options['barrage_fee'].' ';
             }
-			
-			if($options['userlist_time'] !=$oldconfigpri['userlist_time']){
+
+            if($options['userlist_time'] !=$oldconfigpri['userlist_time']){
                 $action.='用户列表请求间隔(秒) '.$options['userlist_time'].' ';
             }
-			
-			if($options['mic_limit'] !=$oldconfigpri['mic_limit']){
+
+            if($options['mic_limit'] !=$oldconfigpri['mic_limit']){
                 $action.='连麦等级限制 '.$options['mic_limit'].' ';
             }
-			
-			if($options['chatserver'] !=$oldconfigpri['chatserver']){
+
+            if($options['chatserver'] !=$oldconfigpri['chatserver']){
                 $action.='聊天服务器带端口 '.$options['chatserver'].' ';
             }
-			
-			if($options['live_sdk'] !=$oldconfigpri['live_sdk']){
-				$live_sdk=$options['live_sdk']?'直播+连麦模式':'直播模式';
+
+            if($options['live_sdk'] !=$oldconfigpri['live_sdk']){
+                $live_sdk=$options['live_sdk']?'直播+连麦模式':'直播模式';
                 $action.='直播模式选择 '.$live_sdk.' ';
             }
-			
-			if($options['cdn_switch'] !=$oldconfigpri['cdn_switch']){
-				$live_sdk=[
-					'1'=>'阿里云',
-					'2'=>'腾讯云',
-					'3'=>'七牛云',
-					'4'=>'网宿',
-					'5'=>'网易云',
-					'6'=>'奥点云',
-				
-				];
+
+            if($options['cdn_switch'] !=$oldconfigpri['cdn_switch']){
+                $live_sdk=[
+                    '1'=>'阿里云',
+                    '2'=>'腾讯云',
+                    '3'=>'七牛云',
+                    '4'=>'网宿',
+                    '5'=>'网易云',
+                    '6'=>'奥点云',
+
+                ];
                 $action.='直播CDN '.$live_sdk[$options['cdn_switch']].' ';
             }
-			
-			
-			if($options['tx_play_key_switch'] !=$oldconfigpri['tx_play_key_switch']){
+
+
+            if($options['tx_play_key_switch'] !=$oldconfigpri['tx_play_key_switch']){
                 $tx_play_key_switch=$options['tx_play_key_switch']?'开':'关';
                 $action.='是否开启腾讯云播流鉴权 '.$tx_play_key_switch.' ';
             }
-			
-			
-			if($options['tx_push'] !=$oldconfigpri['tx_push']){
+
+
+            if($options['tx_push'] !=$oldconfigpri['tx_push']){
                 $action.='腾讯云直播推流域名 '.$options['tx_push'].' ';
             }
-			
-			if($options['tx_pull'] !=$oldconfigpri['tx_pull']){
+
+            if($options['tx_pull'] !=$oldconfigpri['tx_pull']){
                 $action.='腾讯云直播播流域名 '.$options['tx_pull'].' ';
             }
-			
+
             if($options['cash_rate']<=0 || !is_numeric($options['cash_rate']) || floor($options['cash_rate'])!=$options['cash_rate']){
                 $this->error("映票提现比例必须为正整数");
             }
-			
-			if($options['cash_rate'] !=$oldconfigpri['cash_rate']){
+
+            if($options['cash_rate'] !=$oldconfigpri['cash_rate']){
                 $action.='提现比例 '.$options['cash_rate'].' ';
             }
 
             if($options['cash_take']<0 || !is_numeric($options['cash_take']) || floor($options['cash_take'])!=$options['cash_take']){
                 $this->error("映票提现抽成必须为大于等于0的整数");
             }
-			
-			if($options['cash_take'] !=$oldconfigpri['cash_take']){
+
+            if($options['cash_take'] !=$oldconfigpri['cash_take']){
                 $action.='提现抽成'.$options['cash_take'].'(元) ';
             }
-			
-			if($options['cash_min'] !=$oldconfigpri['cash_min']){
+
+            if($options['cash_min'] !=$oldconfigpri['cash_min']){
                 $action.='提现最低额度'.$options['cash_min'].'（元） ';
             }
-			
-			if($options['cash_start'] !=$oldconfigpri['cash_start'] || $options['cash_end'] !=$oldconfigpri['cash_end']){
+
+            if($options['cash_start'] !=$oldconfigpri['cash_start'] || $options['cash_end'] !=$oldconfigpri['cash_end']){
                 $action.='每月提现期 '.$options['cash_start'].'-'.$options['cash_end'].' ';
             }
-			
-			if($options['cash_max_times'] !=$oldconfigpri['cash_max_times']){
+
+            if($options['cash_max_times'] !=$oldconfigpri['cash_max_times']){
                 $action.='每月提现次数'.$options['cash_max_times'].' ';
             }
-			
-			if($options['letter_switch'] !=$oldconfigpri['letter_switch']){
-                $letter_switch=$options['letter_switch']?'开':'关';
-                $action.='私信开关 '.$letter_switch.' ';
-            }
-			
-			
-			if($options['jpush_sandbox'] !=$oldconfigpri['jpush_sandbox']){
-                $jpush_sandbox=$options['jpush_sandbox']?'生产':'开发';
-                $action.='极光推送模式 '.$jpush_sandbox.' ';
-            }
-			
-			
-			
+
+
+
 //			if($options['aliapp_switch'] !=$oldconfigpri['aliapp_switch']){
 //                $aliapp_switch=$options['aliapp_switch']?'开':'关';
 //                $action.='支付宝APP开关 '.$aliapp_switch.' ';
@@ -1013,40 +957,40 @@ class SettingController extends AdminBaseController
 //                $paidprogram_balance_switch=$options['paidprogram_balance_switch']?'开':'关';
 //                $action.='付费内容余额支付APP开关 '.$paidprogram_balance_switch.' ';
 //            }
-			
-			if($options['agent_switch'] !=$oldconfigpri['agent_switch']){
+
+            if($options['agent_switch'] !=$oldconfigpri['agent_switch']){
                 $agent_switch=$options['agent_switch']?'开':'关';
                 $action.='邀请开关 '.$agent_switch.' ';
             }
-			
-			if($options['distribut1'] !=$oldconfigpri['distribut1']){
+
+            if($options['distribut1'] !=$oldconfigpri['distribut1']){
                 $action.='一级分成 '.$options['distribut1'].' ';
             }
-			
-			
-			if($options['video_audit_switch'] !=$oldconfigpri['video_audit_switch']){
+
+
+            if($options['video_audit_switch'] !=$oldconfigpri['video_audit_switch']){
                 $video_audit_switch=$options['video_audit_switch']?'开':'关';
                 $action.='视频审核开关 '.$video_audit_switch.' ';
             }
-			
-			if($options['shop_system_name'] !=$oldconfigpri['shop_system_name']){
+
+            if($options['shop_system_name'] !=$oldconfigpri['shop_system_name']){
                 $action.='系统店铺名称 '.$options['shop_system_name'].' ';
             }
-			
-			if($options['shop_bond'] !=$oldconfigpri['shop_bond']){
+
+            if($options['shop_bond'] !=$oldconfigpri['shop_bond']){
                 $action.='申请店铺需要的保证金 '.$options['shop_bond'].' ';
             }
-			
-			if($options['show_switch'] !=$oldconfigpri['show_switch']){
+
+            if($options['show_switch'] !=$oldconfigpri['show_switch']){
                 $show_switch=$options['show_switch']?'开':'关';
                 $action.='店铺审核 '.$show_switch.' ';
             }
-			
-			if($options['shoporder_percent'] !=$oldconfigpri['shoporder_percent']){
+
+            if($options['shoporder_percent'] !=$oldconfigpri['shoporder_percent']){
                 $action.='店铺订单默认抽成比例 '.$options['shoporder_percent'].' ';
             }
 
-			if($options['video_watermark'] !=$oldconfigpri['video_watermark']){
+            if($options['video_watermark'] !=$oldconfigpri['video_watermark']){
 
                 $secretId = $oldconfigpri['qcloud_secret_id'];
                 $secretKey = $oldconfigpri['qcloud_secret_key'];
@@ -1097,137 +1041,137 @@ class SettingController extends AdminBaseController
 
                 $action.='水印模板修改 '.$options['video_watermark'].' ';
             }
-			
-			if($options['goods_switch'] !=$oldconfigpri['goods_switch']){
+
+            if($options['goods_switch'] !=$oldconfigpri['goods_switch']){
                 $goods_switch=$options['goods_switch']?'开':'关';
                 $action.='商品审核 '.$goods_switch.' ';
             }
-			
-			if($options['shop_certificate_desc'] !=$oldconfigpri['shop_certificate_desc']){
+
+            if($options['shop_certificate_desc'] !=$oldconfigpri['shop_certificate_desc']){
                 $action.='店铺资质说明 '.$options['shop_certificate_desc'].' ';
             }
-			
-			if($options['shop_payment_time'] !=$oldconfigpri['shop_payment_time']){
+
+            if($options['shop_payment_time'] !=$oldconfigpri['shop_payment_time']){
                 $action.='店铺付款失效时间(分钟) '.$options['shop_payment_time'].' ';
             }
-			
-			if($options['shop_shipment_time'] !=$oldconfigpri['shop_shipment_time']){
+
+            if($options['shop_shipment_time'] !=$oldconfigpri['shop_shipment_time']){
                 $action.='店铺发货失效时间(天) '.$options['shop_shipment_time'].' ';
             }
-			
-			if($options['shop_receive_time'] !=$oldconfigpri['shop_receive_time']){
+
+            if($options['shop_receive_time'] !=$oldconfigpri['shop_receive_time']){
                 $action.='店铺自动确认收货时间(天) '.$options['shop_receive_time'].' ';
             }
-			
-			if($options['shop_refund_time'] !=$oldconfigpri['shop_refund_time']){
+
+            if($options['shop_refund_time'] !=$oldconfigpri['shop_refund_time']){
                 $action.='买家发起退款,卖家不做处理自动退款时间(天) '.$options['shop_refund_time'].' ';
             }
-			
-			if($options['shop_refund_finish_time'] !=$oldconfigpri['shop_refund_finish_time']){
+
+            if($options['shop_refund_finish_time'] !=$oldconfigpri['shop_refund_finish_time']){
                 $action.='卖家拒绝买家退款后,买家不做任何操作,订单自动进入退款前状态的时间(天)< '.$options['shop_refund_finish_time'].' ';
             }
-			
-			if($options['shop_receive_refund_time'] !=$oldconfigpri['shop_receive_refund_time']){
+
+            if($options['shop_receive_refund_time'] !=$oldconfigpri['shop_receive_refund_time']){
                 $action.='订单确认收货后,支持退货退款的时间限制(天) '.$options['shop_receive_refund_time'].' ';
             }
-			
-			if($options['shop_settlement_time'] !=$oldconfigpri['shop_settlement_time']){
+
+            if($options['shop_settlement_time'] !=$oldconfigpri['shop_settlement_time']){
                 $action.='订单确认收货后,货款自动打到卖家的时间(天) '.$options['shop_settlement_time'].' ';
             }
-			
-			if($options['balance_cash_min'] !=$oldconfigpri['balance_cash_min']){
+
+            if($options['balance_cash_min'] !=$oldconfigpri['balance_cash_min']){
                 $action.='余额提现最低额度（元） '.$options['balance_cash_min'].' ';
             }
-			
-			if($options['balance_cash_start'] !=$oldconfigpri['balance_cash_start'] || $options['balance_cash_end'] !=$oldconfigpri['balance_cash_end']){
+
+            if($options['balance_cash_start'] !=$oldconfigpri['balance_cash_start'] || $options['balance_cash_end'] !=$oldconfigpri['balance_cash_end']){
                 $action.='余额每月提现期限 '.$options['balance_cash_start'].'-'.$options['balance_cash_end'].' ';
             }
-			
-			if($options['balance_cash_max_times'] !=$oldconfigpri['balance_cash_max_times']){
+
+            if($options['balance_cash_max_times'] !=$oldconfigpri['balance_cash_max_times']){
                 $action.='每月提现次数 '.$options['balance_cash_max_times'].' ';
             }
-			
-			if($options['dynamic_auth'] !=$oldconfigpri['dynamic_auth']){
+
+            if($options['dynamic_auth'] !=$oldconfigpri['dynamic_auth']){
                 $dynamic_auth=$options['dynamic_auth']?'开':'关';
                 $action.='动态认证开关 '.$dynamic_auth.' ';
             }
-			
-			if($options['dynamic_switch'] !=$oldconfigpri['dynamic_switch']){
+
+            if($options['dynamic_switch'] !=$oldconfigpri['dynamic_switch']){
                 $dynamic_switch=$options['dynamic_switch']?'开':'关';
                 $action.='动态审核 '.$dynamic_switch.' ';
             }
-			
-			if($options['comment_weight'] !=$oldconfigpri['comment_weight']){
+
+            if($options['comment_weight'] !=$oldconfigpri['comment_weight']){
                 $action.='评论权重值 '.$options['comment_weight'].' ';
             }
-			
-			
-			if($options['like_weight'] !=$oldconfigpri['like_weight']){
+
+
+            if($options['like_weight'] !=$oldconfigpri['like_weight']){
                 $action.='点赞权重值 '.$options['like_weight'].' ';
             }
-			
-			
 
-			if($options['game_switch'] !=$oldconfigpri['game_switch']){
+
+
+            if($options['game_switch'] !=$oldconfigpri['game_switch']){
                 $action.='游戏开关 '.$options['game_switch'].' ';
             }
-			
-			
-			if($options['game_banker_limit'] !=$oldconfigpri['game_banker_limit']){
+
+
+            if($options['game_banker_limit'] !=$oldconfigpri['game_banker_limit']){
                 $action.='上庄限制 '.$options['game_banker_limit'].' ';
             }
-			
-			if($options['game_odds'] !=$oldconfigpri['game_odds']){
+
+            if($options['game_odds'] !=$oldconfigpri['game_odds']){
                 $action.='普通游戏赔率 '.$options['game_odds'].' ';
             }
-			
-			if($options['game_odds_p'] !=$oldconfigpri['game_odds_p']){
+
+            if($options['game_odds_p'] !=$oldconfigpri['game_odds_p']){
                 $action.='系统坐庄游戏赔率 '.$options['game_odds_p'].' ';
             }
-			
-			if($options['game_odds_u'] !=$oldconfigpri['game_odds_u']){
+
+            if($options['game_odds_u'] !=$oldconfigpri['game_odds_u']){
                 $action.='用户坐庄游戏赔率 '.$options['game_odds_u'].' ';
             }
-			
-			if($options['game_pump'] !=$oldconfigpri['game_pump']){
+
+            if($options['game_pump'] !=$oldconfigpri['game_pump']){
                 $action.='游戏抽水 '.$options['game_pump'].' ';
             }
-			
-			
-			if($options['turntable_switch'] !=$oldconfigpri['turntable_switch']){
+
+
+            if($options['turntable_switch'] !=$oldconfigpri['turntable_switch']){
                 $turntable_switch=$options['turntable_switch']?'开':'关';
                 $action.='直播间大转盘开关 '.$turntable_switch.' ';
             }
-			
-			if($options['express_type'] !=$oldconfigpri['express_type']){
+
+            if($options['express_type'] !=$oldconfigpri['express_type']){
                 $express_type=$options['express_type']?'正式版':'开发版';
                 $action.='物流模式 '.$express_type.' ';
             }
-			
-			if($options['watch_live_term'] !=$oldconfigpri['watch_live_term'] || $options['watch_live_coin'] !=$oldconfigpri['watch_live_coin']){
-           
+
+            if($options['watch_live_term'] !=$oldconfigpri['watch_live_term'] || $options['watch_live_coin'] !=$oldconfigpri['watch_live_coin']){
+
                 $action.='观看直播 条件(分钟)：'.$options['watch_live_term'].'奖励('.$configpub['name_coin'].')：'.$options['watch_live_coin'].' ';
             }
-            
-			
-			if($options['watch_video_term'] !=$oldconfigpri['watch_video_term'] || $options['watch_video_coin'] !=$oldconfigpri['watch_video_coin']){
-           
+
+
+            if($options['watch_video_term'] !=$oldconfigpri['watch_video_term'] || $options['watch_video_coin'] !=$oldconfigpri['watch_video_coin']){
+
                 $action.='观看视频 条件(分钟)：'.$options['watch_video_term'].'奖励('.$configpub['name_coin'].')：'.$options['watch_video_coin'].' ';
             }
-			
-			if($options['open_live_term'] !=$oldconfigpri['open_live_term'] || $options['open_live_coin'] !=$oldconfigpri['open_live_coin']){
-           
+
+            if($options['open_live_term'] !=$oldconfigpri['open_live_term'] || $options['open_live_coin'] !=$oldconfigpri['open_live_coin']){
+
                 $action.='直播奖励 条件(分钟)：'.$options['open_live_term'].'奖励('.$configpub['name_coin'].')：'.$options['open_live_coin'].' ';
             }
-			
-			
-			if($options['award_live_term'] !=$oldconfigpri['award_live_term'] || $options['award_live_coin'] !=$oldconfigpri['award_live_coin']){
-           
+
+
+            if($options['award_live_term'] !=$oldconfigpri['award_live_term'] || $options['award_live_coin'] !=$oldconfigpri['award_live_coin']){
+
                 $action.='打赏奖励 条件(分钟)：'.$options['award_live_term'].'奖励('.$configpub['name_coin'].')：'.$options['award_live_coin'].' ';
             }
-			
-			if($options['share_live_term'] !=$oldconfigpri['share_live_term'] || $options['share_live_coin'] !=$oldconfigpri['share_live_coin']){
-           
+
+            if($options['share_live_term'] !=$oldconfigpri['share_live_term'] || $options['share_live_coin'] !=$oldconfigpri['share_live_coin']){
+
                 $action.='分享奖励 条件(分钟)：'.$options['share_live_term'].'奖励('.$configpub['name_coin'].')：'.$options['share_live_coin'].' ';
             }
 
@@ -1235,10 +1179,10 @@ class SettingController extends AdminBaseController
             $this->resetcache('getConfigPri',$options);
 
             setcaches('sensitive_words',explode(',',$options['sensitive_words']));
-			
+
             if($action!="修私密配置 "){
-				setAdminLog($action);
-			}
+                setAdminLog($action);
+            }
 
             $this->success("保存成功！", '');
 
