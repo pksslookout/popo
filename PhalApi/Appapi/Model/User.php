@@ -112,7 +112,20 @@ class Model_User extends PhalApi_Model_NotORM {
                     DI()->notorm->user_information->where('id=?',$uid)->update($information_arr);
                 }
             }
+            $info['bind_location'] = $user_information['country'].$user_information['province'].$user_information['city'].$user_information['area'];
 
+            // 查询支付宝
+            $cash_account=DI()->notorm->cash_account
+                ->select("name,account")
+                ->where('uid=? and type = 1',$uid)
+                ->fetchOne();
+            if($cash_account){
+                $info['ali_account']['name'] = $cash_account['name'];
+                $info['ali_account']['account'] = $cash_account['account'];
+            }else{
+                $info['ali_account']['name'] = '';
+                $info['ali_account']['account'] = '';
+            }
             if($user_information['user_pay_pass']){
                 $info['user_pay_pass'] = 1;
             }else{
@@ -941,11 +954,11 @@ class Model_User extends PhalApi_Model_NotORM {
         if($isexist){
             if($isexist['status']==1){
                 $result=DI()->notorm->user_attention->where("uid=? and touid=?",$uid,$touid)->update(array("status"=>0,"updatetime"=>time()));
-                $data=[
-                    'type'=>'3',
-                    'nums'=>'1',
-                ];
-                dailyTasks($uid,$data);
+//                $data=[
+//                    'type'=>'3',
+//                    'nums'=>'1',
+//                ];
+//                dailyTasks($uid,$data);
                 if($result!==false){
                     return 0;
                 }else{
@@ -2302,7 +2315,7 @@ class Model_User extends PhalApi_Model_NotORM {
             ->where($where)
             ->select("*")
             ->fetchOne();
-
+        $score = 0;
         if(!$info){
             $rs['code']='1001';
             $rs['msg']=T('系统繁忙,请稍后操作~');
@@ -2332,11 +2345,9 @@ class Model_User extends PhalApi_Model_NotORM {
                 $key="seeDailyTasks_".$uid;
                 delcache($key);
             }
-
-
-
         }
 
+        $rs['info'][0]['score'] = $score;
         return $rs;
     }
 

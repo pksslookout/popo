@@ -50,12 +50,13 @@ class VideoController extends Controller
 
     function watermark()
     {
-        $data = $this->request->get();
+        $data = $this->request->post();
         $video_url = $data['href'];
         $video = explode('/', $video_url);
-        $video_h = explode('.', $video[2]);
-        $video_watermark_url = $video[0].'/'.$video[1].'/'.$video_h[0].'_water.'.$video_h[1];
-
+        $video2 = $video[count($video)-1];
+        $video_h = explode('.', $video2);
+        $video_watermark = $video_h[0].'_water.'.$video_h[1];
+        $video_watermark_url = str_replace($video2,$video_watermark,$video_url);
         if(!urlExists($video_watermark_url)) {
             $configPri = getConfigPri();
             $secretId = $configPri['qcloud_secret_id'];
@@ -73,7 +74,8 @@ class VideoController extends Controller
             try {
 
                 $name = explode('/', $video_watermark);
-                $name = explode('.', $name[2]);
+                $name = $name[count($name)-1];
+                $name = explode('.', $name);
 
                 if (isset($configPri['video_watermark_template_id'])) {
                     $id = $configPri['video_watermark_template_id'];
@@ -84,7 +86,7 @@ class VideoController extends Controller
                             'Content-Type' => 'application/xml',
                         ),
                         'Tag' => 'Watermark', // 模板类型: Watermark;是否必传：否
-                        'Name' => $name[0], // 模板名称，仅支持中文、英文、数字、_、-和*，长度不超过 64;是否必传：否
+                        'Name' => 'PopoLive', // 模板名称，仅支持中文、英文、数字、_、-和*，长度不超过 64;是否必传：否
                         // 水印信息;是否必传：否
                         'Watermark' => array(
                             'Type' => 'Text', // 水印类型Text：文字水印Image：图片水印;是否必传：是
@@ -129,6 +131,9 @@ class VideoController extends Controller
                 ));
                 // 请求成功
             } catch (\Exception $e) {
+                // 请求失败
+                // echo($e);
+                //             exit();
                 // 请求失败
                 echo json_encode(array("ret" => 400, 'data' => array("url" => $video_url), 'msg' => $e));
                 exit;

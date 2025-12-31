@@ -8,7 +8,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 
 		$configPri=getConfigPri();
 
-		if($configPri['is_video_audit']==0){
+		if($configPri['video_audit_switch']==0){
 			$data['status']=1;
 		}
 

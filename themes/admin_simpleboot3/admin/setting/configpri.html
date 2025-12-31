@@ -25,10 +25,10 @@
 <!--        <li><a href="#R" data-toggle="tab">短视频观看模式</a></li>-->
         <li><a href="#I" data-toggle="tab">视频配置</a></li>
         <li><a href="#C" data-toggle="tab">直播配置</a></li>
-        <li><a href="#J" data-toggle="tab">店铺/商品配置</a></li>
-        <li><a href="#K" data-toggle="tab">动态配置</a></li>
-        <li><a href="#L" data-toggle="tab">游戏配置</a></li>
-        <li><a href="#M" data-toggle="tab">物流配置</a></li>
+<!--        <li><a href="#J" data-toggle="tab">店铺/商品配置</a></li>-->
+<!--        <li><a href="#K" data-toggle="tab">动态配置</a></li>-->
+<!--        <li><a href="#L" data-toggle="tab">游戏配置</a></li>-->
+<!--        <li><a href="#M" data-toggle="tab">物流配置</a></li>-->
         <li><a href="#U" data-toggle="tab">云存储设置</a></li>
         <li><a href="#N" data-toggle="tab">每日任务</a></li>
         <li><a href="#S" data-toggle="tab">敏感词</a></li>
@@ -197,65 +197,7 @@
                             </div>
                         </div>
 
-                        <div class="cdn_bd <neq name='config.cdn_switch' value='1'>cdnhide</neq>" id="cdn_switch_1">
-                             <div class="form-group">
-                                <label for="input-push_url" class="col-sm-2 control-label">推流服务器地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-push_url" name="options[push_url]" value="{$config['push_url']|default=''}"> 
-                                    <p class="help-block">格式：域名(:端口) 或者 IP(:端口)</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-auth_key_push" class="col-sm-2 control-label">推流鉴权KEY</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-auth_key_push" name="options[auth_key_push]" value="{$config['auth_key_push']|default=''}"> 
-                                    <p class="help-block">推流鉴权KEY 留空表示不启用</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-auth_length_push" class="col-sm-2 control-label">推流鉴权有效时长</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-auth_length_push" name="options[auth_length_push]" value="{$config['auth_length_push']|default=''}"> 
-                                    <p class="help-block">推流鉴权有效时长（秒）</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-pull_url" class="col-sm-2 control-label">播流服务器地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-pull_url" name="options[pull_url]" value="{$config['pull_url']|default=''}"> 
-                                    <p class="help-block">格式：域名(:端口) 或者 IP(:端口)</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-auth_key_pull" class="col-sm-2 control-label">播流鉴权KEY</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-auth_key_pull" name="options[auth_key_pull]" value="{$config['auth_key_pull']|default=''}"> 
-                                    <p class="help-block">播流鉴权KEY 留空表示不启用</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-auth_length_pull" class="col-sm-2 control-label">播流鉴权有效时长</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-auth_length_pull" name="options[auth_length_pull]" value="{$config['auth_length_pull']|default=''}"> 
-                                    <p class="help-block">播流鉴权有效时长（秒）</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-aliy_key_id" class="col-sm-2 control-label">阿里云AccessKey ID</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-aliy_key_id" name="options[aliy_key_id]" value="{$config['aliy_key_id']|default=''}">
-                                    <p class="help-block"> 回放用</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-aliy_key_secret" class="col-sm-2 control-label">阿里云AccessKey Secret</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-aliy_key_secret" name="options[aliy_key_secret]" value="{$config['aliy_key_secret']|default=''}">
-                                    <p class="help-block"> 回放用</p>
-                                </div>
-                            </div>
-                        </div>
-                        
+
                         <div class="cdn_bd <neq name='config.cdn_switch' value='2'>cdnhide</neq>" id="cdn_switch_2">
                             <div class="form-group">
                                 <label for="input-tx_appid" class="col-sm-2 control-label">腾讯云直播appid</label>
@@ -338,104 +280,6 @@
                                 </div>
                             </div>
                             
-                        </div>
-
-                        <div class="cdn_bd <neq name='config.cdn_switch' value='3'>cdnhide</neq>" id="cdn_switch_3">
-                            <div class="form-group">
-                                <label for="input-qn_ak" class="col-sm-2 control-label">七牛云AccessKey</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-qn_ak" name="options[qn_ak]" value="{$config['qn_ak']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-qn_sk" class="col-sm-2 control-label">七牛云SecretKey</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-qn_sk" name="options[qn_sk]" value="{$config['qn_sk']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-qn_hname" class="col-sm-2 control-label">七牛云直播空间名称</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-qn_hname" name="options[qn_hname]" value="{$config['qn_hname']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-qn_push" class="col-sm-2 control-label">七牛云推流地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-qn_push" name="options[qn_push]" value="{$config['qn_push']|default=''}"> 
-                                    <p class="help-block">七牛云直播云域名管理中RTMP推流域名</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-qn_pull" class="col-sm-2 control-label">七牛云播流地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-qn_pull" name="options[qn_pull]" value="{$config['qn_pull']|default=''}"> 
-                                    <p class="help-block">七牛云直播云域名管理中RTMP播流域名</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cdn_bd <neq name='config.cdn_switch' value='4'>cdnhide</neq>" id="cdn_switch_4">
-                            <div class="form-group">
-                                <label for="input-ws_push" class="col-sm-2 control-label">网宿推流地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-ws_push" name="options[ws_push]" value="{$config['ws_push']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-ws_pull" class="col-sm-2 control-label">网宿播流地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-ws_pull" name="options[ws_pull]" value="{$config['ws_pull']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-ws_apn" class="col-sm-2 control-label">网宿AppName</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-ws_apn" name="options[ws_apn]" value="{$config['ws_apn']|default=''}"> 
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cdn_bd <neq name='config.cdn_switch' value='5'>cdnhide</neq>" id="cdn_switch_5">
-                            <div class="form-group">
-                                <label for="input-wy_appkey" class="col-sm-2 control-label">网易cdn Appkey</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-wy_appkey" name="options[wy_appkey]" value="{$config['wy_appkey']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-wy_appsecret" class="col-sm-2 control-label">网易cdn AppSecret</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-wy_appsecret" name="options[wy_appsecret]" value="{$config['wy_appsecret']|default=''}"> 
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cdn_bd <neq name='config.cdn_switch' value='6'>cdnhide</neq>" id="cdn_switch_6">
-                            <div class="form-group">
-                                <label for="input-ady_push" class="col-sm-2 control-label">奥点云推流地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-ady_push" name="options[ady_push]" value="{$config['ady_push']|default=''}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-ady_pull" class="col-sm-2 control-label">奥点云播流地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-ady_pull" name="options[ady_pull]" value="{$config['ady_pull']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-ady_hls_pull" class="col-sm-2 control-label">奥点云HLS播流地址</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-ady_hls_pull" name="options[ady_hls_pull]" value="{$config['ady_hls_pull']|default=''}"> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-ady_apn" class="col-sm-2 control-label">奥点云AppName</label>
-                                <div class="col-md-6 col-sm-10">
-                                    <input type="text" class="form-control" id="input-ady_apn" name="options[ady_apn]" value="{$config['ady_apn']|default=''}"> 
-                                </div>
-                            </div>
                         </div>
 
 

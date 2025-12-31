@@ -789,7 +789,7 @@ class Api_User extends PhalApi_Api {
             [
                 'img' => get_upload_path('images/digital/score@2x.png'),
                 'name' => '万能积分',
-                'Des' => 'Binance',
+                'Des' => 'Universal Points',
                 'value' => dealPrice($score_q),
                 'rmb' => $rmb.dealPrice($score),
             ],
@@ -803,14 +803,14 @@ class Api_User extends PhalApi_Api {
             [
                 'img' => get_upload_path('images/digital/LALA@2x.png'),
                 'name' => 'LALA',
-                'Des' => 'Lala',
+                'Des' => 'Lala Points',
                 'value' => dealPrice($property['votes']),
                 'rmb' => $rmb.dealPrice($votes),
             ],
             [
                 'img' => get_upload_path('images/digital/POPO@2x.png'),
                 'name' => 'POPO',
-                'Des' => 'Popo',
+                'Des' => 'Mining Points',
                 'value' => dealPrice($property['popo']),
                 'rmb' => $rmb.dealPrice($popo),
             ],

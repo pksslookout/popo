@@ -205,7 +205,7 @@ class Api_Home extends PhalApi_Api {
 		$info['qiniu_domain']=DI()->config->get('app.Qiniu.space_host').'/';//七牛云存储空间地址
         $info['qiniu_uphost']=DI()->config->get('app.Qiniu.uphost');//七牛上传域名（小程序使用）
         $info['qiniu_region']=DI()->config->get('app.Qiniu.region');//七牛上存储区域（小程序使用）
-        $info['video_audit_switch']=$info_pri['is_video_audit']; //视频审核是否开启
+        $info['video_audit_switch']=$info_pri['video_audit_switch']; //视频审核是否开启
         
         /* 私信开关 */
         $info['letter_switch']=$info_pri['letter_switch']; //私信开关
