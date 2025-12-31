@@ -3514,6 +3514,12 @@ class Model_User extends PhalApi_Model_NotORM {
         $start=($p-1)*$pnum;
         $title_array = [
             1=>'打赏礼物',
+            2=>'弹幕',
+            29=>'POPO兑换钻石',
+            30=>'USDT兑换钻石',
+            31=>'钻石兑换POPO',
+            32=>'钻石兑换USDT',
+            33=>'LALA兑换钻石',
         ];
         $where="action = 1 and uid=$uid";
         $list=DI()->notorm->user_coinrecord
