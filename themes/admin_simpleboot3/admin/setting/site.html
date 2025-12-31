@@ -160,16 +160,16 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="input-ipa_ewm" class="col-sm-2 control-label">iPhone版下载二维码</label>
+                            <label for="input-ios_ewm" class="col-sm-2 control-label">iPhone版下载二维码</label>
                             <div class="col-md-6 col-sm-10">
-                                <input type="hidden" name="options[ipa_ewm]" id="thumbnail2" value="{$site_info['ipa_ewm']|default=''}">
+                                <input type="hidden" name="options[ios_ewm]" id="thumbnail2" value="{$site_info['ios_ewm']|default=''}">
                                 <a href="javascript:uploadOneImage('图片上传','#thumbnail2');">
-                                    <if condition="empty($site_info.ipa_ewm)">
+                                    <if condition="empty($site_info.ios_ewm)">
                                     <img src="__TMPL__/public/assets/images/default-thumbnail.png"
                                              id="thumbnail2-preview"
                                              style="cursor: pointer;max-width:150px;max-height:150px;"/>
                                     <else/>
-                                    <img src="{:cmf_get_image_preview_url($site_info.ipa_ewm)}"
+                                    <img src="{:cmf_get_image_preview_url($site_info.ios_ewm)}"
                                          id="thumbnail2-preview"
                                          style="cursor: pointer;max-width:150px;max-height:150px;"/>
                                     </if>
