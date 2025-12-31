@@ -3460,8 +3460,8 @@ class Api_User extends PhalApi_Api {
         $where=[
             'uid'=>$uid,
             'type'=>$type,
-            'account_bank'=>$account_bank,
-            'account'=>$account,
+//            'account_bank'=>$account_bank,
+//            'account'=>$account,
         ];
         $isexist=$domain->getUserAccount($where);
         if($isexist){
