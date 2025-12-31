@@ -228,7 +228,7 @@ class Api_Home extends PhalApi_Api {
         $info['shopexplain_url']=$info['site']."/appapi/page/news?id=17&lang=".$lang;
         $info['stricker_url']=$info['site']."/appapi/page/news?id=18&lang=".$lang;
 
-        $info['shop_system_name']=$info_pri['shop_system_name']; //系统店铺名称
+        $info['shop_system_name']='POPO店铺'; //系统店铺名称
 
         $info['login_private_url']=get_upload_path($info['login_private_url']).'&lang='.$lang;
         $info['login_service_url']=get_upload_path($info['login_service_url']).'&lang='.$lang;
