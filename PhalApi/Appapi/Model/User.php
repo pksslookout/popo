@@ -1668,6 +1668,15 @@ class Model_User extends PhalApi_Model_NotORM {
 
         return $rs;
     }
+    /* 设置提账号 */
+    public function updateUserAccount($data,$id){
+
+        $rs=DI()->notorm->cash_account
+            ->where('id=?',$id)
+            ->update($data);
+
+        return $rs;
+    }
 
     /* 删除提账号 */
     public function delUserAccount($data){

@@ -787,13 +787,6 @@ class Api_User extends PhalApi_Api {
                 'rmb' => $rmb.dealPrice($usdt),
             ],
             [
-                'img' => get_upload_path('images/digital/score@2x.png'),
-                'name' => '万能积分',
-                'Des' => 'Universal Points',
-                'value' => dealPrice($score_q),
-                'rmb' => $rmb.dealPrice($score),
-            ],
-            [
                 'img' => get_upload_path('images/digital/COIN@2x.png'),
                 'name' => '钻石',
                 'Des' => 'Diamond',
@@ -813,6 +806,13 @@ class Api_User extends PhalApi_Api {
                 'Des' => 'Mining Points',
                 'value' => dealPrice($property['popo']),
                 'rmb' => $rmb.dealPrice($popo),
+            ],
+            [
+                'img' => get_upload_path('images/digital/score@2x.png'),
+                'name' => '万能积分',
+                'Des' => 'Universal Points',
+                'value' => dealPrice($score_q),
+                'rmb' => $rmb.dealPrice($score),
             ],
         ];
         $rs['code'] = 0;
@@ -3402,7 +3402,7 @@ class Api_User extends PhalApi_Api {
 	}	
 
 	/**
-	 * 添加提现账号 
+	 * 添加提现账号 / 修改
 	 * @desc 用于添加提现账号
 	 * @return int code 操作码，0表示成功
 	 * @return array info 
@@ -3465,12 +3465,15 @@ class Api_User extends PhalApi_Api {
         ];
         $isexist=$domain->getUserAccount($where);
         if($isexist){
-            $rs['code'] = 1004;
-            $rs['msg'] = T('账号已存在');
-            return $rs;
+//            $rs['code'] = 1004;
+//            $rs['msg'] = T('账号已存在');
+//            return $rs;
+            $result = $domain->updateUserAccount($data,$isexist[0]['id']);
+        }else{
+            $result = $domain->setUserAccount($data);
+
         }
-        
-        $result = $domain->setUserAccount($data);
+
 
         if(!$result){
             $rs['code'] = 1003;

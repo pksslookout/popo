@@ -376,6 +376,15 @@ class Domain_User {
         return $rs;
     }
 
+	public function updateUserAccount($data,$id) {
+        $rs = array();
+
+        $model = new Model_User();
+        $rs = $model->updateUserAccount($data,$id);
+
+        return $rs;
+    }
+
 	public function delUserAccount($data) {
         $rs = array();
                 
