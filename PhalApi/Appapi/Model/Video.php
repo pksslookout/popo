@@ -629,6 +629,13 @@ class Model_Video extends PhalApi_Model_NotORM {
         $configPri=getConfigPri();
         $addtime=time();
         // 生成上热门记录
+        $view_counts = $price*$duration*$configPri['popular_base_number'];
+        if($duration==12){
+            $view_counts = $price*$duration*$configPri['popular_base_number']/2;
+        }
+        if($duration==24){
+            $view_counts = $price*$duration*$configPri['popular_base_number']/4;
+        }
         $insert=array(
             "uid"=>$uid,
             "user_nicename"=>$user_nicename,
@@ -637,7 +644,7 @@ class Model_Video extends PhalApi_Model_NotORM {
             "videoid"=>$videoid,
             "price"=>$price,
             "duration"=>$duration,
-            "view_counts"=>$price*$duration*$configPri['popular_base_number'],
+            "view_counts"=>$view_counts,
             "is_status"=>1,
             "addtime"=>$addtime
         );
