@@ -3469,6 +3469,7 @@ class Api_User extends PhalApi_Api {
 //            $rs['msg'] = T('账号已存在');
 //            return $rs;
             $result = $domain->updateUserAccount($data,$isexist[0]['id']);
+            $result = $isexist[0];
         }else{
             $result = $domain->setUserAccount($data);
 
