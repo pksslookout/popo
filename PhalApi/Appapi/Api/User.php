@@ -3409,7 +3409,7 @@ class Api_User extends PhalApi_Api {
 	 * @return string msg 提示信息
 	 */
 	public function setUserAccount() {
-		$rs = array('code' => 0, 'msg' => T('添加成功'), 'info' => array());
+		$rs = array('code' => 0, 'msg' => T('操作成功'), 'info' => array());
         
         $uid=checkNull($this->uid);
         $token=checkNull($this->token);
