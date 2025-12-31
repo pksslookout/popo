@@ -3521,7 +3521,7 @@ class Model_User extends PhalApi_Model_NotORM {
             32=>'钻石兑换USDT',
             33=>'LALA兑换钻石',
         ];
-        $where="action = 1 and uid=$uid";
+        $where="action in ('1','2','30','31','32','33') and uid=$uid";
         $list=DI()->notorm->user_coinrecord
             ->select('*')
             ->where($where)
