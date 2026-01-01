@@ -50,6 +50,11 @@ class Api_Agent extends PhalApi_Api {
         $configPub=getConfigPub();
         $href=$configPub['apk_url'];
         $qr=$configPub['apk_url'];
+
+        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+        if (preg_match('/iPhone|iPad|iPod/', $userAgent)) {
+            $href = 'https://www.pgyer.com/popolive';
+        }
         $info['href']=$href;
         $info['qr']=get_upload_path($qr);
         $rs['info'][0]=$info;
