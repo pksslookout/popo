@@ -1149,7 +1149,7 @@ class Api_Video extends PhalApi_Api {
      * @return string msg 提示信息
      */
 	public function addRecommend() {
-        $rs = array('code' => 0, 'msg' => T('点赞成功'), 'info' => array());
+        $rs = array('code' => 0, 'msg' => T('推荐成功'), 'info' => array());
         $uid=checkNull($this->uid);
         $token=checkNull($this->token);
         $videoid=checkNull($this->videoid);
