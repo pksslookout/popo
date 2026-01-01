@@ -149,7 +149,7 @@
         if(strpos($file,"http")===0){
             return html_entity_decode($file);
         }else if(strpos($file,"/")===0){
-            $filepath= config('database.HOST').'/'.$file;
+            $filepath= config('database.BD_HOST').'/'.$file;
             return html_entity_decode($filepath);
         }else{
             $filepath= config('database.COS_HOST').'/'.$file;
