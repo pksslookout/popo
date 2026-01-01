@@ -278,7 +278,7 @@ class Api_Agent extends PhalApi_Api {
 //        $uid = 4341244;
         $info['code']=$code;
         $qr=get_upload_path('upload/qr/'.$uid.$lang.'.png');
-        $outputImage = 'upload/agent/'.$bg_id.$uid.'.png';
+        $outputImage = 'upload/agent/'.$bg_id.'_'.$uid.'.png';
         $info['url']=get_upload_path($outputImage);
         if(!urlExists($info['url'])){
             $curlPost['qr'] = $qr.'?imageView2/2/w/120/h/120';

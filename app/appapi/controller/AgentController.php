@@ -176,6 +176,10 @@ class AgentController extends Controller {
         }else{
             $poster = $paylist[$bg_id];
         }
+        // 加载海报背景图
+        $poster = imagecreatefrompng($poster); // 确保路径正确，并且文件存在
+        $qrCodeImage = imagecreatefrompng($qr_img); // 确保路径正确，并且文件存在
+
         if($bg_id == 'zh_cn_1'){
             $black = imagecolorallocate($poster, 81, 255, 85);
         }
@@ -185,10 +189,6 @@ class AgentController extends Controller {
         if($bg_id == 'zh_cn_3'){
             $black = imagecolorallocate($poster, 252, 1, 252);
         }
-        // 加载海报背景图
-        $poster = imagecreatefrompng($poster); // 确保路径正确，并且文件存在
-        $qrCodeImage = imagecreatefrompng($qr_img); // 确保路径正确，并且文件存在
-
         // 获取二维码的尺寸
         $qrWidth = imagesx($qrCodeImage);
         $qrHeight = imagesy($qrCodeImage);
