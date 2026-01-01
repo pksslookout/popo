@@ -8,7 +8,7 @@ namespace app\appapi\controller;
 use think\Controller;
 use think\Db;
 
-class livebackController extends Controller {
+class LivebackController extends Controller {
 
     protected function initialize()
     {
