@@ -48,10 +48,10 @@ class Model_Login extends PhalApi_Model_NotORM {
                 $data['user_email']=$user_login;
                 $user_login_a=explode("@",$user_login);
                 $email_number=$user_login_a[0];
-                $data['user_nicename']='POPO用户'.substr($email_number,-4);
+                $data['user_nicename']='Popo Live_'.substr($email_number,-4);
             }else{
                 $data['mobile']=$user_login;
-                $data['user_nicename']='POPO用户'.substr($user_login,-4);
+                $data['user_nicename']='Popo Live_'.substr($user_login,-4);
             }
             $rs=DI()->notorm->user->insert($data);
             if(!$rs){
@@ -427,10 +427,10 @@ class Model_Login extends PhalApi_Model_NotORM {
             $data['user_email']=$user_login;
             $user_login_a=explode("@",$user_login);
             $email_number=$user_login_a[0];
-            $data['user_nicename']='POPO用户'.substr($email_number,-4);
+            $data['user_nicename']='Popo Live_'.substr($email_number,-4);
         }else{
             $data['mobile']=$user_login;
-            $data['user_nicename']='POPO用户'.substr($user_login,-4);
+            $data['user_nicename']='Popo Live_'.substr($user_login,-4);
         }
         if($type=='email'){
             $data['user_email']=$user_login;
