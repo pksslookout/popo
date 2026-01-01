@@ -593,7 +593,7 @@ function connectionRedis(){
 			$filepath= $web.$file;
 			return html_entity_decode($filepath);
 		}else{
-            $filepath= 'https://popolive-1385521809.cos.ap-hongkong.myqcloud.com/'.$file;
+            $filepath= DI()->config->get('app.cos').'/'.$file;
             return $filepath;
 		}
 	}
