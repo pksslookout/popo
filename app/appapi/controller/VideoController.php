@@ -86,7 +86,7 @@ class VideoController extends Controller
                             'Content-Type' => 'application/xml',
                         ),
                         'Tag' => 'Watermark', // 模板类型: Watermark;是否必传：否
-                        'Name' => 'PopoLive', // 模板名称，仅支持中文、英文、数字、_、-和*，长度不超过 64;是否必传：否
+                        'Name' => 'PopoLive'.rand(1,9999), // 模板名称，仅支持中文、英文、数字、_、-和*，长度不超过 64;是否必传：否
                         // 水印信息;是否必传：否
                         'Watermark' => array(
                             'Type' => 'Text', // 水印类型Text：文字水印Image：图片水印;是否必传：是
