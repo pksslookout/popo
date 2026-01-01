@@ -152,7 +152,7 @@
             $filepath= 'https://www.popolive.net'.$file;
             return html_entity_decode($filepath);
         }else{
-            $filepath= 'https://popolive-1385521809.cos.ap-hongkong.myqcloud.com/'.$file;
+            $filepath= 'https://popolive-1393758224.cos.ap-guangzhou.myqcloud.com/'.$file;
             return $filepath;
         }
     }

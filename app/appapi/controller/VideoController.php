@@ -57,7 +57,7 @@ class VideoController extends Controller
         $video_h = explode('.', $video2);
         $video_watermark = $video_h[0].'_water.'.$video_h[1];
         $video_watermark_url = str_replace($video2,$video_watermark,$video_url);
-        if(!urlExists($video_watermark_url)) {
+        if(!urlExists(get_upload_path($video_watermark_url))) {
             $configPri = getConfigPri();
             $secretId = $configPri['qcloud_secret_id'];
             $secretKey = $configPri['qcloud_secret_key'];
