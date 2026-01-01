@@ -149,10 +149,10 @@
         if(strpos($file,"http")===0){
             return html_entity_decode($file);
         }else if(strpos($file,"/")===0){
-            $filepath= 'https://www.popolive.net'.$file;
+            $filepath= config('database.HOST').'/'.$file;
             return html_entity_decode($filepath);
         }else{
-            $filepath= 'https://popolive-1393758224.cos.ap-guangzhou.myqcloud.com/'.$file;
+            $filepath= config('database.COS_HOST').'/'.$file;
             return $filepath;
         }
     }
