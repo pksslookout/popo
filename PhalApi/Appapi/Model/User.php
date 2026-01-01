@@ -319,9 +319,9 @@ class Model_User extends PhalApi_Model_NotORM {
             ->select("usdt_charge,usdt_forward")
             ->where('id=?',$uid)
             ->fetchOne();
-        $info['usdt_forward'] = dealPrice($user['usdt_forward']);
+        $info['usdt_forward'] = dealPrice($user_information['usdt_forward']);
         $info['usdt_charge'] = dealPrice($user_information['usdt_charge']);
-        $info['usdt'] = dealPrice($user_information['usdt']);
+        $info['usdt'] = dealPrice($user['usdt']);
 
         return 	$info;
     }
