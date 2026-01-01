@@ -73,40 +73,42 @@ class VideoController extends Controller
                         'secretKey' => $secretKey)));
             try {
 
-                $name = explode('/', $video_watermark);
-                $name = $name[count($name)-1];
-                $name = explode('.', $name);
+                // $name = explode('/', $video_watermark);
+                // $name = $name[count($name)-1];
+                // $name = explode('.', $name);
 
-                if (isset($configPri['video_watermark_template_id'])) {
-                    $id = $configPri['video_watermark_template_id'];
-                } else {
-                    $result = $cosClient->CreateWatermarkTemplate(array(
-                        'Bucket' => $bucket, //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
-                        'Headers' => array(
-                            'Content-Type' => 'application/xml',
-                        ),
-                        'Tag' => 'Watermark', // 模板类型: Watermark;是否必传：否
-                        'Name' => 'PopoLive'.rand(1,9999), // 模板名称，仅支持中文、英文、数字、_、-和*，长度不超过 64;是否必传：否
-                        // 水印信息;是否必传：否
-                        'Watermark' => array(
-                            'Type' => 'Text', // 水印类型Text：文字水印Image：图片水印;是否必传：是
-                            'Pos' => 'BottomRight', // 基准位置TopRightTopLeftBottomRightBottomLeftLeftRightTopBottomCenter;是否必传：是
-                            'LocMode' => 'Relativity', // 偏移方式Relativity：按比例Absolute：固定位置;是否必传：是
-                            'Dx' => '0', // 水平偏移在图片水印中，如果 Background 为 true，当 locMode 为 Relativity 时，为%，值范围：[-300 0]；当 locMode 为 Absolute 时，为 px，值范围：[-4096 0]。在图片水印中，如果 Background 为 false，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。在文字水印中，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。当Pos为Top、Bottom和Center时，该参数无效。;是否必传：是
-                            'Dy' => '0', // 垂直偏移在图片水印中，如果 Background 为 true，当 locMode 为 Relativity 时，为%，值范围：[-300 0]；当 locMode 为 Absolute 时，为 px，值范围：[-4096 0]。在图片水印中，如果 Background 为 false，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。在文字水印中，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。当Pos为Left、Right和Center时，该参数无效。;是否必传：是
-                            'StartTime' => '0', // 水印开始时间[0，视频时长]  单位为秒 支持 float 格式，执行精度精确到毫秒;是否必传：否
-                            'EndTime' => '', // 水印结束时间[0，视频时长] 单位为秒 支持 float 格式，执行精度精确到毫秒;是否必传：否
-                            'Text' => array(
-                                'Text' => 'test',
-                                'FontSize' => '30',
-                                'FontType' => 'simfang.ttf',
-                                'FontColor' => '0x000000',
-                                'Transparency' => '90',
-                            ),
-                        ),
-                    ));
-                    $id = $result['Template']['TemplateId'];
-                }
+                // if (isset($configPri['video_watermark_template_id'])) {
+                //     $id = $configPri['video_watermark_template_id'];
+                // } else {
+                //     $result = $cosClient->CreateWatermarkTemplate(array(
+                //         'Bucket' => $bucket, //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+                //         'Headers' => array(
+                //             'Content-Type' => 'application/xml',
+                //         ),
+                //         'Tag' => 'Watermark', // 模板类型: Watermark;是否必传：否
+                //         'Name' => 'PopoLive'.rand(1,9999), // 模板名称，仅支持中文、英文、数字、_、-和*，长度不超过 64;是否必传：否
+                //         // 水印信息;是否必传：否
+                //         'Watermark' => array(
+                //             'Type' => 'Text', // 水印类型Text：文字水印Image：图片水印;是否必传：是
+                //             'Pos' => 'BottomRight', // 基准位置TopRightTopLeftBottomRightBottomLeftLeftRightTopBottomCenter;是否必传：是
+                //             'LocMode' => 'Relativity', // 偏移方式Relativity：按比例Absolute：固定位置;是否必传：是
+                //             'Dx' => '0', // 水平偏移在图片水印中，如果 Background 为 true，当 locMode 为 Relativity 时，为%，值范围：[-300 0]；当 locMode 为 Absolute 时，为 px，值范围：[-4096 0]。在图片水印中，如果 Background 为 false，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。在文字水印中，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。当Pos为Top、Bottom和Center时，该参数无效。;是否必传：是
+                //             'Dy' => '0', // 垂直偏移在图片水印中，如果 Background 为 true，当 locMode 为 Relativity 时，为%，值范围：[-300 0]；当 locMode 为 Absolute 时，为 px，值范围：[-4096 0]。在图片水印中，如果 Background 为 false，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。在文字水印中，当 locMode 为 Relativity 时，为%，值范围：[0 100]；当 locMode 为 Absolute 时，为 px，值范围：[0 4096]。当Pos为Left、Right和Center时，该参数无效。;是否必传：是
+                //             'StartTime' => '0', // 水印开始时间[0，视频时长]  单位为秒 支持 float 格式，执行精度精确到毫秒;是否必传：否
+                //             'EndTime' => '', // 水印结束时间[0，视频时长] 单位为秒 支持 float 格式，执行精度精确到毫秒;是否必传：否
+                //             'Text' => array(
+                //                 'Text' => 'PopoLive',
+                //                 'FontSize' => '30',
+                //                 'FontType' => 'simfang.ttf',
+                //                 'FontColor' => '0xffffff',
+                //                 'Transparency' => '90',
+                //             ),
+                //         ),
+                //     ));
+                //     $id = $result['Template']['TemplateId'];
+                // }
+                // var_dump($id);
+                // exit();
 
                 //提交一个视频明水印任务
                 $result = $cosClient->PostWatermarkJobs(array(
@@ -121,7 +123,7 @@ class VideoController extends Controller
                     ),
                     // 操作规则;是否必传：是
                     'Operation' => array(
-                        'WatermarkTemplateId' => $id, // 水印模板 ID，可以传多个水印模板 ID ，最多传3个;是否必传：否
+                        'WatermarkTemplateId' => 't14a37708dca844a71ac176536ab8c0dbe', // 水印模板 ID，可以传多个水印模板 ID ，最多传3个;是否必传：否
                         'Output' => array(
                             'Region' => $region,
                             'Bucket' => $bucket,
