@@ -1916,14 +1916,14 @@ class Model_User extends PhalApi_Model_NotORM {
                 }
                 $score = $addScore+$score;
             }
-//            $rs = $score;
+            $rs = $score;
             releaseScore($uid,$uid,$score,25);
             releaseAgentScore($uid,$score);
-            $userinfo=DI()->notorm->user
-                ->select("today_score")
-                ->where('id=?',$uid)
-                ->fetchOne();
-            $rs = dealPrice($userinfo['today_score']);
+//            $userinfo=DI()->notorm->user
+//                ->select("today_score")
+//                ->where('id=?',$uid)
+//                ->fetchOne();
+//            $rs = dealPrice($userinfo['today_score']);
         }
 
         return $rs;
