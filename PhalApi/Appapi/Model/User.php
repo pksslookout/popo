@@ -1759,11 +1759,12 @@ class Model_User extends PhalApi_Model_NotORM {
 
         }
         //file_put_contents(API_ROOT.'/Runtime/LoginBonus_'.date('Y-m-d').'.txt',date('Y-m-d H:i:s').' 提交参数信息 rs:'."\r\n",FILE_APPEND);
-        $userinfo=DI()->notorm->user
-            ->select("today_score")
-            ->where('id=?',$uid)
-            ->fetchOne();
-        $rs['today_score']=dealPrice($userinfo['today_score']);
+//        $userinfo=DI()->notorm->user
+//            ->select("today_score")
+//            ->where('id=?',$uid)
+//            ->fetchOne();
+//        $rs['today_score']=dealPrice($userinfo['today_score']);
+        $rs['today_score']='0';
         return $rs;
     }
 
