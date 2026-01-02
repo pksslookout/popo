@@ -596,7 +596,7 @@ class Api_Login extends PhalApi_Api {
 
 		if($get_code){
 			$rs['code']=1002;
-			$rs['msg']=T('验证码5分钟有效，请勿多次发送');
+			$rs['msg']=T('验证码10分钟有效，请勿多次发送');
 			return $rs;
 		}
 
@@ -636,7 +636,7 @@ class Api_Login extends PhalApi_Api {
             curl_setopt($curl, CURLOPT_TIMEOUT, 1);
             curl_exec($curl);
 
-            $time = 60 * 5;
+            $time = 60 * 10;
             setcaches($key, $code, $time);
         }
 
@@ -802,7 +802,7 @@ class Api_Login extends PhalApi_Api {
 
         if($get_code){
             $rs['code']=1002;
-            $rs['msg']=T('验证码5分钟有效，请勿多次发送');
+            $rs['msg']=T('验证码10分钟有效，请勿多次发送');
             return $rs;
         }
 
@@ -843,7 +843,7 @@ class Api_Login extends PhalApi_Api {
             curl_setopt($curl, CURLOPT_TIMEOUT, 1);
             curl_exec($curl);
 
-            $time = 60 * 5;
+            $time = 60 * 10;
             setcaches($key, $code, $time);
         }
 
