@@ -53,7 +53,7 @@ class Api_Agent extends PhalApi_Api {
 
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
         if (preg_match('/iPhone|iPad|iPod/', $userAgent)) {
-            $href = 'https://www.pgyer.com/popolive';
+            $href = $configPub['ipa_url'];
         }
         $info['href']=$href;
         $info['qr']=get_upload_path($qr);
