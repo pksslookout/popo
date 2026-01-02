@@ -813,6 +813,15 @@ class SettingController extends AdminBaseController
                 $action.='登录奖励开关 '.$bonus_switch.' ';
             }
 
+            if($options['iplimit_switch'] !=$oldconfigpri['iplimit_switch']){
+                $iplimit_switch=$options['iplimit_switch']?'开':'关';
+                $action.='短信验证码IP限制开关 '.$iplimit_switch.' ';
+            }
+
+            if($options['iplimit_times'] !=$oldconfigpri['iplimit_times']){
+                $action.='短信验证码IP限制次数 '.$options['iplimit_times'].' ';
+            }
+
 //			if($options['auth_islimit'] !=$oldconfigpri['auth_islimit']){
 //                $auth_islimit=$options['auth_islimit']?'开':'关';
 //                $action.='认证限制 '.$auth_islimit.' ';
