@@ -490,11 +490,11 @@ class Model_Video extends PhalApi_Model_NotORM {
                     ->update( array('collections' => new NotORM_Literal("collections - 1") ) );
                 //将状态改为取消收藏
                 $result=DI()->notorm->video_collection->where("uid=? and videoid=?",$uid,$videoid)->update(array("status"=>0,"updatetime"=>time()));
-                $dataTask=[
-                    'type'=>'4',
-                    'nums'=>'1',
-                ];
-                dailyTasks($uid,$dataTask);
+//                $dataTask=[
+//                    'type'=>'4',
+//                    'nums'=>'1',
+//                ];
+//                dailyTasks($uid,$dataTask);
                 if($result!==false){
                     return 200;
                 }else{
@@ -698,11 +698,11 @@ class Model_Video extends PhalApi_Model_NotORM {
 				->where("id = '{$videoid}' and likes>0")
 				->update( array('likes' => new NotORM_Literal("likes - 1") ) );
 			$rs['islike']='0';
-            $dataTask=[
-                'type'=>'1',
-                'nums'=>'1',
-            ];
-            dailyTasks($uid,$dataTask);
+//            $dataTask=[
+//                'type'=>'1',
+//                'nums'=>'1',
+//            ];
+//            dailyTasks($uid,$dataTask);
 		}else{
 			DI()->notorm->video_like
 						->insert(array("uid"=>$uid,"touid"=>$video['uid'],"videoid"=>$videoid,"addtime"=>time() ));
@@ -794,6 +794,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 				->where("id = '{$videoid}'")
 				->update( array('recommends' => new NotORM_Literal("recommends - 1") ) );
 			$rs['isrecommend']='0';
+			$rs['msg']='已取消推荐';
 		}else{
 			DI()->notorm->video_recommend
 						->insert(array("uid"=>$uid,"touid"=>$video['uid'],"videoid"=>$videoid,"addtime"=>time() ));
@@ -802,6 +803,7 @@ class Model_Video extends PhalApi_Model_NotORM {
                 ->where("id = '{$videoid}'")
                 ->update( array('recommends' => new NotORM_Literal("recommends + 1") ) );
             $rs['isrecommend']='1';
+            $rs['msg']='推荐成功';
 
 		}
 

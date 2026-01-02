@@ -1178,6 +1178,8 @@ class Api_Video extends PhalApi_Api {
 			$rs['msg'] = T("不能给自己推荐");
 			return $rs;
 		}
+        $rs['msg'] = T($result['msg']);
+        unset($result['msg']);
 		$rs['info'][0]=$result;
         return $rs;
     }
