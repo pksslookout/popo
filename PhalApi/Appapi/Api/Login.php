@@ -8,7 +8,7 @@ class Api_Login extends PhalApi_Api {
         return array(
 			'userLoginReg' => array(
                 'country_code' => array('name' => 'country_code', 'type' => 'int', 'default'=>'86',  'desc' => '国家代号'),
-                'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'30', 'desc' => '账号'),
+                'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'56', 'desc' => '账号'),
                 'code' => array('name' => 'code', 'type' => 'string', 'min' => 1, 'require' => true,   'desc' => '验证码'),
                 'agent_code' => array('name' => 'agent_code', 'type' => 'string', 'desc' => '邀请码'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
@@ -16,7 +16,7 @@ class Api_Login extends PhalApi_Api {
             ),
 			'userLogin' => array(
                 'country_code' => array('name' => 'country_code', 'type' => 'int', 'default'=>'86',  'desc' => '国家代号'),
-                'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'30', 'desc' => '账号'),
+                'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'56', 'desc' => '账号'),
 				'user_pass' => array('name' => 'user_pass', 'type' => 'string','require' => true,  'min' => '1',  'max'=>'30', 'desc' => '密码'),
                 'type' => array('name' => 'type', 'type' => 'string',  'default'=>'mobile', 'require' => true, 'desc' => 'mobile/email'),
                 'timestamp' => array('name' => 'timestamp', 'type' => 'string', 'require' => true, 'desc' => '秒级时间戳'),
@@ -26,7 +26,7 @@ class Api_Login extends PhalApi_Api {
             ),
 			'userReg' => array(
                 'country_code' => array('name' => 'country_code', 'type' => 'int','default'=>'86', 'desc' => '国家代号'),
-                'user_login' => array('name' => 'user_login', 'type' => 'string','require' => true,  'min' => '6',  'max'=>'30', 'desc' => '账号'),
+                'user_login' => array('name' => 'user_login', 'type' => 'string','require' => true,  'min' => '6',  'max'=>'56', 'desc' => '账号'),
 				'user_pass' => array('name' => 'user_pass', 'type' => 'string','require' => true,  'min' => '1',  'max'=>'30', 'desc' => '密码'),
 				'user_pass2' => array('name' => 'user_pass2', 'type' => 'string',  'require' => true,  'min' => '1',  'max'=>'30', 'desc' => '确认密码'),
                 'code' => array('name' => 'code', 'type' => 'string', 'min' => 1, 'require' => true,   'desc' => '验证码'),
@@ -37,7 +37,7 @@ class Api_Login extends PhalApi_Api {
 
 			'userFindPass' => array(
                 'country_code' => array('name' => 'country_code', 'type' => 'int','default'=>'86',  'desc' => '国家代号'),
-                'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'30', 'desc' => '账号'),
+                'user_login' => array('name' => 'user_login', 'type' => 'string', 'require' => true,  'min' => '6',  'max'=>'56', 'desc' => '账号'),
 				'user_pass' => array('name' => 'user_pass', 'type' => 'string', 'require' => true,  'min' => '1',  'max'=>'30', 'desc' => '密码'),
 				'user_pass2' => array('name' => 'user_pass2', 'type' => 'string', 'require' => true,  'min' => '1',  'max'=>'30', 'desc' => '确认密码'),
                 'code' => array('name' => 'code', 'type' => 'string', 'min' => 1, 'require' => true,   'desc' => '验证码'),
