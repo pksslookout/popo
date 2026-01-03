@@ -853,11 +853,11 @@ function connectionRedis(){
                 $level_q=$experience-$level_up_q;
                 $level_h=$level_up-$level_up_q;
                 $p =$level_q/$level_h;
-                $parent = number_format($p,2)*100;
+                $parent = 100 - number_format($p,2)*100;
                 break;
 			}
 		}
-        $parent = dealPrice($parent,2);
+        $parent = dealPrice($parent,2).'%';
         $data = [
             'levelid'=>(string)$levelid,
             'parent'=>(string)$parent,
