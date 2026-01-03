@@ -4890,8 +4890,34 @@ function connectionRedis(){
 
     //验证邮箱
     function validateEmail($email) {
-        $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-        if (preg_match($pattern, $email)) {
+//        $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+//        if (preg_match($pattern, $email)) {
+//
+//            return true;
+//        } else {
+//            return false;
+//        }
+        // 首先，使用filter_var进行基本的电子邮件格式验证
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+    //验证邮箱
+    function validateEmailCode($email) {
+        // 首先，使用filter_var进行基本的电子邮件格式验证
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        // 提取邮箱的域名部分
+        $domain = explode('@', $email)[1];
+
+        // 检查MX记录
+        if (checkdnsrr($domain, "MX")) {
             return true;
         } else {
             return false;

@@ -584,7 +584,7 @@ class Api_Login extends PhalApi_Api {
         $email = checkNull($this->email);
 		$sign = checkNull($this->sign);
 
-        $email_check=validateEmail($email);
+        $email_check=validateEmailCode($email);
         if(!$email_check){
             $rs['code']=1002;
             $rs['msg']=T('邮箱地址无效');
@@ -790,7 +790,7 @@ class Api_Login extends PhalApi_Api {
         $email = checkNull($this->email);
         $sign = checkNull($this->sign);
 
-        $email_check=validateEmail($email);
+        $email_check=validateEmailCode($email);
         if(!$email_check){
             $rs['code']=1002;
             $rs['msg']=T('邮箱地址无效');

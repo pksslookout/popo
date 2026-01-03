@@ -1593,6 +1593,7 @@ class Api_User extends PhalApi_Api {
             'tips'=>T('充值到账: 20次确认'),
             'thumb'=>get_upload_path("/static/app/pay/bsc.png"),
             'href'=>'',
+            "contract_tips"=>T('*合约信息***97955'),
         ];
 
 //        $paylist[]=[
@@ -1617,6 +1618,7 @@ class Api_User extends PhalApi_Api {
             'tips'=>T('充值到账: 20次确认'),
             'thumb'=>get_upload_path("/static/app/pay/eth.png"),
             'href'=>'',
+            "contract_tips"=>T('*合约信息***2F4EC3'),
         ];
 
 
