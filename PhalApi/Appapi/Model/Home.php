@@ -809,7 +809,7 @@ class Model_Home extends PhalApi_Model_NotORM {
                 //获取今天开始结束时间
                 $dayStart=strtotime(date("Y-m-d"));
                 $dayEnd=strtotime(date("Y-m-d 23:59:59"));
-                $where=" starttime >={$dayStart} and starttime<={$dayEnd} ";
+                $where="starttime >={$dayStart} and starttime<={$dayEnd} ";
 
                 break;
 
@@ -825,7 +825,7 @@ class Model_Home extends PhalApi_Model_NotORM {
                 //周天
                 $week_end=strtotime("{$week} +1 week")-1;
 
-                $where=" starttime >={$week_start} and starttime<={$week_end} ";
+                $where="starttime >={$week_start} and starttime<={$week_end} ";
 
                 break;
 
@@ -837,7 +837,7 @@ class Model_Home extends PhalApi_Model_NotORM {
                 //本月最后一天
                 $month_end=strtotime("{$month} +1 month")-1;
 
-                $where=" starttime >={$month_start} and starttime<={$month_end} ";
+                $where="starttime >={$month_start} and starttime<={$month_end} ";
 
                 break;
 
@@ -859,7 +859,7 @@ class Model_Home extends PhalApi_Model_NotORM {
         $result = DI()->redis->Get($key);
 
         if(!$result) {
-            $where = 'user_type = 2 and'.$where;
+//            $where = 'user_type = 2 and'.$where;
             if (empty($where)) {
                 $result = DI()->notorm->live_record
                     ->select('sum(nums) as nums, uid')

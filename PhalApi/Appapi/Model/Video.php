@@ -693,10 +693,11 @@ class Model_Video extends PhalApi_Model_NotORM {
 			DI()->notorm->video_like
 						->where("uid='{$uid}' and videoid='{$videoid}'")
 						->delete();
-			
-			DI()->notorm->video
-				->where("id = '{$videoid}' and likes>0")
-				->update( array('likes' => new NotORM_Literal("likes - 1") ) );
+			if($video['likes']>0){
+                DI()->notorm->video
+                    ->where("id = '{$videoid}'")
+                    ->update( array('likes' => new NotORM_Literal("likes - 1") ) );
+            }
 			$rs['islike']='0';
 //            $dataTask=[
 //                'type'=>'1',
