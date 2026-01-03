@@ -2364,11 +2364,7 @@ class Model_User extends PhalApi_Model_NotORM {
             }
         }
 
-        $userinfo=DI()->notorm->user
-            ->select("today_score")
-            ->where('id=?',$uid)
-            ->fetchOne();
-        $rs['info'][0]['score'] = dealPrice($userinfo['today_score']);
+        $rs['info'][0]['score'] = '10';
         return $rs;
     }
 

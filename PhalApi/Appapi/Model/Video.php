@@ -703,6 +703,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 //                'nums'=>'1',
 //            ];
 //            dailyTasks($uid,$dataTask);
+            $video['likes'] = $video['likes'] - 1;
 		}else{
 			DI()->notorm->video_like
 						->insert(array("uid"=>$uid,"touid"=>$video['uid'],"videoid"=>$videoid,"addtime"=>time() ));
@@ -716,12 +717,8 @@ class Model_Video extends PhalApi_Model_NotORM {
                 'nums'=>'1',
             ];
             dailyTasks($uid,$dataTask);
-		}	
-		
-		$video=DI()->notorm->video
-				->select("likes,uid,thumb")
-				->where("id = '{$videoid}'")
-				->fetchOne();
+            $video['likes'] = $video['likes'] + 1;
+		}
 				
 		$rs['likes']=$video['likes'];
 		
@@ -795,6 +792,7 @@ class Model_Video extends PhalApi_Model_NotORM {
 				->update( array('recommends' => new NotORM_Literal("recommends - 1") ) );
 			$rs['isrecommend']='0';
 			$rs['msg']='已取消推荐';
+            $video['recommends'] = $video['recommends'] - 1;
 		}else{
 			DI()->notorm->video_recommend
 						->insert(array("uid"=>$uid,"touid"=>$video['uid'],"videoid"=>$videoid,"addtime"=>time() ));
@@ -804,13 +802,9 @@ class Model_Video extends PhalApi_Model_NotORM {
                 ->update( array('recommends' => new NotORM_Literal("recommends + 1") ) );
             $rs['isrecommend']='1';
             $rs['msg']='推荐成功';
+            $video['recommends'] = $video['recommends'] + 1;
 
 		}
-
-		$video=DI()->notorm->video
-				->select("recommends,uid,thumb")
-				->where("id = '{$videoid}'")
-				->fetchOne();
 
 		$rs['recommend']=$video['recommends'];
 
