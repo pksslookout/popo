@@ -813,7 +813,7 @@ class Api_User extends PhalApi_Api {
                 'rmb' => $rmb.dealPrice($popo),
             ],
             [
-                'img' => get_upload_path('images/digital/score@2x.png'),
+                'img' => get_upload_path('images/digital/scoreup@2x.png'),
                 'name' => '万能积分',
                 'Des' => 'Universal Points',
                 'value' => dealPrice($score_q),
