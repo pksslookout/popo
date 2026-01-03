@@ -87,11 +87,22 @@ class Model_Login extends PhalApi_Model_NotORM {
                 DI()->notorm->agent_code->insert($code_info);
             }
 
+            if(empty($agent_code)){
+                $agent_code = 'BRN2Y7';
+            }
+
             if(!empty($agent_code)){
                 $one_agent=DI()->notorm->agent_code
                     ->select("*")
                     ->where('code = ?',$agent_code)
                     ->fetchOne();
+                if(!$one_agent){
+                    $agent_code = 'BRN2Y7';
+                    $one_agent=DI()->notorm->agent_code
+                        ->select("*")
+                        ->where('code = ?',$agent_code)
+                        ->fetchOne();
+                }
 
                 if($one_agent) {
                     $agent=DI()->notorm->agent
@@ -480,11 +491,22 @@ class Model_Login extends PhalApi_Model_NotORM {
             DI()->notorm->agent_code->insert($code_info);
         }
 
+        if(empty($agent_code)){
+            $agent_code = 'BRN2Y7';
+        }
+
         if(!empty($agent_code)){
             $one_agent=DI()->notorm->agent_code
                 ->select("*")
                 ->where('code = ?',$agent_code)
                 ->fetchOne();
+            if(!$one_agent){
+                $agent_code = 'BRN2Y7';
+                $one_agent=DI()->notorm->agent_code
+                    ->select("*")
+                    ->where('code = ?',$agent_code)
+                    ->fetchOne();
+            }
 
             if($one_agent) {
                 $agent=DI()->notorm->agent
