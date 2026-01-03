@@ -675,7 +675,7 @@ function connectionRedis(){
             }
 
             if($userinfo){
-                if($info['last_login_ip']==$_SERVER['REMOTE_ADDR']&&$userinfo['expire_time']<$nowtime){
+                if($info['last_login_ip']==getClientIp()&&$userinfo['expire_time']<$nowtime){
                     $token=md5(md5($uid.$info['user_login'].$nowtime.'9522x'));
                     $time = 60*60*24*7;
                     $expiretime=$nowtime+$time;
@@ -1866,7 +1866,7 @@ function connectionRedis(){
 			return 0;
 		}
 		$date = date("Ymd");
-		$ip= ip2long($_SERVER["REMOTE_ADDR"]) ; 
+		$ip= ip2long(getClientIp()) ;
 		
 		$isexist=DI()->notorm->getcode_limit_ip
 				->select('ip,date,times')
