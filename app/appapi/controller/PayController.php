@@ -37,6 +37,13 @@ class PayController extends Controller {
 //        ', $request);
 //        $request = str_replace('\t', '  ', $request);
         $ip=get_client_ip();
+        if($ip!='172.31.25.128'){
+            $result['code']=400;
+            $result['data']=[];
+            $result['msg']='Fail';
+            echo json_encode($result);
+            exit();
+        }
         $this->callbacklog('callback request:'.$ip.'::'.json_encode($request));
 
         $request = json_decode($request, true);
