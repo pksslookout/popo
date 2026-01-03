@@ -150,29 +150,24 @@ class Api_Login extends PhalApi_Api {
 
             $code_key = 'code_time_'.$user_login.'_'.date('Ymd',$now);
             $code_key_data = getcaches($code_key);
+
+            if(!empty($code_key_data)&&$code_key_data >= 5) {
+                $rs['code'] = 1002;
+                $rs['msg'] = T('验证码错误次数5，明日再试');
+                return $rs;
+            }
+
             if ($code != $get_code) {
                 if(empty($code_key_data)){
                     setcaches($code_key,1,24*3600);
                 }else{
                     setcaches($code_key,$code_key_data+1,24*3600);
-                    $code_key_data = $code_key_data+1;
-                }
-                if(!empty($code_key_data)&&$code_key_data >= 5) {
-                    $rs['code'] = 1002;
-                    $rs['msg'] = T('验证码错误次数5，明日再试');
-                    return $rs;
                 }
                 $rs['code'] = 1002;
                 $rs['msg'] = T('验证码错误');
                 return $rs;
             }
 
-        }
-
-        if(!empty($code_key_data)&&$code_key_data >= 5) {
-            $rs['code'] = 1002;
-            $rs['msg'] = T('验证码错误次数5，明日再试');
-            return $rs;
         }
 
         $domain = new Domain_Login();
@@ -242,7 +237,7 @@ class Api_Login extends PhalApi_Api {
 		$timestamp=checkNull($this->timestamp);
 		$nonce=checkNull($this->nonce);
 		$sign=checkNull($this->sign);
-
+        $now = time();
         $checkdata=array(
             'user_login'=>$user_login,
             'timestamp'=>$timestamp,
@@ -267,6 +262,14 @@ class Api_Login extends PhalApi_Api {
             setcaches($key,1,300);
         }
 
+        $code_key = 'password_time_'.$user_login.'_'.date('Ymd',$now);
+        $code_key_data = getcaches($code_key);
+        if(!empty($code_key_data)&&$code_key_data >= 5) {
+            $rs['code'] = 1002;
+            $rs['msg'] = T('密码错误次数5，明日再试');
+            return $rs;
+        }
+
         $now = time();
         $timestamp = (int)$timestamp+300;
         if($now>$timestamp){
@@ -279,6 +282,11 @@ class Api_Login extends PhalApi_Api {
         $info = $domain->userLogin($country_code,$user_login,$user_pass,$type);
 
 		if($info==1001){
+            if(empty($code_key_data)){
+                setcaches($code_key,1,24*3600);
+            }else{
+                setcaches($code_key,$code_key_data+1,24*3600);
+            }
 			$rs['code'] = 1001;
             $rs['msg'] = T('账号或密码错误');
             return $rs;
@@ -356,17 +364,16 @@ class Api_Login extends PhalApi_Api {
 
             $code_key = 'code_time_' . $user_login . '_' . date('Ymd', $now);
             $code_key_data = getcaches($code_key);
+            if (!empty($code_key_data) && $code_key_data >= 5) {
+                $rs['code'] = 1002;
+                $rs['msg'] = T('验证码错误次数5，明日再试');
+                return $rs;
+            }
             if ($code != $get_code) {
                 if (empty($code_key_data)) {
                     setcaches($code_key, 1, 24 * 3600);
                 } else {
                     setcaches($code_key, $code_key_data + 1, 24 * 3600);
-                    $code_key_data = $code_key_data + 1;
-                }
-                if (!empty($code_key_data) && $code_key_data >= 5) {
-                    $rs['code'] = 1002;
-                    $rs['msg'] = T('验证码错误次数5，明日再试');
-                    return $rs;
                 }
                 $rs['code'] = 1002;
                 $rs['msg'] = T('验证码错误');
