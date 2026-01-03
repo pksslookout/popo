@@ -224,7 +224,7 @@ class Api_Agent extends PhalApi_Api {
         if(!DI()->test) {
             $href = get_upload_path("/wap/index.html#/?agentCode=" . $code . '&lang=' . $lang);
         }else{
-            $href = get_upload_path("/waptest/index.html#/?agentCode=" . $code);
+            $href = get_upload_path("/waptest/index.html#/?agentCode=" . $code . '&lang=' . $lang);
         }
 //        $uid = 4341244;
         $info['href']=$href;
