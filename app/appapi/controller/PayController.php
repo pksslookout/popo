@@ -38,6 +38,7 @@ class PayController extends Controller {
 //        $request = str_replace('\t', '  ', $request);
         $ip=get_client_ip();
         if($ip!='172.31.25.128'){
+            $this->callbacklog('Fail callback request:'.$ip.'::'.json_encode($request));
             $result['code']=400;
             $result['data']=[];
             $result['msg']='Fail';
