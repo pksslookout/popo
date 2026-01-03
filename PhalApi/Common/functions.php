@@ -4828,6 +4828,7 @@ function connectionRedis(){
         $smtpSetting = getEmailConfig();
 
         require_once API_ROOT.'/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        require_once API_ROOT.'/../vendor/phpmailer/phpmailer/src/Exception.php';
         require_once API_ROOT.'/../vendor/phpmailer/phpmailer/src/SMTP.php';
         $mail        = new \PHPMailer\PHPMailer\PHPMailer(true);
         // 设置PHPMailer使用SMTP服务器发送Email
