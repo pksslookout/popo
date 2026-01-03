@@ -7,8 +7,8 @@ class Api_Agent extends PhalApi_Api {
 	public function getRules() {
 		return array(
             'getCode' => array(
-				'uid' => array('name' => 'uid', 'type' => 'int', 'desc' => '用户ID'),
-				'token' => array('name' => 'token', 'type' => 'string', 'desc' => '用户token'),
+//				'uid' => array('name' => 'uid', 'type' => 'int', 'desc' => '用户ID'),
+//				'token' => array('name' => 'token', 'type' => 'string', 'desc' => '用户token'),
 			),
 
 			'checkAgent'=>array(
