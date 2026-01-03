@@ -5279,7 +5279,8 @@ function connectionRedis(){
             ->where('uid = ?',$uid)
             ->fetchOne();
         if($agent){
-            $relation_chain_arr = explode(',',$agent['relation_chain']);
+            $relation_chain_arr = str_replace('11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,','',$agent['relation_chain']);
+            $relation_chain_arr = explode(',',$relation_chain_arr);
             $relation_chain_count = count($relation_chain_arr);
             for ($i=0;$i<$relation_chain_count;$i++){
                 if(isset($relation_chain_arr[$relation_chain_count-$i-1])){

@@ -489,7 +489,7 @@ class Api_Live extends PhalApi_Api {
         if(empty($userinfo['islive'])){
             // 团队主播人数+1
             $agent=DI()->notorm->agent->select("relation_chain")->where('uid = ?',$uid)->fetchOne();
-            addTeamVipCount($agent['relation_chain']);
+            addTeamLiveCount($agent['relation_chain']);
             delCache("userinfo_".$uid);
             DI()->notorm->user->where('id=?',$uid)->update(['islive'=>1]);
         }
